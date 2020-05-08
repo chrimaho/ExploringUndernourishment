@@ -66,7 +66,8 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
             }
             add(repo, unlist(status()["untracked"]))
             writeLines(paste0("Items have been Staged."))
-            CommitComment <- readline(prompt = "If needed, enter a Commit comment: ")
+            CommitComment <- showPrompt(title="Git Commit Comment", message="OPTIONAL: Enter a comment for the commit message.")
+            # CommitComment <- readline(prompt = "If needed, enter a Commit comment: ")
             if (!nchar(trimws(CommitComment), keepNA = TRUE) %in% c("NA","0",NA,0)) {
                 CommitComment <- paste(Sys.time(), CommitComment, sep = " - ")
             } else {
@@ -102,7 +103,8 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     # Process commit ----
     if (commit == TRUE) {
         if (!is.null(unlist(status()["staged"]))) {
-            CommitComment <- readline(prompt = "If needed, enter a Commit comment: ")
+            CommitComment <- showPrompt(title="Git Commit Comment", message="OPTIONAL: Enter a comment for the commit message.")
+            # CommitComment <- readline(prompt = "If needed, enter a Commit comment: ")
             if (!nchar(trimws(CommitComment), keepNA = TRUE) %in% c("NA","0",NA,0)) {
                 CommitComment <- paste(Sys.time(), CommitComment, sep = " - ")
             } else {
