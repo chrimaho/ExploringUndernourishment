@@ -46,14 +46,24 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     # Get credentials from user input ----
     get_Credentials <- function() {
         
+        # Get & Set
+        if (is.null(getOption("git_username"))) {
+            username <- showPrompt(title="Username", message="Enter your username:", default="")
+        } else {
+            username <- getOption("git_username")
+        }
+        if (is.null(getOption("git_password"))) {
+            password <- askForPassword(prompt="Enter your password:")
+        } else {
+            password <- getOption("git_password")
+        }
+        
         # Set
-        username <- showPrompt(title="Username", message="Enter your username:", default="")
-        password <- askForPassword(prompt="Enter your password:")
         credentials <- cred_user_pass(username=username, password=password)
         
         # Save username
         if (is.null(getOption("git_username"))) {
-            confirm <- showQuestion(title="Save Credentials?"
+            confirm <- showQuestion(title="Save username?"
                                    ,message=paste0("Would you like to save your Git username to the `options()` environment?","\n\n"
                                                   ,"If 'Yes', then you will not be prompted for your username next time.","\n"
                                                   ,"If 'No', then you will be prompted for your username again next time.","\n\n"
@@ -68,9 +78,9 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
                 options(git_username=username)
             }
         } else if (username != getOption("git_username")) {
-            confirm <- showQuestion(title="Update Credentials?"
-                                   ,message=paste0("The password you have provided is different to what is saved.","\n"
-                                                  ,"Would you like to update this new password to memory?"
+            confirm <- showQuestion(title="Update username?"
+                                   ,message=paste0("The username you have provided is different to what is saved.","\n"
+                                                  ,"Would you like to update this new username to memory?"
                                                   )
                                    ,ok="Yes"
                                    ,cancel="No"
@@ -82,7 +92,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
         
         # Save password
         if (is.null(getOption("git_password"))) {
-            confirm <- showQuestion(title="Save Credentials?"
+            confirm <- showQuestion(title="Save password?"
                                    ,message=paste0("Would you like to save your Git password to the `options()` environment?","\n\n"
                                                   ,"If 'Yes', then you will not be prompted for your password next time.","\n"
                                                   ,"If 'No', then you will be prompted for your password again next time.","\n\n"
@@ -97,7 +107,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
                 options(git_password=password)
             }
         } else if (password != getOption("git_password")) {
-            confirm <- showQuestion(title="Update Credentials?"
+            confirm <- showQuestion(title="Update password?"
                                    ,message=paste0("The password you have provided is different to what is saved.","\n"
                                                   ,"Would you like to update this new password to memory?"
                                                   )
