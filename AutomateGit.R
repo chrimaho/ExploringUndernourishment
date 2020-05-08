@@ -36,6 +36,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     # Confirm required packages are loaded ----
     require(git2r)
     require(rprojroot)
+    require(rstudioapi)
     
     # Confirm valid repor directory ----
     if (!file.exists(paste0(repo, "/.git/config"))) {
@@ -44,8 +45,10 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     
     # Get credentials from user input ----
     get_Credentials <- function() {
-        username <- readline(prompt="Enter your GitHub username: ")
-        password <- readline(prompt="Enter your GitHub password: ")
+        username <- showPrompt(title="Username", message="Enter your username:", default="")
+        password <- askForPassword(prompt="Enter your password:")
+        # username <- readline(prompt="Enter your GitHub username: ")
+        # password <- readline(prompt="Enter your GitHub password: ")
         credentials <- cred_user_pass(username=username, password=password)
         return(credentials)
     }
