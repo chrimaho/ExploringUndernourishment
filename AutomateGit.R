@@ -46,20 +46,19 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     # Get credentials from user input ----
     get_Credentials <- function() {
         
-        # Get & Set
+        # Get & Set username
         if (is.null(getOption("git_username"))) {
             username <- showPrompt(title="Username", message="Enter your username:", default="")
         } else {
             username <- getOption("git_username")
         }
+        
+        # Get & Set password
         if (is.null(getOption("git_password"))) {
             password <- askForPassword(prompt="Enter your password:")
         } else {
             password <- getOption("git_password")
         }
-        
-        # Set
-        credentials <- cred_user_pass(username=username, password=password)
         
         # Save username
         if (is.null(getOption("git_username"))) {
@@ -119,6 +118,9 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
             }
         }
         
+        # Set Credentials
+        credentials <- cred_user_pass(username=username, password=password)
+        
         # Return
         return(credentials)
     }
@@ -138,8 +140,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
             }
             add(repo, unlist(status()["untracked"]))
             writeLines(paste0("Items have been Staged."))
-            CommitComment <- showPrompt(title="Git Commit Comment", message="OPTIONAL: Enter a comment for the commit message.")
-            # CommitComment <- readline(prompt = "If needed, enter a Commit comment: ")
+            CommitComment <- showPrompt(title="Git Commit Comment", message="Enter a comment for the commit message.")
             if (!nchar(trimws(CommitComment), keepNA = TRUE) %in% c("NA","0",NA,0)) {
                 CommitComment <- paste(Sys.time(), CommitComment, sep = " - ")
             } else {
@@ -175,8 +176,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     # Process commit ----
     if (commit == TRUE) {
         if (!is.null(unlist(status()["staged"]))) {
-            CommitComment <- showPrompt(title="Git Commit Comment", message="OPTIONAL: Enter a comment for the commit message.")
-            # CommitComment <- readline(prompt = "If needed, enter a Commit comment: ")
+            CommitComment <- showPrompt(title="Git Commit Comment", message="Enter a comment for the commit message.")
             if (!nchar(trimws(CommitComment), keepNA = TRUE) %in% c("NA","0",NA,0)) {
                 CommitComment <- paste(Sys.time(), CommitComment, sep = " - ")
             } else {
