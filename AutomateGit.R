@@ -45,9 +45,71 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     
     # Get credentials from user input ----
     get_Credentials <- function() {
+        
+        # Set
         username <- showPrompt(title="Username", message="Enter your username:", default="")
         password <- askForPassword(prompt="Enter your password:")
         credentials <- cred_user_pass(username=username, password=password)
+        
+        # Save username
+        if (is.null(getOption("git_username"))) {
+            confirm <- showQuestion(title="Save Credentials?"
+                                   ,message=paste0("Would you like to save your Git username to the `options()` environment?","\n\n"
+                                                  ,"If 'Yes', then you will not be prompted for your username next time.","\n"
+                                                  ,"If 'No', then you will be prompted for your username again next time.","\n\n"
+                                                  ,"Note: `options()` are not pushed to Git.","\n"
+                                                  ,"However, they are still retrievable by others on your computer.","\n"
+                                                  ,"So be careful."
+                                                  )
+                                   ,ok="Yes"
+                                   ,cancel="No"
+                                   )
+            if (confirm == TRUE) {
+                options(git_username=username)
+            }
+        } else if (username != getOption("git_username")) {
+            confirm <- showQuestion(title="Update Credentials?"
+                                   ,message=paste0("The password you have provided is different to what is saved.","\n"
+                                                  ,"Would you like to update this new password to memory?"
+                                                  )
+                                   ,ok="Yes"
+                                   ,cancel="No"
+                                   )
+            if (confirm == TRUE) {
+                options(git_username=username)
+            }
+        }
+        
+        # Save password
+        if (is.null(getOption("git_password"))) {
+            confirm <- showQuestion(title="Save Credentials?"
+                                   ,message=paste0("Would you like to save your Git password to the `options()` environment?","\n\n"
+                                                  ,"If 'Yes', then you will not be prompted for your password next time.","\n"
+                                                  ,"If 'No', then you will be prompted for your password again next time.","\n\n"
+                                                  ,"Note: `options()` are not pushed to Git.","\n"
+                                                  ,"However, they are still retrievable by others on your computer.","\n"
+                                                  ,"So be careful."
+                                                  )
+                                   ,ok="Yes"
+                                   ,cancel="No"
+                                   )
+            if (confirm == TRUE) {
+                options(git_password=password)
+            }
+        } else if (password != getOption("git_password")) {
+            confirm <- showQuestion(title="Update Credentials?"
+                                   ,message=paste0("The password you have provided is different to what is saved.","\n"
+                                                  ,"Would you like to update this new password to memory?"
+                                                  )
+                                   ,ok="Yes"
+                                   ,cancel="No"
+                                   )
+            if (confirm == TRUE) {
+                options(git_password=password)
+            }
+        }
+        
+        # Return
         return(credentials)
     }
     
