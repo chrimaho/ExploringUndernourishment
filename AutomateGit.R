@@ -47,8 +47,6 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     get_Credentials <- function() {
         username <- showPrompt(title="Username", message="Enter your username:", default="")
         password <- askForPassword(prompt="Enter your password:")
-        # username <- readline(prompt="Enter your GitHub username: ")
-        # password <- readline(prompt="Enter your GitHub password: ")
         credentials <- cred_user_pass(username=username, password=password)
         return(credentials)
     }
