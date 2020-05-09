@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------#
+#==============================================================================#
 #                                                                              #
 #    Title      : Automate Git                                                 #
 #    Purpose    : Define function for automating Git processes.                #
@@ -9,7 +9,7 @@
 #    Sources    : .                                                            #
 #    Edited     : 09/May/2020 - Initial creation                               #
 #                                                                              #
-#------------------------------------------------------------------------------#
+#==============================================================================#
 
 # Start ----
 GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, stage=TRUE, commit=TRUE, pull=TRUE, push=TRUE) {
