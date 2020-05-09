@@ -92,7 +92,7 @@ FaoStat_long <- FaoStat %>%
     
     #extract mapping
     (function(x){
-        FaoStat_VariableMapping <<- x %>% select(variable,item)
+        FaoStat_VariableMapping <<- x %>% select(variable,item) %>% distinct()
         return(x)
     }) %>% 
     

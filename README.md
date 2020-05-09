@@ -16,7 +16,11 @@
 # Exploring Undernourishment
 Exploring data from the United Nations to better understand undernourishment.
 
+## Overview
+
 Shiny application provided in the folder `ExploringUndernourishment\`.
+
+## Data Sources
 
 Data provided by [Food and Agriculture Organization of the United Nations](http://www.fao.org/home/en/) (FAO).
 
@@ -30,3 +34,11 @@ Additional information about the data sources can be found at:
 >* [FAO: Food Security Indicators](http://www.fao.org/economic/ess/ess-fs/ess-fadata/en/#.XrXa5Wgzack)
 >* [Our World in Data: Hunger and Undernourishment](https://ourworldindata.org/hunger-and-undernourishment)
 
+---
+
+## Data Dictionary
+
+Field|Description
+:----|:----------
+`avg_dietary_adequacy`|Average dietary energy supply adequacy (percent) (3-year average)
+`pct_access_to_drinking_water`|Percentage of population using at least basic drinking water services (percent)
