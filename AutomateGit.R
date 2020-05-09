@@ -148,7 +148,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
             }
             commit(message = CommitComment)
             writeLines(paste0("Items have been Committed."))
-            push(credentials = if(exists("credentials")) {credentials} else {credentials <- get_Credentials()})
+            push(credentials = get_Credentials())
             writeLines(paste0("Items have been Pushed."))
         }
     }
@@ -197,7 +197,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     if (pull == TRUE) {
         pull <- tryCatch ( 
             expr = {
-                pull(credentials = if(exists("credentials")) {credentials} else {credentials <- get_Credentials()})
+                pull(credentials = get_Credentials())
             },
             error = function (err) {
                 message (paste0("Error when Pulling from GitHub. Try checking your credentials and try again.","\n","Message thrown: "))
@@ -223,7 +223,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
         if (num > 0) {
             tryCatch(
                 expr = {
-                    push(credentials = if(exists("credentials")) {credentials} else {credentials <- get_Credentials()})
+                    push(credentials = get_Credentials())
                 },
                 error = function(err) {
                     message (paste0("Error when Pushing to GitHub. Try checking your credentials and try again.","\n","Message thrown: "))
