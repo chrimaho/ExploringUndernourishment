@@ -1,7 +1,22 @@
+<!--
+#==============================================================================#
+#                                                                              #
+#    Title      : ReadMe file                                                  #
+#    Purpose    : Vital for any Git repo                                       #
+#    Notes      : .                                                            #
+#    Author     : chrimaho                                                     #
+#    Created    : 09/May/2020                                                  #
+#    References : .                                                            #
+#    Sources    : .                                                            #
+#    Edited     : 09/May/2020 - Initial creation                               #
+#                                                                              #
+#==============================================================================#
+-->
+
 # Exploring Undernourishment
 Exploring data from the United Nations to better understand undernourishment.
 
-Shiny application provided in the folder `ExploringUndernourishment`.
+Shiny application provided in the folder `ExploringUndernourishment\`.
 
 Data provided by [Food and Agriculture Organization of the United Nations](http://www.fao.org/home/en/) (FAO).
 
