@@ -197,7 +197,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
     if (pull == TRUE) {
         pull <- tryCatch ( 
             expr = {
-                pull(credentials = get_Credentials())
+                git2r::pull(credentials = get_Credentials())
             },
             error = function (err) {
                 message (paste0("Error when Pulling from GitHub. Try checking your credentials and try again.","\n","Message thrown: "))
