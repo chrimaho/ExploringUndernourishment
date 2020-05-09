@@ -138,7 +138,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
             for (i in 1:num) {
                 writeLines(paste0("    ", i, ": ",unlist(status()["untracked"])[i]))
             }
-            add(repo, unlist(status()["untracked"]))
+            git2r::add(repo, unlist(status()["untracked"]))
             writeLines(paste0("Items have been Staged."))
             CommitComment <- showPrompt(title="Git Commit Comment", message="Enter a comment for the commit message.")
             if (!nchar(trimws(CommitComment), keepNA = TRUE) %in% c("NA","0",NA,0)) {
@@ -163,7 +163,7 @@ GitSync <- function(repo=rprojroot::find_rstudio_root_file(), untracked=TRUE, st
             }
         }
         if (!is.null(unlist(status()["unstaged"]))) {
-            add(repo, unlist(status()["unstaged"]))
+            git2r::add(repo, unlist(status()["unstaged"]))
             num2 <- length(unlist(status()["unstaged"]))
             if (num2 == 0) {
                 writeLines(paste0("Items have been Staged."))

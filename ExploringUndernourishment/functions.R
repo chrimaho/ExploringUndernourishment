@@ -27,7 +27,7 @@ str_Left <- function(string, num_chars) {
     # Validations
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
-    assert_that(length(num_chars==1))
+    assert_that(length(num_chars)==1)
     
     # Do work
     return <- str_sub(string, end=num_chars)
@@ -49,7 +49,7 @@ str_NotLeft <- function(string, num_chars) {
     # Validations
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
-    assert_that(length(num_chars==1))
+    assert_that(length(num_chars)==1)
     
     # Do work
     return <- str_sub(string, start=num_chars-1)
@@ -97,7 +97,7 @@ str_Right <- function(string, num_chars) {
     # Validations
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
-    assert_that(length(num_chars==1))
+    assert_that(length(num_chars)==1)
     
     # Do work
     return <- str_sub(string, start=-num_chars)
@@ -119,7 +119,7 @@ str_NotRight <- function(string, num_chars) {
     # Validations:
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
-    assert_that(length(num_chars==1))
+    assert_that(length(num_chars)==1)
     
     # Do work
     return <- str_sub(string, end=-num_chars-1)
@@ -136,7 +136,7 @@ str_NotRight <- function(string, num_chars) {
 #------------------------------------------------------------------------------#
 
 
-get_PrintReturn <- function(DataFrame) {
+get_PrintDataReturn <- function(DataFrame) {
     #' @title Print Then Return
     #' @description Print the `data.frame`, then return it. Best to use this in the middle of a `dplyr` pipe.
     #' @note Probably the easyiest, yet most useful function I've ever written.
@@ -148,6 +148,24 @@ get_PrintReturn <- function(DataFrame) {
     
     # Do work ----
     print(DataFrame)
+    
+    # Return ----
+    return(DataFrame)
+}
+
+
+get_PrintStatReturn <- function(DataFrame) {
+    #' @title Print Stats Then Return
+    #' @description Print dataframe statistics, then return the original dataframe.
+    #' @note Best used within a dplyr pipe.
+    #' @param DataFrame data.frame. The dataframe you want checked.
+    #' @return The original dataframe.
+    
+    # Validations ----
+    assert_that(is.data.frame(DataFrame))
+    
+    # Do work ----
+    print(get_DataFrameStatistics(DataFrame))
     
     # Return ----
     return(DataFrame)
