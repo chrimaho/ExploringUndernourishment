@@ -15,9 +15,10 @@
 raw_DataPath <- find_rstudio_root_file("/ExploringUndernourishment/data/raw")
 for (file in list.files(raw_DataPath, pattern="*.csv")) {
     filename <- str_remove(file, ".csv")
-    assign(filename
-          ,read_csv(paste0(raw_DataPath, "/", file))
+    assign(paste0("raw_",filename)
+          ,read_csv(paste0(raw_DataPath, "/", file), col_types=cols())
           )
 }
 
 # Clean data ----
+#GitSync()

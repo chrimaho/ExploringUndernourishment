@@ -11,141 +11,209 @@
 #                                                                              #
 #------------------------------------------------------------------------------#
 
-# Define function to load packages ----
-LoadPackages <- function(packages, install=FALSE) {
-    
-    # Input:
-    # - 'packages' : An atomic string or a string vector of the list of packages to load.
-    # - 'install'  : A boolean value for whether or not to install the packages that are missing.
-    
-    # Output:
-    # - A logical result (TRUE of FALSE) for if they were successfully loaded.
-    
-    # Validations:
-    assert_that(is.character(packages))
-    assert_that(is.logical(install))
-    
-    # Remove all packages. Note: The suppression functions are to limit the amount of printed output.
-    for (package in .packages()) {
-        if (!package %in% c("parallel", "stats", "graphics", "grDevices", "datasets", "utils", "methods", "base")) { #THESE PACKAGES ARE PART OF BASE!! YOU CANNOT REMOVE THEM!! But you can remove everything else...
-            suppressPackageStartupMessages ( 
-                suppressMessages ( 
-                    suppressWarnings ( 
-                        detach ( paste0("package:", package) #The `detach()` function is like the reverse of `library()` or `require()`.
-                                 , unload = TRUE
-                                 , character.only = TRUE
-                        )
-                    )
-                )
-            )
-        }
-    }
-    
-    # Install all defined packages
-    if (install==TRUE) {
-        for (package in packages) {
-            if (!package %in% installed.packages()) { #The `installed.packages()` function  returns a vector of all the installed packages...
-                install.packages ( package
-                                   # , quiet = TRUE
-                                   # , verbose = FALSE
-                                   , dependencies = TRUE
-                )
-            }
-        }
-    }
-    
-    # Load all defined packages
-    for (package in packages) { #Need to loop through a second time because it does funny things if you combine the `install.packages()` and `library()` steps in to one.
-        if (!package %in% .packages()) { #`.packages()` returns a vector of all the loaded packages...
-            suppressPackageStartupMessages (
-                library ( package
-                          , character.only = TRUE
-                          , quietly = TRUE
-                          , warn.conflicts = FALSE
-                          , verbose = FALSE
-                )
-            )
-        }
-        if (!package %in% .packages()) {
-            stop(paste0("Package '", package, "' was not loaded properly."))
-        }
-    }
-    
-    # Return
-    return(TRUE)
-    
-}
 
+#------------------------------------------------------------------------------#
+# Programmatic Tools                                                        ####
+#------------------------------------------------------------------------------#
 
-# Three string manipulation functions (LEFT,RIGHT,MID) #
-str_left <- function(string, num_chars) {
+str_Left <- function(string, num_chars) {
+    #' @title Subset Left
+    #' @description Subset the `string` argument to only include the left-most `num_chars` number of characters.
+    #' Is similar to SQL and VB function LEFT().
+    #' @param string character. The text string you want to select from; must be an character type.
+    #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
+    #' @return A text string of length 'num_chars' that corresponds to the left most number of characters from the 'string' option.
     
-    # Input:
-    # - 'string' is the text string you want to select from; must be an character type.
-    # - 'num_chars' is the number of characters that you want to select; must be an atomic numeric type.
-    
-    # Output:
-    # - A text string of length 'num_chars' that corresponds to the left most number of characters from the 'string' option.
-    
-    # Validations:
+    # Validations
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
-    assert_that(is.atomic(num_chars))
+    assert_that(length(num_chars==1))
     
     # Do work
-    return <- substr(string, 1, num_chars)
+    return <- str_sub(string, end=num_chars)
     
     # Return
     return(return)
     
 }
 
-str_mid <- function(string, start_num, num_chars) {
+
+str_NotLeft <- function(string, num_chars) {
+    #' @title Subset Not Left
+    #' @description Subset the `string` argument excluding the left-most `num_chars` number of characters.
+    #' Is similar to SQL and VB function LEFT().
+    #' @param string character. The text string you want to select from; must be an character type.
+    #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
+    #' @return A text string of length 'num_chars' that corresponds to the left most number of characters from the 'string' option.
     
-    # Input:
-    # - 'string' is the text string you want to select from; must be an atopic string.
-    # - 'start_num' is the starting position of the mid-text string you want to select from; must be an atomic numeric type.
-    # - 'num_chars' is the number of characters that you want to select; must be an atomic numeric type.
-    
-    # Output:
-    # - A text string of length 'num_chars' that corresponds to the characters from the 'start_num' starting position from the 'string' option.
-    
-    # Validations:
+    # Validations
     assert_that(is.character(string))
-    assert_that(is.numeric(start_num))
-    assert_that(is.atomic(start_num))
     assert_that(is.numeric(num_chars))
-    assert_that(is.atomic(num_chars))
+    assert_that(length(num_chars==1))
     
-    # Do work ----
-    return <- substr(string, start_num, start_num + num_chars - 1)
+    # Do work
+    return <- str_sub(string, start=num_chars-1)
     
-    # Return ----
+    # Return
     return(return)
     
 }
 
-str_right <- function(string, num_chars) {
+
+str_Mid <- function(string, start_num, num_chars) {
+    #' @title Subset Left
+    #' @description Subset the mid-point in a string, starting from a specified position and extends to a specified length.
+    #' Is similar to SQL and VB function MID().
+    #' @param string character. The text string you want to select from; must be an atopic string.
+    #' @param start_num numeric. The starting position of the mid-text string you want to select from; must be an atomic numeric type.
+    #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
+    #' @return A text string of length 'num_chars' that corresponds to the characters from the 'start_num' starting position from the 'string' option.
     
-    # Input:
-    # - 'string' is the text string you want to select from; must be an character type.
-    # - 'num_chars' is the number of characters that you want to select; must be an atomic numeric type.
-    
-    # Output:
-    # - A text string of length 'num_chars' that corresponds to the right most number of characters from the 'string' option.
-    
-    # Validations ----
+    # Validations
     assert_that(is.character(string))
+    assert_that(is.character(string)) 
+    assert_that(is.numeric(start_num))
+    assert_that(length(start_num)==1) 
     assert_that(is.numeric(num_chars))
-    assert_that(is.atomic(num_chars))
+    assert_that(length(num_chars)==1) 
     
-    # Do work ----
-    return <- substr(string, nchar(string) - (num_chars - 1), nchar(string))
+    # Do work
+    return <- str_sub(string, start_num, start_num + num_chars - 1)
     
-    # Return ----
+    # Return
     return(return)
     
 }
+
+
+str_Right <- function(string, num_chars) {
+    #' @title Subset Right
+    #' @description Subset the `string` argument to only include the right-most `num_chars` number of characters.
+    #' Is similar to SQL and VB function RIGHT().
+    #' @param string character. The text string you want to select from; must be an character type.
+    #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
+    #' @return A text string of length 'num_chars' that corresponds to the right most number of characters from the 'string' option.
+    
+    # Validations
+    assert_that(is.character(string))
+    assert_that(is.numeric(num_chars))
+    assert_that(length(num_chars==1))
+    
+    # Do work
+    return <- str_sub(string, start=-num_chars)
+    
+    # Return
+    return(return)
+    
+}
+
+
+str_NotRight <- function(string, num_chars) {
+    #' @title Subset Not Right
+    #' @description Subset the `string` argument excluting the right-most `num_chars` number of characters.
+    #' Is similar to SQL and VB function RIGHT().
+    #' @param string character. The text string you want to select from; must be an character type.
+    #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
+    #' @return A text string of length 'num_chars' that corresponds to the right most number of characters from the 'string' option.
+    
+    # Validations:
+    assert_that(is.character(string))
+    assert_that(is.numeric(num_chars))
+    assert_that(length(num_chars==1))
+    
+    # Do work
+    return <- str_sub(string, end=-num_chars-1)
+    
+    # Return
+    return(return)
+    
+}
+
+
+
+#------------------------------------------------------------------------------#
+# Object Details                                                            ####
+#------------------------------------------------------------------------------#
+
+
+get_PrintReturn <- function(DataFrame) {
+    #' @title Print Then Return
+    #' @description Print the `data.frame`, then return it. Best to use this in the middle of a `dplyr` pipe.
+    #' @note Probably the easyiest, yet most useful function I've ever written.
+    #' @param DataFrame data.frame. The `data.frame` you want printed.
+    #' @return The original `data.frame`.
+    
+    # Validations ----
+    assert_that(is.data.frame(DataFrame))
+    
+    # Do work ----
+    print(DataFrame)
+    
+    # Return ----
+    return(DataFrame)
+}
+
+
+get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
+    #' @title Get `data.frame` Statistics.
+    #' @description Get some key statistics from a `data.frame`.
+    #' @note Requires the `e1071` and `gmodels` packages.
+    #' @param DataFrame data.frame. The dataframe which will have the details generated from.
+    #' @param p_val numeric. The P-Value from which to draw the confidence-interval from.
+    #' @param signif numeric. The level of significant digits that the data should be rounded to.
+    #' @return A `data.frame` containing the information about `DataFrame`.
+    
+    # Load packages:
+    require(e1071)
+    require(gmodels)
+        
+    # Assertions:
+    assert_that(is.data.frame(DataFrame))
+    assert_that("e1071" %in% .packages(), msg="'e1071' is not loaded.")
+    assert_that("gmodels" %in% .packages(), msg="'gmodels' is not loaded.")
+    assert_that(is.numeric(p_val))
+    assert_that(between(p_val, 0, 1), msg="'p_val' must be between '0' and '1'.")
+    assert_that(is.numeric(signif))
+    assert_that(signif %% 1 == 0, msg="'signif' must be an integer.")
+    
+    # Do work:
+    dat <- data.frame( length       = nrow(DataFrame)
+                       , class        = sapply(DataFrame, function(x) class(x))
+                       , type         = sapply(DataFrame, function(x) typeof(x))
+                       , mode         = sapply(DataFrame, function(x) mode(x))
+                       , num_distinct = sapply(DataFrame, function(x) sum(!is.na(unique(x))))
+                       , pct_distinct = sapply(DataFrame, function(x) sum(!is.na(unique(x))) / nrow(DataFrame))
+                       , num_na       = sapply(DataFrame, function(x) sum(is.na(x)))
+                       , pct_na       = sapply(DataFrame, function(x) sum(is.na(x))/nrow(DataFrame))
+                       , num_null     = sapply(DataFrame, function(x) sum(is.null(x)))
+                       , pct_null     = sapply(DataFrame, function(x) sum(is.null(x))/nrow(DataFrame))
+                       , mean         = sapply(DataFrame, function(x) mean(x, na.rm=T))
+                       , std.dev      = sapply(DataFrame, function(x) sd(x, na.rm=T))
+                       , ci_mean      = sapply(DataFrame, function(x) if(is.character(x) | is.logical(x)) NA else x %>% data.frame %>% na.omit %>% pull %>% ci(p_val) %>% .[c("CI lower", "CI upper")] %>% round(signif) %>% str_c(collapse=", ") %>% paste0("[",.,"]"))
+                       , median       = sapply(DataFrame, function(x) median(x, na.rm=T)) %>% as.numeric()
+                       , max          = sapply(DataFrame, function(x) max(x, na.rm=T) %>% as.numeric())
+                       , min          = sapply(DataFrame, function(x) min(x, na.rm=T) %>% as.numeric())
+                       , sum          = sapply(DataFrame, function(x) if(is.character(x)) NA else sum(x, na.rm=T))
+                       , num_range    = sapply(DataFrame, function(x) max(x, na.rm=T) %>% as.numeric() - min(x, na.rm=T) %>% as.numeric())
+                       , val_range    = sapply(DataFrame, function(x) range(x, na.rm=T) %>% str_c(collapse=", ") %>% paste0("[",.,"]"))
+                       , skewness     = sapply(DataFrame, function(x) if(is.character(x)) NA else skewness(x, na.rm=T))
+                       , kurtosis     = sapply(DataFrame, function(x) if(is.character(x)) NA else kurtosis(x, na.rm=T))
+                       , norm_test    = sapply(DataFrame, function(x) if(length(x)>=5000 || is.character(x) || is.logical(x)) NA else x %>% data.frame %>% na.omit %>% pull %>% shapiro.test %>% extract2("statistic"))
+    ) %>% 
+        rownames_to_column("variable") %>% 
+        mutate_at(c("pct_distinct","pct_na","mean","std.dev","skewness","kurtosis","norm_test"), round, signif)
+    
+    # Return:
+    return (dat)
+    
+}
+
+
+
+#------------------------------------------------------------------------------#
+# Data Visualisation Tools                                                  ####
+#------------------------------------------------------------------------------#
+
 
 # Review Distribution function ----
 RevDist <- function(dat, revwcols=NA, exclcols=NA, label=NA, bins=NA, groupby=NA){
