@@ -102,7 +102,11 @@ if (!exists("FaoStat_long")) {
         
         #extract mapping
         (function(x){
-            FaoStat_VariableMapping <<- x %>% select(variable,item) %>% distinct()
+            FaoStat_VariableMapping <<- x %>% 
+                select(variable,item) %>% 
+                distinct() %>% 
+                rbind(c("country", "The country being recorded")) %>% 
+                rbind(c("year", "The year of record"))
             return(x)
         }) %>% 
         
@@ -128,7 +132,14 @@ if (!exists("FaoStat_wide")) {
         #order data
         arrange(country,year)
 
-    }
+}
+
+
+# FaoStat VariableMapping ----
+FaoStat_VariableMapping <- FaoStat_wide %>% 
+    names %>% 
+    data.frame("variable"=., stringsAsFactors=FALSE) %>% 
+    left_join(y=FaoStat_VariableMapping, by=c("variable"="variable"))
 
 
 #------------------------------------------------------------------------------#
