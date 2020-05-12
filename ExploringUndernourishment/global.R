@@ -22,7 +22,9 @@ library(ggridges)
 library(rprojroot)
 library(assertthat)
 library(shiny)
+library(shinyWidgets)
 library(shinydashboard)
+library(shinydashboardPlus)
 
 # Set defaults ----
 theme_set(theme_bw())
