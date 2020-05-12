@@ -21,6 +21,8 @@ library(magrittr)
 library(ggridges)
 library(rprojroot)
 library(assertthat)
+library(shiny)
+library(shinydashboard)
 
 # Set defaults ----
 theme_set(theme_bw())
