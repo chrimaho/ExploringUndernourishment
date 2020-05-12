@@ -13,5 +13,13 @@
 
 # Define the Server ----
 server <- function(input, output, session) {
-  
+    output$dat_DataDictionary <- renderTable(
+        striped=TRUE,
+        bordered=TRUE,
+        hover=TRUE,
+        spacing="xs",
+        expr={
+            FaoStat_VariableMapping
+            }
+        )
 }
