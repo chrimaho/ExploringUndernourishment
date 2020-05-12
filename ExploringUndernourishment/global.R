@@ -15,11 +15,11 @@
 source("functions.R", local=TRUE)
 
 # Import libraries ----
-library(googlesheets4)
 library(tidyverse)
 library(shiny)
 library(magrittr)
 library(ggridges)
+library(rprojroot)
 library(assertthat)
 
 # Set defaults ----
