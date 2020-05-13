@@ -195,28 +195,45 @@ get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
     assert_that(signif %% 1 == 0, msg="'signif' must be an integer.")
     
     # Do work:
-    dat <- data.frame( length       = nrow(DataFrame)
-                       , class        = sapply(DataFrame, function(x) class(x))
-                       , type         = sapply(DataFrame, function(x) typeof(x))
-                       , mode         = sapply(DataFrame, function(x) mode(x))
-                       , num_distinct = sapply(DataFrame, function(x) sum(!is.na(unique(x))))
-                       , pct_distinct = sapply(DataFrame, function(x) sum(!is.na(unique(x))) / nrow(DataFrame))
-                       , num_na       = sapply(DataFrame, function(x) sum(is.na(x)))
-                       , pct_na       = sapply(DataFrame, function(x) sum(is.na(x))/nrow(DataFrame))
-                       , num_null     = sapply(DataFrame, function(x) sum(is.null(x)))
-                       , pct_null     = sapply(DataFrame, function(x) sum(is.null(x))/nrow(DataFrame))
-                       , mean         = sapply(DataFrame, function(x) mean(x, na.rm=T))
-                       , std.dev      = sapply(DataFrame, function(x) sd(x, na.rm=T))
-                       , ci_mean      = sapply(DataFrame, function(x) if(is.character(x) | is.logical(x)) NA else x %>% data.frame %>% na.omit %>% pull %>% ci(p_val) %>% .[c("CI lower", "CI upper")] %>% round(signif) %>% str_c(collapse=", ") %>% paste0("[",.,"]"))
-                       , median       = sapply(DataFrame, function(x) median(x, na.rm=T)) %>% as.numeric()
-                       , max          = sapply(DataFrame, function(x) max(x, na.rm=T) %>% as.numeric())
-                       , min          = sapply(DataFrame, function(x) min(x, na.rm=T) %>% as.numeric())
-                       , sum          = sapply(DataFrame, function(x) if(is.character(x)) NA else sum(x, na.rm=T))
-                       , num_range    = sapply(DataFrame, function(x) max(x, na.rm=T) %>% as.numeric() - min(x, na.rm=T) %>% as.numeric())
-                       , val_range    = sapply(DataFrame, function(x) range(x, na.rm=T) %>% str_c(collapse=", ") %>% paste0("[",.,"]"))
-                       , skewness     = sapply(DataFrame, function(x) if(is.character(x)) NA else skewness(x, na.rm=T))
-                       , kurtosis     = sapply(DataFrame, function(x) if(is.character(x)) NA else kurtosis(x, na.rm=T))
-                       , norm_test    = sapply(DataFrame, function(x) if(length(x)>=5000 || is.character(x) || is.logical(x)) NA else x %>% data.frame %>% na.omit %>% pull %>% shapiro.test %>% extract2("statistic"))
+    dat <- data.frame(length       = nrow(DataFrame)
+                      ,class        = sapply(DataFrame, function(x) class(x))
+                      ,type         = sapply(DataFrame, function(x) typeof(x))
+                      ,mode         = sapply(DataFrame, function(x) mode(x))
+                      ,num_distinct = sapply(DataFrame, function(x) sum(!is.na(unique(x))))
+                      ,pct_distinct = sapply(DataFrame, function(x) sum(!is.na(unique(x))) / nrow(DataFrame))
+                      ,num_na       = sapply(DataFrame, function(x) sum(is.na(x)))
+                      ,pct_na       = sapply(DataFrame, function(x) sum(is.na(x))/nrow(DataFrame))
+                      ,num_null     = sapply(DataFrame, function(x) sum(is.null(x)))
+                      ,pct_null     = sapply(DataFrame, function(x) sum(is.null(x))/nrow(DataFrame))
+                      ,mean         = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {mean(x, na.rm=T)}})
+                      ,std.dev      = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {sd(x, na.rm=T)}})
+                      ,ci_mean      = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {
+                         x %>%
+                             data.frame %>%
+                             na.omit %>%
+                             pull %>%
+                             ci(p_val) %>%
+                             .[c("CI lower", "CI upper")] %>%
+                             round(signif) %>%
+                             str_c(collapse=", ") %>%
+                             paste0("[",.,"]")
+                         }})
+                      ,median       = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {median(x, na.rm=T) %>% as.numeric()}})
+                      ,max          = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {max(x, na.rm=T) %>% as.numeric()}})
+                      ,min          = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {min(x, na.rm=T) %>% as.numeric()}})
+                      ,sum          = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {sum(x, na.rm=T)}})
+                      ,num_range    = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {max(x, na.rm=T) %>% as.numeric() - min(x, na.rm=T) %>% as.numeric()}})
+                      ,val_range    = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {range(x, na.rm=T) %>% str_c(collapse=", ") %>% paste0("[",.,"]")}})
+                      ,skewness     = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {skewness(x, na.rm=T)}})
+                      ,kurtosis     = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {kurtosis(x, na.rm=T)}})
+                      ,norm_test    = sapply(DataFrame, function(x) {if (is.character(x) | is.logical(x) | is.factor(x)) {NA} else {
+                         x %>%
+                             data.frame %>%
+                             na.omit %>%
+                             pull %>%
+                             shapiro.test %>%
+                             extract2("statistic")
+                         }})
     ) %>% 
         rownames_to_column("variable") %>% 
         mutate_at(c("pct_distinct","pct_na","mean","std.dev","skewness","kurtosis","norm_test"), round, signif)
