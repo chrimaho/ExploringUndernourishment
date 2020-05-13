@@ -71,9 +71,15 @@ sidebar <- dashboardSidebar(
             #     "Subset",
             #     tabName="stats_total"
             # )
-        )
+        ),
         
-        
+        # Add Socials
+        tags$hr(),
+        tags$a("App By Chris Mahoney"), br(),
+        tags$ol(tags$a(icon("linkedin"), "LinkedIn", href="https://www.linkedin.com/in/chrimaho/")),
+        tags$ol(tags$a(icon("github"), "GitHub", href="https://github.com/chrimaho/ExploringUndernourishment/")),
+        tags$ol(tags$a(icon("medium"), "Medium", href="https://medium.com/@chrimaho")),
+        tags$ol(tags$a(icon("stack-overflow"), "StackOverflow", href="https://stackoverflow.com/users/12036005/chrimaho"))
         
     )
 )
