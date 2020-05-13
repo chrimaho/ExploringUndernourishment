@@ -138,6 +138,9 @@ if (!exists("FaoStat_wide")) {
         #make wider
         pivot_wider(names_from="variable", values_from="value") %>% 
         
+        #make prevalence_of_undernourishment at the start
+        select(country, year, prevalence_of_undernourishment, everything()) %>% 
+        
         #order data
         arrange(country,year)
 
