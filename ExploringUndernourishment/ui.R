@@ -17,8 +17,7 @@
 #------------------------------------------------------------------------------#
 
 header <- dashboardHeaderPlus(
-    title=tags$span(icon("seedling"), "Explorer")
-    # ,fixed=TRUE
+    title=tags$span(icon("seedling"), "Data Explorer")
     ,left_menu=tagList(
         dropdownBlock(
             id = "mydropdown",
@@ -51,14 +50,31 @@ header <- dashboardHeaderPlus(
 
 sidebar <- dashboardSidebar(
     sidebarMenu(
-        menuItem("Information", 
-                 tabName="info", 
-                 icon=icon("info-circle")),
-        menuItem("Widgets", 
-                 icon=icon("th"), 
-                 tabName="widgets",
-                 badgeLabel="new", 
-                 badgeColor="green")
+        menuItem(
+            "Information", 
+            tabName="info",
+            icon=icon("info-circle"),
+            badgeLabel="info",
+            badgeColor="light-blue"
+        ),
+        menuItem(
+            "Overall Statistics",
+            icon=icon("chart-pie"), 
+            tabName="stats",
+            badgeLabel="stats",
+            badgeColor="green"
+            # menuSubItem(
+            #     "Total",
+            #     tabName="stats_total"
+            # ),
+            # menuSubItem(
+            #     "Subset",
+            #     tabName="stats_total"
+            # )
+        )
+        
+        
+        
     )
 )
 
@@ -67,6 +83,7 @@ sidebar <- dashboardSidebar(
 # Set Body                                                                  ####
 #------------------------------------------------------------------------------#
 
+# Define Info Page ----
 pag_InfoPage <- tabItem(
     tabName="info",
     h1("Exploring Undernourishment"),
@@ -87,7 +104,7 @@ pag_InfoPage <- tabItem(
     ),
     fluidRow(
         box(
-            title="Disclaimer:",
+            title="Disclaimer",
             width=12,
             "The data sources are provided as Open Source, and explored as Open Source.", br(),
             "The Author has no affiliation with the UN or with FAO, other than personal interest."
@@ -97,18 +114,49 @@ pag_InfoPage <- tabItem(
         box(
             title="Data Dictionary",
             width=12,
-            column(12, align="left", tableOutput(outputId="dat_DataDictionary"))
+            "A data dictionary is provided to ensure there is a description provided for each variable in the data table.", br(), br(),
+            column(12, align="left", tableOutput(outputId="dat_info_DataDictionary"))
         )
     )
 )
 
 
+# Define Data Stats Page ----
+pag_StatPage <- tabItem(
+    tabName="stats",
+    h1("Overall Statistics"),
+    fluidRow(
+        box(
+            title="Explanation",
+            width=4,
+            "Explanation...!"
+        ),
+        box(
+            title="Graph",
+            width=8,
+            plotOutput(outputId="plt_stat_PrevUndrOverall")
+        )
+    ),
+    fluidRow(
+        box(
+            title="Explanation",
+            width=4,
+            "Explanation...?"
+        ),
+        box(
+            title="Graph",
+            width=8,
+            plotOutput(outputId="plt_stat_MissingData")
+        )
+    )
+)
+
+
+# Pull together ----
 body <- dashboardBody(
     tabItems(
         pag_InfoPage,
-        tabItem(tabName="widgets",
-            h2("Widgets tab content")
-        )
+        pag_StatPage
     )
 )
 
