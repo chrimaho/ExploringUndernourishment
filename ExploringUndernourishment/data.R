@@ -68,7 +68,7 @@ if (!exists("FaoStat_long")) {
             ,item=="Average protein supply (g/cap/day) (3-year average)" ~ "avg_protein_supply"
             ,item=="Average supply of protein of animal origin (g/cap/day) (3-year average)" ~ "avg_supply_of_protein_of_animal_origin"
             ,item=="Gross domestic product per capita, PPP, dissemination (constant 2011 international $)" ~ "gross_domestic_product_per_capita_ppp"
-            ,item=="Prevalence of undernourishment (percent) (3-year average)" ~ "prv_prevalence_of_undernourishment"
+            ,item=="Prevalence of undernourishment (percent) (3-year average)" ~ "prevalence_of_undernourishment"
             ,item=="Number of people undernourished (million) (3-year average)" ~ "num_people_undernourished"
             ,item=="Prevalence of severe food insecurity in the total population (percent) (3-year average)" ~ "prv_severe_food_insecurity"
             ,item=="Prevalence of moderate or severe food insecurity in the total population (percent) (3-year average)" ~ "prv_moderate_food_insecurity"
@@ -98,15 +98,24 @@ if (!exists("FaoStat_long")) {
         mutate(value=ifelse(unit=="%", value/100, value)
                ,value=ifelse(unit=="millions", value*1e+06, value)
                ,year=str_Right(year,4)
+               ,country=as.factor(country)
+               ,year=as.factor(year)
                ) %>% 
         
         #extract mapping
         (function(x){
             FaoStat_VariableMapping <<- x %>% 
                 select(variable,item) %>% 
+                rename("description"="item") %>% 
                 distinct() %>% 
                 rbind(c("country", "The country being recorded")) %>% 
-                rbind(c("year", "The year of record"))
+                rbind(c("year", "The year of record")) %>% 
+                mutate(type=case_when(
+                    variable=="country" ~ "identifier"
+                    ,variable=="year" ~ "identifier"
+                    ,variable=="prevalence_of_undernourishment" ~ "target"
+                    ,TRUE ~ "predictor"
+                ))
             return(x)
         }) %>% 
         
