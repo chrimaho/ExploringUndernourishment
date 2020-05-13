@@ -99,9 +99,11 @@ pag_InfoPage <- tabItem(
             title="Data Sources",
             width=12,
             "Source data provided by:",
-            tags$li(tags$a("Food and Agriculture Organization of the United Nations", href="http://www.fao.org/home/en/"), " (FAO)."), br(),
+            tags$li(tags$a("Food and Agriculture Organization of the United Nations", href="http://www.fao.org/home/en/"), " (FAO)."),
+            tags$br(),
             "Raw data obtained from:", 
-            tags$li(tags$a("FAO: Suite of Food Security Indicators", href="http://www.fao.org/faostat/en/#data/FS")), br(),
+            tags$li(tags$a("FAO: Suite of Food Security Indicators", href="http://www.fao.org/faostat/en/#data/FS")),
+            tags$br(),
             "Additional information about the data sources can be found at:",
             tags$li(tags$a("FAO: Sustainable Development Goals: Indicator 2.1.1 - Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/")),
             tags$li(tags$a("FAO: Food Security Indicators", href="http://www.fao.org/economic/ess/ess-fs/ess-fadata/en/#.XrXa5Wgzack")),
@@ -112,16 +114,19 @@ pag_InfoPage <- tabItem(
         box(
             title="Disclaimer",
             width=12,
-            "The data sources are provided as Open Source, and explored as Open Source.", br(),
-            "The Author has no affiliation with the UN or with FAO, other than personal interest."
+            tags$div("The data sources are provided as Open Source, and explored as Open Source."),
+            br(),
+            tags$div("The Author has no affiliation with the UN or with FAO, other than personal interest.")
         )
     ),
     fluidRow(
         box(
             title="Data Dictionary",
             width=12,
-            "A data dictionary is provided to ensure there is a description provided for each variable in the data table.", br(), br(),
-            column(12, align="left", tableOutput(outputId="dat_info_DataDictionary"))
+            tags$div("A data dictionary is provided to ensure there is a description provided for each variable in the data table."),
+            tags$br(),
+            tags$br(),
+            DT::dataTableOutput(outputId="tbl_info_DataDictionary")
         )
     )
 )
@@ -153,6 +158,23 @@ pag_StatPage <- tabItem(
             title="Graph",
             width=8,
             plotOutput(outputId="plt_stat_MissingData")
+        )
+    ),
+    fluidRow(
+        box(
+            title="Data Frame Statistics",
+            width=12,
+            tags$div("The following output is a table of statistics for each field of the FAO data."),
+            tags$br(),
+            tags$div("Note the following:"),
+            tags$li("The search bar has been included for ease of searching."),
+            tags$li("There are more statistical features to the right!"),
+            tags$li("The 'country' and 'year' features are both string type, and therefore do not have any statistical values."),
+            tags$br(),
+            tags$div("From this, the following information can be learnt:"),
+            tags$li("First"),
+            tags$li("Second"),
+            DT::dataTableOutput(outputId="tbl_stat_DataFrameStats")
         )
     )
 )
