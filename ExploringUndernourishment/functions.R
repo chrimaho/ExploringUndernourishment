@@ -250,6 +250,167 @@ get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
 #------------------------------------------------------------------------------#
 
 
+plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
+    #' @title Add function title
+    #' @description Add function description.
+    #' @note Add a note for the developer.
+    #' @param Feature data.frame or vector. The Feature to be visualised.
+    #' @param Name character. The Name of the Feature, only used if `Feature` is a vector.
+    #' @param ColourPallette vector. A vector of colours to be used.
+    #' @param Bins numeric. Number of bins to be used in the histogram.
+    #' @return What is being returned?
+    
+    # Validations ----
+    assert_that(is.data.frame(Feature) | is.vector(Feature))
+    assert_that(is.string(Name) | is.na(Name))
+    assert_that(is.number(Bins) | is.na(Bins))
+    if (is.data.frame(Feature)) {
+        assert_that(ncol(Feature)==1, msg="'Feature' must be a single-column data frame.")
+        Name <- names(Feature)
+    }
+    if (is.vector(Feature)) {
+        assert_that(!is.na(Name), msg="If 'Feature' is a vector, 'Name' must contain the name of the Feature.")
+        Feature <- data.frame(Name = Feature)
+    }
+    
+    # Check ----
+    if (is.na(Bins)) {
+        Bins <- Feature %>% extract(!is.na(.)) %>% unique %>% length
+        if (Bins>30) {Bins <- 30}
+    }
+    
+    # Clean ----
+    Feature <- Feature %>% filter(!is.na(.))
+    
+    # Set Stats ----
+    binwid <- (max(Feature) - min(Feature)) / (Bins+1)
+    avg <- Feature %>% extract2(1) %>% mean
+    std <- Feature %>% extract2(1) %>% sd
+    num <- Feature %>% extract2(1) %>% length
+    
+    # Set initial plot ----
+    plt <- Feature %>%
+        ggplot(aes_string(Name)) +
+        geom_histogram(aes(y=..count..), fill="cornflowerblue", color="cornflowerblue", alpha=0.4, bins=Bins) +
+        stat_function(fun = function(x) dnorm(x, mean=avg, sd=std) * num * binwid, color="cornflowerblue", size=1.3) +
+        labs(title=paste0("Histogram of", "\n", "'", Name, "'")
+            ,subtitle=paste0("num=", round(num)
+                            ,"   "
+                            ,"avg=", round(avg,3)
+                            ,"   "
+                            ,"std=", round(std,3)
+                            ,"   "
+                            ,"normtest=", Feature %>% extract2(1) %>% shapiro.test() %>% extract2("statistic") %>% round(3)
+                            )
+        )
+    
+    # Resize bins ----
+    if(Bins<30){
+        plt <- plt + scale_x_continuous(breaks=round(seq(min(dat),max(dat),by=1)))
+    }
+    
+    # Set theme ----
+    plt <- plt +
+        theme_bw() +
+        theme(plot.title = element_text(hjust=0.5)) +
+        theme(plot.subtitle = element_text(hjust=0.5)) +
+        theme(panel.grid.major.x = element_blank())
+    
+    # Return ----
+    return(plt)
+    
+}
+
+
+plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=names(DataFrame)[2], GroupBy=NA, Smooth=FALSE) {
+    #' @title Add function title
+    #' @description Add function description.
+    #' @note Add a note for the developer.
+    #' @param DataFrame data.frame. The Table
+    #' @param Target string. Name
+    #' @param Feature string. Name
+    #' @return What is being returned?
+    
+    # Validations ----
+    assert_that(is.data.frame(DataFrame))
+    assert_that(is.string(Target))
+    assert_that(is.string(Feature))
+    assert_that(c(Target, Feature) %all_in% names(DataFrame), msg=paste0("The values for 'Target' and 'Feature (which are ", Target, "' and '", Feature, "', respectively), must be valid column names in 'DataFrame'."))
+    if (!is.na(GroupBy)) {
+        assert_that(c(GroupBy) %in% names(DataFrame), msg=paste0("The value for 'GroupBy' (which is '", GroupBy, "') must be a valid column name in 'DataFrame'."))
+        assert_that(isFALSE(Smooth), msg="If you define a 'GroupBy' variable, it is illogical to include a smooth line.")
+    }
+    
+    # Set Up ----
+    plt <- DataFrame %>% 
+        ggplot(aes_string(Feature, Target))
+    
+    # Add Grouping ----
+    if (is.na(GroupBy)) {
+        plt <- plt + 
+            geom_point()
+    } else {
+        plt <- plt + 
+            geom_point(aes_string(colour=GroupBy)) +
+            theme(legend.position="none")
+    }
+    
+    # Add Smooth ----
+    if (isTRUE(Smooth)) {
+        plt <- plt +
+            geom_smooth(colour="blue", fill="cornflowerblue")
+    }
+    
+    # Add Labels ----
+    plt <- plt +
+        labs(
+            title=paste0("Dot Plot"),
+            subtitle=paste0("'", Target, "' by '", Feature, "'")
+        )
+    if (!is.na(GroupBy)) {
+        plt <- plt +
+            labs(
+                caption=paste0("With a colour grouping by '", GroupBy, "'")
+            )
+    }
+    
+    # Return ----
+    return(plt)
+}
+
+
+plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=NA) {
+    #' @title Add function title
+    #' @description Add function description.
+    #' @note Add a note for the developer.
+    #' @param DataFrame Input1Type. What is Input1?
+    #' @param Target Input2Type. What is input2?
+    #' @return What is being returned?
+    
+    # Validations ----
+    assert_that(is.data.frame(DataFrame))
+    assert_that(is.string(Target) | is.na(Target))
+    assert_that(is.string(Feature) | is.na(Feature))
+    assert_that(is.string(GroupBy) | is.na(GroupBy))
+    assert_that(c(Target, Feature) %all_in% names(DataFrame), msg=paste0("The values for 'Target' and 'Feature (which are ", Target, "' and '", Feature, "', respectively), must be valid column names in 'DataFrame'."))
+    if (!is.na(GroupBy)) {
+        assert_that(c(GroupBy) %in% names(DataFrame), msg=paste0("The value for 'GroupBy' (which is '", GroupBy, "') must be a valid column name in 'DataFrame'."))
+    }
+    
+    # Create Distribution ----
+    hist <- plt_hist_SingleFeature(DataFrame[Feature])
+    
+    # Create comparison ----
+    comb <- plt_dot_DualFeature(DataFrame, Target, Feature, GroupBy)
+    
+    # Combine ----
+    plot <- grid.arrange(hist, comb, nrow=1)
+    
+    # Return ----
+    return(invisible(NULL))
+}
+
+
 # Review Distribution function ----
 RevDist <- function(dat, revwcols=NA, exclcols=NA, label=NA, bins=NA, groupby=NA){
     
@@ -262,8 +423,7 @@ RevDist <- function(dat, revwcols=NA, exclcols=NA, label=NA, bins=NA, groupby=NA
     # Check packages ----
     for (package in c("ragtop","dplyr","ggplot2","RColorBrewer")) {
         suppressPackageStartupMessages(
-            require(package
-                    ,character.only=TRUE)
+            require(package, character.only=TRUE)
         )
     }
     
@@ -296,12 +456,12 @@ RevDist <- function(dat, revwcols=NA, exclcols=NA, label=NA, bins=NA, groupby=NA
         # Set Colour Palette ----
         ColourPalette <- c("#008000","#0000ff","#ff0000","#00ffff","#ff00ff","#ffff00")
         
-        # If there is only one variable in the groupvar, then do the following #
+        # If there is only one variable in the groupvar, then do the following ---
         if (groupvar==1) {
             
             # Account for blank bins ----
             if(is.blank(bins)){
-                bins <- length(unique(get(i)[!is.na(get(i))]))
+                bins <- length(unique(dat[!is.na(dat[i]), i]))
                 if(bins>30){bins<-30}
             }
             

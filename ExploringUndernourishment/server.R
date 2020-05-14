@@ -42,34 +42,38 @@ server <- function(input, output, session) {
     #------------------------------------------------------------------------------#
     
     # comment ----
-    output$plt_stat_PrevUndrOverall <- renderPlot(
+    output$plt_stat_PrevUndrOverall <- renderPlotly(
         expr={
-            FaoStat_wide %>% 
-                ggplot() +
-                geom_histogram(aes(prevalence_of_undernourishment), bins=30, fill="cornflowerblue", colour="black") +
-                labs(title="Prevalence of Undernourishment",
-                     subtitle="Histogram Plot",
-                     x="Prevalence of Undernourishment",
-                     y="Count",
-                     caption="A neat, right-tailed histogram, with values between 0 and 0.7."
-                )
+            ggplotly(
+                FaoStat_wide %>% 
+                    ggplot() +
+                    geom_histogram(aes(prevalence_of_undernourishment), bins=30, fill="cornflowerblue", colour="black") +
+                    labs(title="Prevalence of Undernourishment",
+                         subtitle="Histogram Plot",
+                         x="Prevalence of Undernourishment",
+                         y="Count",
+                         caption="A neat, right-tailed histogram, with values between 0 and 0.7."
+                    )
+            )
         }
     )
     
     # comment ----
-    output$plt_stat_MissingData <- renderPlot(
+    output$plt_stat_MissingData <- renderPlotly(
         expr={
-            FaoStat_wide %>% 
-                gg_miss_var(show_pct=TRUE) +
-                theme_bw() +
-                theme_update(plot.title = element_text(hjust=0.5)
-                             ,plot.subtitle = element_text(hjust=0.5)
-                )+
-                scale_y_continuous(limits=c(0,100)) +
-                labs(title="Percentage of Missing Values"
-                     ,subtitle="Ordered by percentage missing"
-                     ,y="Percentage Missing"
-                )
+            ggplotly(
+                FaoStat_wide %>% 
+                    gg_miss_var(show_pct=TRUE) +
+                    theme_bw() +
+                    theme_update(plot.title = element_text(hjust=0.5)
+                                 ,plot.subtitle = element_text(hjust=0.5)
+                    )+
+                    scale_y_continuous(limits=c(0,100)) +
+                    labs(title="Percentage of Missing Values"
+                         ,subtitle="Ordered by percentage missing"
+                         ,y="Percentage Missing"
+                    )
+            )
         }
     )
     

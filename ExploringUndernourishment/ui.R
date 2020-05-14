@@ -17,7 +17,10 @@
 #------------------------------------------------------------------------------#
 
 header <- dashboardHeaderPlus(
-    title=tags$span(icon("seedling"), "Data Explorer")
+    title=tagList(
+        span(class="logo-lg", icon("hand-holding-heart"), "Data Explorer"),
+        icon("hand-holding-heart")
+    )
     ,left_menu=tagList(
         dropdownBlock(
             id = "mydropdown",
@@ -145,7 +148,7 @@ pag_StatPage <- tabItem(
         box(
             title="Graph",
             width=8,
-            plotOutput(outputId="plt_stat_PrevUndrOverall")
+            plotlyOutput(outputId="plt_stat_PrevUndrOverall")
         )
     ),
     fluidRow(
@@ -157,7 +160,7 @@ pag_StatPage <- tabItem(
         box(
             title="Graph",
             width=8,
-            plotOutput(outputId="plt_stat_MissingData")
+            plotlyOutput(outputId="plt_stat_MissingData")
         )
     ),
     fluidRow(
