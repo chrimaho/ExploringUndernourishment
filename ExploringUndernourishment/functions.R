@@ -330,6 +330,47 @@ plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
 }
 
 
+plt_grob_MultipleHistograms <- function(DataFrame, ExcludeFeatures=NA) {
+    #' @title Add function title
+    #' @description Add function description.
+    #' @note Add a note for the developer.
+    #' @param Input1Name Input1Type. What is Input1?
+    #' @param Input2Name Input2Type. What is input2?
+    #' @return What is being returned?
+    #' @author chrimaho
+    
+    # Validations ----
+    assert_that(is.data.frame(DataFrame))
+    if (!is.na(ExcludeFeatures)) {
+        assert_that(is.character(ExcludeFeatures))
+    }
+    
+    # Set Up ----
+    iter <- 0
+    objs <- c()
+    
+    # Do work ----
+    for (feature in DataFrame %>% names){
+        if (feature %in% ExcludeFeatures) next
+        iter <- iter + 1
+        name <- paste0("plot", iter)
+        plot <- DataFrame[feature] %>% plt_hist_SingleFeature()
+        # print(plot)
+        assign(name, plot)
+        # objs[[iter]] <- name
+        objs <- c(objs, name)
+    }
+    
+    # Create Grob ----
+    objs <- list(objs)
+    grob <- arrangeGrob(grobs=objs, ncol=2)
+    
+    # Return ----
+    return(objs)
+    
+}
+
+
 plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=names(DataFrame)[2], GroupBy=NA, Smooth=FALSE) {
     #' @title Add function title
     #' @description Add function description.
@@ -419,7 +460,6 @@ plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=
     # Return ----
     return(plot)
 }
-
 
 
 
