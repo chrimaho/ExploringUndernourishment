@@ -23,6 +23,7 @@ str_Left <- function(string, num_chars) {
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
     #' @return A text string of length 'num_chars' that corresponds to the left most number of characters from the 'string' option.
+    #' @author chrimaho
     
     # Validations
     assert_that(is.character(string))
@@ -45,6 +46,7 @@ str_NotLeft <- function(string, num_chars) {
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
     #' @return A text string of length 'num_chars' that corresponds to the left most number of characters from the 'string' option.
+    #' @author chrimaho
     
     # Validations
     assert_that(is.character(string))
@@ -68,6 +70,7 @@ str_Mid <- function(string, start_num, num_chars) {
     #' @param start_num numeric. The starting position of the mid-text string you want to select from; must be an atomic numeric type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
     #' @return A text string of length 'num_chars' that corresponds to the characters from the 'start_num' starting position from the 'string' option.
+    #' @author chrimaho
     
     # Validations
     assert_that(is.character(string))
@@ -93,6 +96,7 @@ str_Right <- function(string, num_chars) {
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
     #' @return A text string of length 'num_chars' that corresponds to the right most number of characters from the 'string' option.
+    #' @author chrimaho
     
     # Validations
     assert_that(is.character(string))
@@ -115,6 +119,7 @@ str_NotRight <- function(string, num_chars) {
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
     #' @return A text string of length 'num_chars' that corresponds to the right most number of characters from the 'string' option.
+    #' @author chrimaho
     
     # Validations:
     assert_that(is.character(string))
@@ -142,6 +147,7 @@ get_PrintDataReturn <- function(DataFrame) {
     #' @note Probably the easyiest, yet most useful function I've ever written.
     #' @param DataFrame data.frame. The `data.frame` you want printed.
     #' @return The original `data.frame`.
+    #' @author chrimaho
     
     # Validations ----
     assert_that(is.data.frame(DataFrame))
@@ -180,6 +186,7 @@ get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
     #' @param p_val numeric. The P-Value from which to draw the confidence-interval from.
     #' @param signif numeric. The level of significant digits that the data should be rounded to.
     #' @return A `data.frame` containing the information about `DataFrame`.
+    #' @author chrimaho
     
     # Load packages:
     require(e1071)
@@ -259,6 +266,7 @@ plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
     #' @param ColourPallette vector. A vector of colours to be used.
     #' @param Bins numeric. Number of bins to be used in the histogram.
     #' @return What is being returned?
+    #' @author chrimaho
     
     # Validations ----
     assert_that(is.data.frame(Feature) | is.vector(Feature))
@@ -330,6 +338,7 @@ plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=n
     #' @param Target string. Name
     #' @param Feature string. Name
     #' @return What is being returned?
+    #' @author chrimaho
     
     # Validations ----
     assert_that(is.data.frame(DataFrame))
@@ -351,7 +360,7 @@ plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=n
             geom_point()
     } else {
         plt <- plt + 
-            geom_point(aes_string(colour=GroupBy)) +
+            geom_point(aes_string(colour=GroupBy), alpha=0.5) +
             theme(legend.position="none")
     }
     
@@ -386,6 +395,7 @@ plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=
     #' @param DataFrame Input1Type. What is Input1?
     #' @param Target Input2Type. What is input2?
     #' @return What is being returned?
+    #' @author chrimaho
     
     # Validations ----
     assert_that(is.data.frame(DataFrame))
@@ -404,11 +414,14 @@ plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=
     comb <- plt_dot_DualFeature(DataFrame, Target, Feature, GroupBy)
     
     # Combine ----
-    plot <- grid.arrange(hist, comb, nrow=1)
+    plot <- arrangeGrob(hist, comb, nrow=1)
     
     # Return ----
-    return(invisible(NULL))
+    return(plot)
 }
+
+
+
 
 
 # Review Distribution function ----
