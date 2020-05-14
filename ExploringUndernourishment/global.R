@@ -33,6 +33,7 @@ library(shinydashboardPlus)
 library(dynutils)
 library(gridExtra)
 library(ggpubr)
+library(GGally)
 
 # Set defaults ----
 theme_set(theme_bw())
