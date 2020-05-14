@@ -80,10 +80,8 @@ server <- function(input, output, session) {
     # Heading3 ----
     output$plt_hist_FeatureDistributions <- renderPlot(
         expr={
-            # ggplotly(
-                FaoStat_wide %>% 
-                    plt_grob_MultipleHistograms(c("country", "year"))
-            # )
+            FaoStat_wide %>% 
+                plt_grob_MultipleHistograms(c("country", "year"))
         }
     )
     
