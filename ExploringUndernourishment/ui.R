@@ -156,7 +156,7 @@ pag_StatPage <- tabItem(
         box(
             title="Graph",
             width=8,
-            plotlyOutput(
+            plotOutput(
                 outputId="plt_stat_PrevUndrOverall"
             )
         )
@@ -172,7 +172,7 @@ pag_StatPage <- tabItem(
         box(
             title="Graph",
             width=8,
-            plotlyOutput(
+            plotOutput(
                 outputId="plt_stat_MissingData",
                 height="6in"
             )
@@ -189,9 +189,9 @@ pag_StatPage <- tabItem(
         box(
             title="Corrplot",
             width=8,
-            plotlyOutput(
+            plotOutput(
                 outputId="plt_corr_AllVariables",
-                height="6in"
+                height="10in"
             )
         )
     ),

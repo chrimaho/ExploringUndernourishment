@@ -31,7 +31,7 @@ server <- function(input, output, session) {
             pageLength=100,
             dom="ft",
             autoWidth=TRUE,
-            bAutoWidth=TRUE,
+            scrollX=TRUE,
             columnDefs=list(list(ClassName="dt-left", targets="_all"))
         )
     )
@@ -42,38 +42,66 @@ server <- function(input, output, session) {
     #------------------------------------------------------------------------------#
     
     # comment ----
-    output$plt_stat_PrevUndrOverall <- renderPlotly(
+    output$plt_stat_PrevUndrOverall <- renderPlot(
         expr={
-            ggplotly(
-                FaoStat_wide %>% 
-                    ggplot() +
-                    geom_histogram(aes(prevalence_of_undernourishment), bins=30, fill="cornflowerblue", colour="black") +
-                    labs(title="Prevalence of Undernourishment",
-                         subtitle="Histogram Plot",
-                         x="Prevalence of Undernourishment",
-                         y="Count",
-                         caption="A neat, right-tailed histogram, with values between 0 and 0.7."
-                    )
-            )
+            FaoStat_wide %>% 
+                ggplot() +
+                geom_histogram(aes(prevalence_of_undernourishment), bins=30, fill="cornflowerblue", colour="black") +
+                labs(title="Prevalence of Undernourishment",
+                     subtitle="Histogram Plot",
+                     x="Prevalence of Undernourishment",
+                     y="Count",
+                     caption="A neat, right-tailed histogram, with values between 0 and 0.7."
+                )
         }
     )
     
     # comment ----
-    output$plt_stat_MissingData <- renderPlotly(
+    output$plt_stat_MissingData <- renderPlot(
         expr={
-            ggplotly(
-                FaoStat_wide %>% 
-                    gg_miss_var(show_pct=TRUE) +
-                    theme_bw() +
-                    theme_update(plot.title = element_text(hjust=0.5)
-                                 ,plot.subtitle = element_text(hjust=0.5)
-                    )+
-                    scale_y_continuous(limits=c(0,100)) +
-                    labs(title="Percentage of Missing Values"
-                         ,subtitle="Ordered by percentage missing"
-                         ,y="Percentage Missing"
-                    )
-            )
+            FaoStat_wide %>% 
+                miss_var_summary() %>% 
+                left_join(x=., y=FaoStat_VariableMapping %>% select(variable, category), by=c("variable"="variable")) %>% 
+                ggplot(aes(x = stats::reorder(variable, pct_miss))) + 
+                geom_bar(aes(y = pct_miss, colour=category, fill=category)
+                         ,stat = "identity"
+                         ,position = "dodge"
+                         ,width = 0.1
+                ) + 
+                geom_point(aes(y = pct_miss, colour=category)
+                           ,size=3
+                ) + 
+                coord_flip() + 
+                scale_color_brewer(type="qual", palette="Dark2", aesthetics=c("colour", "fill")) +
+                labs(title="Percentage of Missing Values"
+                     ,subtitle="Ordered by percentage missing"
+                     ,y="Percentage Missing"
+                     ,x="Variables"
+                     ,color="Category"
+                     ,fill="Category"
+                )
+        }
+    )
+    
+    # Heading3 ----
+    output$plt_corr_AllVariables <- renderPlot(
+        expr={
+            FaoStat_wide %>% 
+                select(-country, -year) %>% 
+                cor(use="pairwise.complete.obs") %>% 
+                ggcorrplot::ggcorrplot(method="square"
+                                       ,type="upper"
+                                       ,show.diag=FALSE
+                                       ,colors = c("blue", "grey", "red")
+                                       ,digits=1
+                                       ,tl.srt=90
+                                       ,lab=TRUE
+                                       ,lab_col="black"
+                                       ,lab_size=3
+                                       ,insig="pch"
+                                       ,pch="?"
+                                       ,pch.cex=3
+                )
         }
     )
     
