@@ -347,26 +347,27 @@ plt_grob_MultipleHistograms <- function(DataFrame, ExcludeFeatures=NA) {
     
     # Set Up ----
     iter <- 0
-    objs <- c()
+    objs <<- list()
     
     # Do work ----
     for (feature in DataFrame %>% names){
         if (feature %in% ExcludeFeatures) next
         iter <- iter + 1
-        name <- paste0("plot", iter)
         plot <- DataFrame[feature] %>% plt_hist_SingleFeature()
-        # print(plot)
-        assign(name, plot)
-        # objs[[iter]] <- name
-        objs <- c(objs, name)
+        assign("temp", 
+            DataFrame[feature] %>% plt_hist_SingleFeature()
+        )
+        objs[[iter]] <<- temp
     }
     
     # Create Grob ----
-    objs <- list(objs)
-    grob <- arrangeGrob(grobs=objs, ncol=2)
+    grob <- arrangeGrob(grobs=objs, ncol=3)
+    
+    # Create Plot ----
+    plot <- grob %>% as_ggplot()
     
     # Return ----
-    return(objs)
+    return(plot)
     
 }
 
