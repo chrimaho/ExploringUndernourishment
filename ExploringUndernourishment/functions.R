@@ -361,7 +361,7 @@ plt_grob_MultipleHistograms <- function(DataFrame, ExcludeFeatures=NA) {
     }
     
     # Create Grob ----
-    grob <- arrangeGrob(grobs=objs, ncol=3)
+    grob <- arrangeGrob(grobs=objs, ncol=4)
     
     # Create Plot ----
     plot <- grob %>% as_ggplot()
