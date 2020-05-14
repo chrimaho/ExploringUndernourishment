@@ -38,7 +38,7 @@ header <- dashboardHeaderPlus(
                 icon_on = icon("check"),
                 icon_off = icon("remove")
             )
-        ),
+        )
         # menuItem("Case growth rate",
         #          tabName = "growth_total_tab", 
         #          icon = icon("line-chart")
@@ -53,13 +53,8 @@ header <- dashboardHeaderPlus(
 
 sidebar <- dashboardSidebar(
     sidebarMenu(
-        menuItem(
-            "Information", 
-            tabName="info",
-            icon=icon("info-circle"),
-            badgeLabel="info",
-            badgeColor="light-blue"
-        ),
+        
+        # Stats page
         menuItem(
             "Overall Statistics",
             icon=icon("chart-pie"),
@@ -74,6 +69,15 @@ sidebar <- dashboardSidebar(
             #     "Subset",
             #     tabName="stats_total"
             # )
+        ),
+        
+        # Info page
+        menuItem(
+            "Information", 
+            tabName="info",
+            icon=icon("info-circle"),
+            badgeLabel="info",
+            badgeColor="light-blue"
         ),
         
         # Add Socials
@@ -138,7 +142,11 @@ pag_InfoPage <- tabItem(
 # Define Data Stats Page ----
 pag_StatPage <- tabItem(
     tabName="stats",
+    
+    # Header
     h1("Overall Statistics"),
+    
+    # Distribution of target
     fluidRow(
         box(
             title="Explanation",
@@ -148,9 +156,13 @@ pag_StatPage <- tabItem(
         box(
             title="Graph",
             width=8,
-            plotlyOutput(outputId="plt_stat_PrevUndrOverall")
+            plotlyOutput(
+                outputId="plt_stat_PrevUndrOverall"
+            )
         )
     ),
+    
+    # Percentage of missingness
     fluidRow(
         box(
             title="Explanation",
@@ -160,21 +172,47 @@ pag_StatPage <- tabItem(
         box(
             title="Graph",
             width=8,
-            plotlyOutput(outputId="plt_stat_MissingData")
+            plotlyOutput(
+                outputId="plt_stat_MissingData",
+                height="6in"
+            )
         )
     ),
+    
+    # Correlation of all variables
+    fluidRow(
+        box(
+            title="Corrplot",
+            width=4,
+            "Explanation"
+        ),
+        box(
+            title="Corrplot",
+            width=8,
+            plotlyOutput(
+                outputId="plt_corr_AllVariables",
+                height="6in"
+            )
+        )
+    ),
+    
+    # Distribution of all variables
     fluidRow(
         box(
             title="This",
             width=12,
             tags$div("Explanation"),
-            height="20in",
             column(
                 width=12,
-                plotOutput(outputId="plt_hist_FeatureDistributions")
+                plotOutput(
+                    outputId="plt_hist_FeatureDistributions",
+                    height="20in"
+                )
             )
         )
     ),
+    
+    # Statistics of all variables
     fluidRow(
         box(
             title="Data Frame Statistics",
