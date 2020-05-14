@@ -62,7 +62,7 @@ sidebar <- dashboardSidebar(
         ),
         menuItem(
             "Overall Statistics",
-            icon=icon("chart-pie"), 
+            icon=icon("chart-pie"),
             tabName="stats",
             badgeLabel="stats",
             badgeColor="green"
@@ -161,6 +161,18 @@ pag_StatPage <- tabItem(
             title="Graph",
             width=8,
             plotlyOutput(outputId="plt_stat_MissingData")
+        )
+    ),
+    fluidRow(
+        box(
+            title="This",
+            width=12,
+            tags$div("Explanation"),
+            height="20in",
+            column(
+                width=12,
+                plotOutput(outputId="plt_hist_FeatureDistributions")
+            )
         )
     ),
     fluidRow(

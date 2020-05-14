@@ -77,6 +77,16 @@ server <- function(input, output, session) {
         }
     )
     
+    # Heading3 ----
+    output$plt_hist_FeatureDistributions <- renderPlot(
+        expr={
+            # ggplotly(
+                FaoStat_wide %>% 
+                    plt_grob_MultipleHistograms(c("country", "year"))
+            # )
+        }
+    )
+    
     # comment ----
     output$tbl_stat_DataFrameStats <- DT::renderDataTable(
         expr={
