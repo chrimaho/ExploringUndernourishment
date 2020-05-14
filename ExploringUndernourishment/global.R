@@ -11,6 +11,9 @@
 #                                                                              #
 #==============================================================================#
 
+# Toggle auto-reload (for design enhancements) ----
+options(shiny.autoreload=TRUE)
+
 # Load Functions ----
 source("functions.R", local=TRUE)
 
