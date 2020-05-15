@@ -288,6 +288,10 @@ pag_StatFaeturesPage <- tabItem(
 )
 
 
+#------------------------------------------------------------------------------#
+# Undernourishment                                                          ####
+#------------------------------------------------------------------------------#
+
 pag_Undernourishment <- tabItem(
     tabName="undernourishment",
     
@@ -297,8 +301,29 @@ pag_Undernourishment <- tabItem(
     # Header Variables
     fluidRow(
         box(
-            title="Selections"
-            
+            title="Selections",
+            width=12,
+            column(
+                width=3,
+                selectizeInput(
+                    "select1",
+                    h3("Select Box"),
+                    choices=FaoStat_wide %>% select(country) %>% distinct(),
+                    multiple=TRUE
+                )
+            ),
+            column(
+                width=9,
+                sliderInput(
+                    "slider1",
+                    h3("Slider"),
+                    min=2000,
+                    max=2020,
+                    value=c(2001,2019),
+                    step=1,
+                    sep=""
+                )
+            )
         )
     ),
     
