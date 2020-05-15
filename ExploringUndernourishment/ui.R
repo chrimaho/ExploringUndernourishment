@@ -13,7 +13,9 @@
 
 
 #------------------------------------------------------------------------------#
-# Set Header                                                                ####
+#                                                                              #
+#    Header                                                                 ####
+#                                                                              #
 #------------------------------------------------------------------------------#
 
 header <- dashboardHeaderPlus(
@@ -47,20 +49,30 @@ header <- dashboardHeaderPlus(
 )
 
 
+
 #------------------------------------------------------------------------------#
-# Set Side Bar                                                              ####
+#                                                                              #
+#    SideBar                                                                ####
+#                                                                              #
 #------------------------------------------------------------------------------#
 
 sidebar <- dashboardSidebar(
     sidebarMenu(
+        
+        # Info page
+        menuItem(
+            "Introduction", 
+            tabName="info",
+            icon=icon("info-circle"),
+            badgeLabel="info",
+            badgeColor="light-blue"
+        ),
         
         # Stats page
         menuItem(
             "Overall Statistics",
             icon=icon("chart-pie"),
             tabName="stats",
-            # badgeLabel="stats",
-            # badgeColor="green"
             menuSubItem(
                 "Total",
                 tabName="stats_total"
@@ -71,13 +83,11 @@ sidebar <- dashboardSidebar(
             )
         ),
         
-        # Info page
+        #Undernourishment
         menuItem(
-            "Information", 
-            tabName="info",
-            icon=icon("info-circle"),
-            badgeLabel="info",
-            badgeColor="light-blue"
+            "Undernourishment",
+            tabName="under",
+            icon=icon("")
         ),
         
         # Add Socials
@@ -92,9 +102,18 @@ sidebar <- dashboardSidebar(
 )
 
 
+
 #------------------------------------------------------------------------------#
-# Set Body                                                                  ####
+#                                                                              #
+#    Body                                                                   ####
+#                                                                              #
 #------------------------------------------------------------------------------#
+
+
+#------------------------------------------------------------------------------#
+# Individual Definitions                                                    ####
+#------------------------------------------------------------------------------#
+
 
 # Define Info Page ----
 pag_InfoPage <- tabItem(
@@ -197,7 +216,7 @@ pag_StatTotalPage <- tabItem(
     )
 )
 
-# Define Stats Featureas Page ----
+# Define Stats Features Page ----
 pag_StatFaeturesPage <- tabItem(
     tabName="stats_features",
     
@@ -241,7 +260,10 @@ pag_StatFaeturesPage <- tabItem(
 )
 
 
-# Pull together ----
+#------------------------------------------------------------------------------#
+# Pull together                                                             ####
+#------------------------------------------------------------------------------#
+
 body <- dashboardBody(
     tabItems(
         pag_InfoPage,
@@ -251,8 +273,11 @@ body <- dashboardBody(
 )
 
 
+
 #------------------------------------------------------------------------------#
-# Pull Together                                                             ####
+#                                                                              #
+#    Finalise                                                               ####
+#                                                                              #
 #------------------------------------------------------------------------------#
 
 # Set the UI ----
