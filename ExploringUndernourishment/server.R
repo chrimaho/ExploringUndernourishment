@@ -20,7 +20,9 @@ server <- function(input, output, session) {
     
     
     #------------------------------------------------------------------------------#
-    # Info Page                                                                 ####
+    #                                                                              #
+    #    Information                                                            ####
+    #                                                                              #
     #------------------------------------------------------------------------------#
     
     output$tbl_info_DataDictionary <- DT::renderDataTable(
@@ -37,11 +39,14 @@ server <- function(input, output, session) {
     )
     
     
+    
     #------------------------------------------------------------------------------#
-    # Stat Page                                                                 ####
+    #                                                                              #
+    #    Statistics > Total                                                     ####
+    #                                                                              #
     #------------------------------------------------------------------------------#
     
-    # comment ----
+    # Histogram Plot ----
     output$plt_stat_PrevUndrOverall <- renderPlot(
         expr={
             # Optimise for to save future load time.
@@ -71,7 +76,7 @@ server <- function(input, output, session) {
         }
     )
     
-    # comment ----
+    # MissingNess Plot ----
     output$plt_stat_MissingData <- renderPlot(
         expr={
             # Optimise for to save future load time.
@@ -110,29 +115,45 @@ server <- function(input, output, session) {
         }
     )
     
-    # Heading3 ----
+    # Correlation Plot ----
     output$plt_corr_AllVariables <- renderPlot(
         expr={
-            # Optimise for to save future load time.
-            if (exists("plt_corr_AllVariables")) {
-                plt_corr_AllVariables
-            } else {
-                # Make
-                plt_corr_AllVariables <<- FaoStat_wide %>% 
-                    select(-country, -year) %>% 
-                    extract(ncol(.):1) %>% 
-                    cor(use="pairwise.complete.obs") %>% 
-                    corrplot(method="pie"
-                             ,type="lower"
-                             ,diag=FALSE
-                             ,tl.col="black"
+            FaoStat_wide %>% 
+                select(-country, -year) %>% 
+                extract(ncol(.):1) %>% 
+                cor(use="pairwise.complete.obs") %>% 
+                corrplot(method="pie"
+                         ,type="lower"
+                         ,diag=FALSE
+                         ,tl.col="black"
+                )
+        }
+    )
+    
+    
+    # GGRidges Plot ----
+    output$plt_ridg_UndernourishmentByYear <- renderPlot(
+        expr={
+            FaoStat_wide %>% {
+                ggplot(., aes(prevalence_of_undernourishment, reorder(year,desc(year)), fill=year)) +
+                    geom_density_ridges() + 
+                    scale_fill_manual(values=colorRampPalette(brewer.pal(9, "YlGn"))(nrow(unique(.["year"])))) +
+                    labs(
+                        title="Undernourishment Per Year",
+                        subtitle="Ridge Plot",
+                        y="Year",
+                        x="Prevalence of Undernourishment"
                     )
-                
-                # Return
-                plt_corr_AllVariables
             }
         }
     )
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    Statistics > Features                                                  ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
     
     # Heading3 ----
     output$plt_hist_FeatureDistributions <- renderPlot(
@@ -166,5 +187,12 @@ server <- function(input, output, session) {
             columnDefs=list(list(ClassName="dt-left", width="auto", targets="_all"))
         )
     )
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    Undernourishment                                                       ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
     
 }
