@@ -35,6 +35,8 @@ library(gridExtra)
 library(ggpubr)
 library(GGally)
 library(corrplot)
+library(RColorBrewer)
+library(ggridges)
 
 # Set defaults ----
 theme_set(theme_bw())
