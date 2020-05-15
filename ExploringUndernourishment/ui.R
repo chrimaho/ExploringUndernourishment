@@ -59,7 +59,7 @@ header <- dashboardHeaderPlus(
 sidebar <- dashboardSidebar(
     sidebarMenu(
         
-        # Info page
+        # Info 
         menuItem(
             "Introduction", 
             tabName="info",
@@ -68,26 +68,31 @@ sidebar <- dashboardSidebar(
             badgeColor="light-blue"
         ),
         
-        # Stats page
+        # Overall Stats
         menuItem(
             "Overall Statistics",
             icon=icon("chart-pie"),
-            tabName="stats",
-            menuSubItem(
-                "Total",
-                tabName="stats_total"
-            ),
-            menuSubItem(
-                "Features",
-                tabName="stats_features"
-            )
+            tabName="stats_total",
+            badgeLabel="big",
+            badgeColor="green"
         ),
         
-        #Undernourishment
+        # Feature Stats
+        menuItem(
+            "Feature Statistics",
+            icon=icon("chart-pie"),
+            tabName="stats_features",
+            badgeLabel="small",
+            badgeColor="olive"
+        ),
+        
+        # Undernourishment
         menuItem(
             "Undernourishment",
-            tabName="under",
-            icon=icon("")
+            tabName="undernourishment",
+            icon=icon("seedling"),
+            badgeLabel="food",
+            badgeColor="orange"
         ),
         
         # Add Socials
@@ -283,6 +288,41 @@ pag_StatFaeturesPage <- tabItem(
 )
 
 
+pag_Undernourishment <- tabItem(
+    tabName="undernourishment",
+    
+    # Header
+    h1("Aspects to Undernourishment"),
+    
+    # Header Variables
+    fluidRow(
+        box(
+            title="Selections"
+            
+        )
+    ),
+    
+    # Visualisation
+    fluidRow(
+        box(
+            title="Plot",
+            width=6,
+            plotOutput(
+                outputId="plt_undr_Histogram",
+                height="6in"
+            )
+        ),
+        box(
+            title="Plot",
+            width=6,
+            plotOutput(
+                outputId="plt_undr_Ridge",
+                height="6in"
+            )
+        )
+    )
+)
+
 #------------------------------------------------------------------------------#
 # Pull together                                                             ####
 #------------------------------------------------------------------------------#
@@ -291,7 +331,8 @@ body <- dashboardBody(
     tabItems(
         pag_InfoPage,
         pag_StatFaeturesPage,
-        pag_StatTotalPage
+        pag_StatTotalPage,
+        pag_Undernourishment
     )
 )
 
