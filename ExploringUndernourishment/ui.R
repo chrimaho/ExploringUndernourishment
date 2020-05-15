@@ -59,16 +59,16 @@ sidebar <- dashboardSidebar(
             "Overall Statistics",
             icon=icon("chart-pie"),
             tabName="stats",
-            badgeLabel="stats",
-            badgeColor="green"
-            # menuSubItem(
-            #     "Total",
-            #     tabName="stats_total"
-            # ),
-            # menuSubItem(
-            #     "Subset",
-            #     tabName="stats_total"
-            # )
+            # badgeLabel="stats",
+            # badgeColor="green"
+            menuSubItem(
+                "Total",
+                tabName="stats_total"
+            ),
+            menuSubItem(
+                "Features",
+                tabName="stats_features"
+            )
         ),
         
         # Info page
@@ -139,9 +139,9 @@ pag_InfoPage <- tabItem(
 )
 
 
-# Define Data Stats Page ----
-pag_StatPage <- tabItem(
-    tabName="stats",
+# Define Stats Total Page ----
+pag_StatTotalPage <- tabItem(
+    tabName="stats_total",
     
     # Header
     h1("Overall Statistics"),
@@ -191,10 +191,18 @@ pag_StatPage <- tabItem(
             width=8,
             plotOutput(
                 outputId="plt_corr_AllVariables",
-                height="10in"
+                height="7in"
             )
         )
-    ),
+    )
+)
+
+# Define Stats Featureas Page ----
+pag_StatFaeturesPage <- tabItem(
+    tabName="stats_features",
+    
+    # Header
+    h1("Feature-Wise Statistics"),
     
     # Distribution of all variables
     fluidRow(
@@ -237,7 +245,8 @@ pag_StatPage <- tabItem(
 body <- dashboardBody(
     tabItems(
         pag_InfoPage,
-        pag_StatPage
+        pag_StatFaeturesPage,
+        pag_StatTotalPage
     )
 )
 
