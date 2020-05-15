@@ -111,11 +111,9 @@ sidebar <- dashboardSidebar(
 
 
 #------------------------------------------------------------------------------#
-# Individual Definitions                                                    ####
+# Information                                                               ####
 #------------------------------------------------------------------------------#
 
-
-# Define Info Page ----
 pag_InfoPage <- tabItem(
     tabName="info",
     h1("Exploring Undernourishment"),
@@ -158,39 +156,42 @@ pag_InfoPage <- tabItem(
 )
 
 
-# Define Stats Total Page ----
+#------------------------------------------------------------------------------#
+# Statistics > Total                                                        ####
+#------------------------------------------------------------------------------#
+
 pag_StatTotalPage <- tabItem(
     tabName="stats_total",
     
     # Header
     h1("Overall Statistics"),
     
-    # Distribution of target
+    # Distribution of target ----
     fluidRow(
         box(
             title="Explanation",
-            width=4,
+            width=5,
             "Explanation...!"
         ),
         box(
             title="Graph",
-            width=8,
+            width=7,
             plotOutput(
                 outputId="plt_stat_PrevUndrOverall"
             )
         )
     ),
     
-    # Percentage of missingness
+    # Percentage of missingness ----
     fluidRow(
         box(
             title="Explanation",
-            width=4,
+            width=5,
             "Explanation...?"
         ),
         box(
             title="Graph",
-            width=8,
+            width=7,
             plotOutput(
                 outputId="plt_stat_MissingData",
                 height="6in"
@@ -198,32 +199,54 @@ pag_StatTotalPage <- tabItem(
         )
     ),
     
-    # Correlation of all variables
+    # Correlation of all variables ----
     fluidRow(
         box(
             title="Corrplot",
-            width=4,
+            width=5,
             "Explanation"
         ),
         box(
             title="Corrplot",
-            width=8,
+            width=7,
             plotOutput(
                 outputId="plt_corr_AllVariables",
                 height="7in"
             )
         )
+    ),
+    
+    # Ridge Plot ----
+    fluidRow(
+        box(
+            title="Ridge Plot",
+            width=5,
+            "Explanation"
+        ),
+        box(
+            title="Ridge Plot",
+            width=7,
+            plotOutput(
+                outputId="plt_ridg_UndernourishmentByYear", 
+                height="6in"
+            )
+        )
     )
+    
 )
 
-# Define Stats Features Page ----
+
+#------------------------------------------------------------------------------#
+# Statistics > Features                                                     ####
+#------------------------------------------------------------------------------#
+
 pag_StatFaeturesPage <- tabItem(
     tabName="stats_features",
     
     # Header
     h1("Feature-Wise Statistics"),
     
-    # Distribution of all variables
+    # Distribution of all variables ----
     fluidRow(
         box(
             title="This",
@@ -239,7 +262,7 @@ pag_StatFaeturesPage <- tabItem(
         )
     ),
     
-    # Statistics of all variables
+    # Statistics of all variables ----
     fluidRow(
         box(
             title="Data Frame Statistics",
