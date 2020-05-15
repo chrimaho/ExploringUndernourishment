@@ -134,19 +134,29 @@ server <- function(input, output, session) {
     # GGRidges Plot ----
     output$plt_ridg_UndernourishmentByYear <- renderPlot(
         expr={
-            FaoStat_wide %>% {
-                ggplot(., aes(prevalence_of_undernourishment, reorder(year,desc(year)), fill=year)) +
-                    geom_density_ridges() + 
-                    scale_fill_manual(values=colorRampPalette(brewer.pal(9, "YlGn"))(nrow(unique(.["year"])))) +
-                    labs(
-                        title="Undernourishment Per Year",
-                        subtitle="Ridge Plot",
-                        y="Year",
-                        x="Prevalence of Undernourishment"
-                    )
+            # Optimise for to save future load time.
+            if (exists("plt_ridg_UndernourishmentByYear")) {
+                plt_ridg_UndernourishmentByYear
+            } else {
+                # Make
+                plt_ridg_UndernourishmentByYear <<- FaoStat_wide %>% {
+                    ggplot(., aes(prevalence_of_undernourishment, reorder(year,desc(year)), fill=year)) +
+                        geom_density_ridges() + 
+                        scale_fill_manual(values=colorRampPalette(brewer.pal(9, "YlGn"))(nrow(unique(.["year"])))) +
+                        labs(
+                            title="Undernourishment Per Year",
+                            subtitle="Ridge Plot",
+                            y="Year",
+                            x="Prevalence of Undernourishment"
+                        )
+                
+                # Return
+                plt_ridg_UndernourishmentByYear
+                }
             }
         }
     )
+    
     
     
     #------------------------------------------------------------------------------#
