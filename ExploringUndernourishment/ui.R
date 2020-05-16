@@ -23,29 +23,29 @@ header <- dashboardHeaderPlus(
         span(class="logo-lg", icon("hand-holding-heart"), "Data Explorer"),
         icon("hand-holding-heart")
     )
-    ,left_menu=tagList(
-        dropdownBlock(
-            id = "mydropdown",
-            title = "Dropdown 1",
-            icon = icon("sliders"),
-            sliderInput(
-                inputId = "n",
-                label = "Number of observations",
-                min = 10, max = 100, value = 30
-            ),
-            prettyToggle(
-                inputId = "na",
-                label_on = "NAs keeped",
-                label_off = "NAs removed",
-                icon_on = icon("check"),
-                icon_off = icon("remove")
-            )
-        )
-        # menuItem("Case growth rate",
-        #          tabName = "growth_total_tab", 
-        #          icon = icon("line-chart")
-        #          )
-    )
+    # ,left_menu=tagList(
+    #     dropdownBlock(
+    #         id = "mydropdown",
+    #         title = "Dropdown 1",
+    #         icon = icon("sliders"),
+    #         sliderInput(
+    #             inputId = "n",
+    #             label = "Number of observations",
+    #             min = 10, max = 100, value = 30
+    #         ),
+    #         prettyToggle(
+    #             inputId = "na",
+    #             label_on = "NAs keeped",
+    #             label_off = "NAs removed",
+    #             icon_on = icon("check"),
+    #             icon_off = icon("remove")
+    #         )
+    #     )
+    #     # menuItem("Case growth rate",
+    #     #          tabName = "growth_total_tab", 
+    #     #          icon = icon("line-chart")
+    #     #          )
+    # )
 )
 
 
@@ -58,15 +58,6 @@ header <- dashboardHeaderPlus(
 
 sidebar <- dashboardSidebar(
     sidebarMenu(
-        
-        # Undernourishment
-        menuItem(
-            "Undernourishment",
-            tabName="undernourishment",
-            icon=icon("seedling"),
-            badgeLabel="food",
-            badgeColor="orange"
-        ),
         
         # Info 
         menuItem(
@@ -93,6 +84,15 @@ sidebar <- dashboardSidebar(
             tabName="stats_features",
             badgeLabel="small",
             badgeColor="teal"
+        ),
+        
+        # Undernourishment
+        menuItem(
+            "Undernourishment",
+            tabName="undernourishment",
+            icon=icon("seedling"),
+            badgeLabel="food",
+            badgeColor="orange"
         ),
         
         # Add Socials
@@ -174,15 +174,20 @@ pag_StatTotalPage <- tabItem(
     # Distribution of target ----
     fluidRow(
         box(
-            title="Explanation",
-            width=5,
-            "Explanation...!"
-        ),
-        box(
-            title="Graph",
-            width=7,
-            plotOutput(
-                outputId="plt_stat_PrevUndrOverall"
+            title="Histogram of Undernourishment",
+            width=12,
+            column(
+                width=5,
+                style="border: 1px double lightgrey;",
+                tags$p("<Section reserved for comments>"),
+            ),
+            column(
+                title="Graph",
+                width=7,
+                style="border: 1px double lightgrey;",
+                plotOutput(
+                    outputId="plt_stat_PrevUndrOverall"
+                )
             )
         )
     ),
@@ -190,16 +195,21 @@ pag_StatTotalPage <- tabItem(
     # Percentage of missingness ----
     fluidRow(
         box(
-            title="Explanation",
-            width=5,
-            "Explanation...?"
-        ),
-        box(
-            title="Graph",
-            width=7,
-            plotOutput(
-                outputId="plt_stat_MissingData",
-                height="6in"
+            title="Percentage of Missing Data per Feature",
+            width=12,
+            column(
+                width=5,
+                style="border: 1px double lightgrey;",
+                tags$p("<Section reserved for comments>"),
+            ),
+            column(
+                title="Graph",
+                width=7,
+                style="border: 1px double lightgrey;",
+                plotOutput(
+                    outputId="plt_stat_MissingData",
+                    height="6in"
+                )
             )
         )
     ),
@@ -207,16 +217,21 @@ pag_StatTotalPage <- tabItem(
     # Correlation of all variables ----
     fluidRow(
         box(
-            title="Corrplot",
-            width=5,
-            "Explanation"
-        ),
-        box(
-            title="Corrplot",
-            width=7,
-            plotOutput(
-                outputId="plt_corr_AllVariables",
-                height="7in"
+            title="Correlation Plot of each Feature",
+            width=12,
+            column(
+                width=5,
+                style="border: 1px double lightgrey;",
+                tags$p("<Section reserved for comments>"),
+            ),
+            column(
+                title="Corrplot",
+                width=7,
+                style="border: 1px double lightgrey;",
+                plotOutput(
+                    outputId="plt_corr_AllVariables",
+                    height="7in"
+                )
             )
         )
     ),
@@ -224,16 +239,21 @@ pag_StatTotalPage <- tabItem(
     # Ridge Plot ----
     fluidRow(
         box(
-            title="Ridge Plot",
-            width=5,
-            "Explanation"
-        ),
-        box(
-            title="Ridge Plot",
-            width=7,
-            plotOutput(
-                outputId="plt_ridg_UndernourishmentByYear", 
-                height="6in"
+            title="Ridge Plot of Undernourishment per Year",
+            width=12,
+            column(
+                width=5,
+                style="border: 1px double lightgrey;",
+                tags$p("<Section reserved for comments>"),
+            ),
+            column(
+                title="Ridge Plot",
+                width=7,
+                style="border: 1px double lightgrey;",
+                plotOutput(
+                    outputId="plt_ridg_UndernourishmentByYear", 
+                    height="6in"
+                )
             )
         )
     )
@@ -256,7 +276,7 @@ pag_StatFaeturesPage <- tabItem(
         box(
             title="This",
             width=12,
-            tags$div("Explanation"),
+            tags$p("<Section reserved for comments>"),
             column(
                 width=12,
                 plotOutput(

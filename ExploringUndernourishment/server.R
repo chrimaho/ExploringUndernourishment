@@ -127,7 +127,7 @@ server <- function(input, output, session) {
         expr={
             # Can't optimise this one because 'corrplot()' doesn't actually return a plot object...
             FaoStat_wide %>% 
-                select(-country, -year) %>% 
+                select(-country, -year, -contains("_complete"), -contains("avg_undernourishment")) %>% 
                 extract(ncol(.):1) %>% 
                 cor(use="pairwise.complete.obs") %>% 
                 corrplot(method="pie"
@@ -314,7 +314,7 @@ server <- function(input, output, session) {
             if (!exists("plt_undr_stat_Ridges")) {
                 
                 # Make
-                FaoStat_wide %>% 
+                plt_undr_stat_Ridges <<- FaoStat_wide %>% 
                     filter(cat_complete!="empty") %>% 
                     {ggplot(., aes(prevalence_of_undernourishment, reorder(country, desc(avg_undernourishment)), fill=reorder(country, desc(avg_undernourishment)))) +
                             geom_density_ridges(alpha=0.8) + 
