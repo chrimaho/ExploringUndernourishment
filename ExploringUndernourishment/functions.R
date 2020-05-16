@@ -314,7 +314,7 @@ plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
     
     # Resize bins ----
     if(Bins<30){
-        plt <- plt + scale_x_continuous(breaks=round(seq(min(dat),max(dat),by=1)))
+        plt <- plt + scale_x_continuous(breaks=round(seq(min(Feature),max(Feature),by=1)))
     }
     
     # Set theme ----
