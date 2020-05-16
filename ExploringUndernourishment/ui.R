@@ -59,13 +59,22 @@ header <- dashboardHeaderPlus(
 sidebar <- dashboardSidebar(
     sidebarMenu(
         
+        # Undernourishment
+        menuItem(
+            "Undernourishment",
+            tabName="undernourishment",
+            icon=icon("seedling"),
+            badgeLabel="food",
+            badgeColor="orange"
+        ),
+        
         # Info 
         menuItem(
             "Introduction", 
             tabName="info",
             icon=icon("info-circle"),
             badgeLabel="info",
-            badgeColor="light-blue"
+            badgeColor="green"
         ),
         
         # Overall Stats
@@ -74,7 +83,7 @@ sidebar <- dashboardSidebar(
             icon=icon("chart-pie"),
             tabName="stats_total",
             badgeLabel="big",
-            badgeColor="green"
+            badgeColor="blue"
         ),
         
         # Feature Stats
@@ -83,16 +92,7 @@ sidebar <- dashboardSidebar(
             icon=icon("chart-pie"),
             tabName="stats_features",
             badgeLabel="small",
-            badgeColor="olive"
-        ),
-        
-        # Undernourishment
-        menuItem(
-            "Undernourishment",
-            tabName="undernourishment",
-            icon=icon("seedling"),
-            badgeLabel="food",
-            badgeColor="orange"
+            badgeColor="teal"
         ),
         
         # Add Socials
@@ -162,7 +162,7 @@ pag_InfoPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Statistics > Total                                                        ####
+# Overall Statistics                                                        ####
 #------------------------------------------------------------------------------#
 
 pag_StatTotalPage <- tabItem(
@@ -242,7 +242,7 @@ pag_StatTotalPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Statistics > Features                                                     ####
+# Feature Statistics                                                        ####
 #------------------------------------------------------------------------------#
 
 pag_StatFaeturesPage <- tabItem(
@@ -295,57 +295,100 @@ pag_StatFaeturesPage <- tabItem(
 pag_Undernourishment <- tabItem(
     tabName="undernourishment",
     
-    # Header
+    # Header ----
     h1("Aspects to Undernourishment"),
     
-    # Header Variables
+    # Dynamic part ----
     fluidRow(
         box(
-            title="Selections",
+            
+            # Sub Header
+            h2("Dynamic Part"),
             width=12,
-            column(
-                width=3,
-                selectizeInput(
-                    "select1",
-                    h3("Select Box"),
-                    choices=FaoStat_wide %>% select(country) %>% distinct(),
-                    multiple=TRUE
+            
+            # Selections
+            fluidRow(
+                title=tags$b("Selections"),
+                width=12,
+                column(
+                    width=3,
+                    selectizeInput(
+                        "undr_dynm_inbx_SelectedCountries",
+                        h4("Select Countries"),
+                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(country) %>% distinct(),
+                        selected="Thailand",
+                        multiple=TRUE,
+                    )
+                ),
+                column(
+                    width=9,
+                    sliderInput(
+                        "undr_dynm_slid_SelectedYears",
+                        h4("Select Years"),
+                        min=2000,
+                        max=2020,
+                        value=c(2001,2019),
+                        step=1,
+                        sep="",
+                        ticks=FALSE,
+                        dragRange=TRUE
+                    )
                 )
             ),
-            column(
-                width=9,
-                sliderInput(
-                    "slider1",
-                    h3("Slider"),
-                    min=2000,
-                    max=2020,
-                    value=c(2001,2019),
-                    step=1,
-                    sep=""
+            
+            # Plots
+            fixedRow(
+                column(
+                    title=tags$b("Improvement Per Year"),
+                    width=6,
+                    tags$p("<Section reserved for comments>"),
+                    plotOutput(
+                        outputId="undr_dynm_plot_ImprovementPerYear",
+                        height="6in"
+                    )
+                ),
+                column(
+                    title=tags$b("Distribution Per Country"),
+                    width=6,
+                    tags$p("<Section reserved for comments>"),
+                    plotOutput(
+                        outputId="undr_dynm_plot_DistributionPerCountry",
+                        height="6in"
+                    )
                 )
             )
         )
     ),
     
-    # Visualisation
+    
+    # Static Part ----
     fluidRow(
         box(
-            title="Plot",
-            width=6,
-            plotOutput(
-                outputId="plt_undr_Histogram",
-                height="6in"
-            )
-        ),
-        box(
-            title="Plot",
-            width=6,
-            plotOutput(
-                outputId="plt_undr_Ridge",
-                height="6in"
+            h2("Static Part"),
+            width=12,
+            column(
+                title=tags$b("Completeness of Records"),
+                width=6,
+                style="border: 1px double lightgrey;",
+                tags$p("<Section reserved for comments>"),
+                plotOutput(
+                    outputId="plt_undr_stat_Completeness",
+                    height="20in"
+                )
+            ),
+            column(
+                title=tags$b("Ridges per country"),
+                width=6,
+                style="border: 1px double lightgrey;",
+                tags$p("<Section reserved for comments>"),
+                plotOutput(
+                    outputId="plt_undr_stat_Ridges",
+                    height="20in"
+                )
             )
         )
     )
+    
 )
 
 #------------------------------------------------------------------------------#

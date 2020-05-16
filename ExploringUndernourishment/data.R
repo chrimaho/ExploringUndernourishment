@@ -144,21 +144,23 @@ if (!exists("FaoStat_wide")) {
     # Make FaoStat_wide ----
     FaoStat_wide <- FaoStat_long %>% 
         
-        #make wider
+        # Make Wider
         pivot_wider(names_from="variable", values_from="value") %>% 
         
-        #add completeness
+        # Add Completeness
         (function(x){
             x %>% 
                 select(country, prevalence_of_undernourishment) %>% 
                 group_by(country) %>% 
-                summarise(num_complete=sum(!is.na(prevalence_of_undernourishment))) %>% 
+                summarise(num_complete=sum(!is.na(prevalence_of_undernourishment)),
+                          avg_undernourishment=mean(prevalence_of_undernourishment, na.rm=TRUE)
+                          ) %>% 
                 ungroup() %>% 
                 mutate(
                     pct_complete=num_complete/max(num_complete)*100,
                     cat_complete=case_when(
                         pct_complete==100 ~ "full",
-                        pct_complete==0   ~ "empty",
+                        pct_complete<=20  ~ "empty",
                         TRUE              ~ "partial"
                     )
                 ) %>% 
@@ -170,10 +172,10 @@ if (!exists("FaoStat_wide")) {
                 return()
         }) %>% 
         
-        #make prevalence_of_undernourishment at the start
+        # Reorder Columns
         select(country, year, prevalence_of_undernourishment, everything()) %>% 
         
-        #order data
+        # Reorder Rows
         arrange(country,year)
 
 }
@@ -181,7 +183,7 @@ if (!exists("FaoStat_wide")) {
 
 # FaoStat VariableMapping ----
 FaoStat_VariableMapping <- FaoStat_wide %>% 
-    select(-contains("_complete")) %>% 
+    select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
     names %>% 
     data.frame("variable"=., stringsAsFactors=FALSE) %>% 
     left_join(y=FaoStat_VariableMapping, by=c("variable"="variable")) %>% 
