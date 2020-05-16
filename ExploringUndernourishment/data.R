@@ -19,7 +19,7 @@
 # Import Data                                                               ####
 #------------------------------------------------------------------------------#
 
-raw_DataPath <- find_rstudio_root_file("/ExploringUndernourishment/data/raw")
+raw_DataPath <- "./data/raw"
 for (file in list.files(raw_DataPath, pattern="*.csv")) {
     filename <- str_remove(file, ".csv")
     assign(paste0("raw_",filename)
@@ -254,7 +254,7 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
 # Save Data                                                                 ####
 #------------------------------------------------------------------------------#
 
-pro_DataPath <- find_rstudio_root_file("/ExploringUndernourishment/data/processed")
+pro_DataPath <- "./data/processed"
 
 # Long ----
 if (!file.exists(paste0(pro_DataPath, "/FaoStat_long.rds"))) {
