@@ -179,7 +179,7 @@ pag_StatTotalPage <- tabItem(
             column(
                 width=5,
                 style="border: 1px double lightgrey;",
-                tags$p("<Section reserved for comments>"),
+                tags$p("Section reserved for future comments.", style="color:red"),
             ),
             column(
                 title="Graph",
@@ -200,7 +200,7 @@ pag_StatTotalPage <- tabItem(
             column(
                 width=5,
                 style="border: 1px double lightgrey;",
-                tags$p("<Section reserved for comments>"),
+                tags$p("Section reserved for future comments.", style="color:red"),
             ),
             column(
                 title="Graph",
@@ -222,7 +222,7 @@ pag_StatTotalPage <- tabItem(
             column(
                 width=5,
                 style="border: 1px double lightgrey;",
-                tags$p("<Section reserved for comments>"),
+                tags$p("Section reserved for future comments.", style="color:red"),
             ),
             column(
                 title="Corrplot",
@@ -244,7 +244,7 @@ pag_StatTotalPage <- tabItem(
             column(
                 width=5,
                 style="border: 1px double lightgrey;",
-                tags$p("<Section reserved for comments>"),
+                tags$p("Section reserved for future comments.", style="color:red"),
             ),
             column(
                 title="Ridge Plot",
@@ -276,7 +276,7 @@ pag_StatFaeturesPage <- tabItem(
         box(
             title="This",
             width=12,
-            tags$p("<Section reserved for comments>"),
+            tags$p("Section reserved for future comments.", style="color:red"),
             column(
                 width=12,
                 plotOutput(
@@ -361,7 +361,7 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Improvement Per Year"),
                     width=6,
-                    tags$p("<Section reserved for comments>"),
+                    tags$p("Section reserved for future comments.", style="color:red"),
                     plotOutput(
                         outputId="undr_dynm_plot_ImprovementPerYear",
                         height="6in"
@@ -370,7 +370,7 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Distribution Per Country"),
                     width=6,
-                    tags$p("<Section reserved for comments>"),
+                    tags$p("Section reserved for future comments.", style="color:red"),
                     plotOutput(
                         outputId="undr_dynm_plot_DistributionPerCountry",
                         height="6in"
@@ -390,7 +390,7 @@ pag_Undernourishment <- tabItem(
                 title=tags$b("Completeness of Records"),
                 width=6,
                 style="border: 1px double lightgrey;",
-                tags$p("<Section reserved for comments>"),
+                tags$p("Section reserved for future comments.", style="color:red"),
                 plotOutput(
                     outputId="plt_undr_stat_Completeness",
                     height="20in"
@@ -400,7 +400,7 @@ pag_Undernourishment <- tabItem(
                 title=tags$b("Ridges per country"),
                 width=6,
                 style="border: 1px double lightgrey;",
-                tags$p("<Section reserved for comments>"),
+                tags$p("Section reserved for future comments.", style="color:red"),
                 plotOutput(
                     outputId="plt_undr_stat_Ridges",
                     height="20in"
