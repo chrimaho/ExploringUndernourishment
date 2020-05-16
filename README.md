@@ -17,9 +17,12 @@
 
 Exploring data from the United Nations to better understand undernourishment.
 
-## Overview
+## Shiny App
 
-Shiny application provided in the folder `ExploringUndernourishment\`.
+The primary means of exploring this data:
+
+* Shiny App deployed to: [Exploring Undernourishment](https://chrimaho.shinyapps.io/ExploringUndernourishment/).
+* Shiny App source code: [`ExploringUndernourishment\`](https://github.com/chrimaho/ExploringUndernourishment/tree/master/ExploringUndernourishment).
 
 ## Data Sources
 

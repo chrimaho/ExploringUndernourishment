@@ -382,192 +382,234 @@ summary {
 <div id="exploring-undernourishment" class="section level1">
 <h1>Exploring Undernourishment</h1>
 <p>Exploring data from the United Nations to better understand undernourishment.</p>
-<div id="overview" class="section level2">
-<h2>Overview</h2>
-<p>Shiny application provided in the folder <code>ExploringUndernourishment\</code>.</p>
+<div id="shiny-app" class="section level2">
+<h2>Shiny App</h2>
+<ul>
+<li>Shiny App deployed to: <a href="https://chrimaho.shinyapps.io/ExploringUndernourishment/">Exploring Undernourishment</a>.</li>
+<li>Shiny App source code: <a href="https://github.com/chrimaho/ExploringUndernourishment/tree/master/ExploringUndernourishment"><code>ExploringUndernourishment\</code></a>.</li>
+</ul>
 </div>
 <div id="data-sources" class="section level2">
 <h2>Data Sources</h2>
-<p>Data provided by <a href="http://www.fao.org/home/en/">Food and Agriculture Organization of the United Nations</a> (FAO).</p>
+<p>Data provided by:</p>
+<ul>
+<li><a href="http://www.fao.org/home/en/">Food and Agriculture Organization of the United Nations</a> (FAO).</li>
+</ul>
 <p>Raw data obtained from:</p>
-<blockquote>
 <ul>
 <li><a href="http://www.fao.org/faostat/en/#data/FS">FAO: Suite of Food Security Indicators</a></li>
 </ul>
-</blockquote>
 <p>Additional information about the data sources can be found at:</p>
-<blockquote>
 <ul>
 <li><a href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/">FAO: Sustainable Development Goals: Indicator 2.1.1 - Prevalence of Undernourishment</a></li>
 <li><a href="http://www.fao.org/economic/ess/ess-fs/ess-fadata/en/#.XrXa5Wgzack">FAO: Food Security Indicators</a></li>
 <li><a href="https://ourworldindata.org/hunger-and-undernourishment">Our World in Data: Hunger and Undernourishment</a></li>
 </ul>
-</blockquote>
 <hr />
 </div>
 <div id="data-dictionary" class="section level2">
 <h2>Data Dictionary</h2>
 <table>
 <colgroup>
-<col width="31%"></col>
-<col width="68%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Field</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>avg_dietary_adequacy</code></td>
-<td align="left">Average dietary energy supply adequacy (percent) (3-year average)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>pct_access_to_drinking_water</code></td>
-<td align="left">Percentage of population using at least basic drinking water services (percent)</td>
-</tr>
-</tbody>
-</table>
-<table>
-<colgroup>
-<col width="66%"></col>
-<col width="33%"></col>
+<col width="25%"></col>
+<col width="59%"></col>
+<col width="6%"></col>
+<col width="8%"></col>
 </colgroup>
 <thead>
 <tr class="header">
 <th align="left">variable</th>
-<th align="left">item</th>
+<th align="left">description</th>
+<th align="left">type</th>
+<th align="left">category</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left"><code>country</code></td>
-<td align="left">The country being reported against</td>
+<td align="left">The country being recorded</td>
+<td align="left">identifier</td>
+<td align="left">identifier</td>
 </tr>
 <tr class="even">
 <td align="left"><code>year</code></td>
-<td align="left">The reporting year</td>
+<td align="left">The year of record</td>
+<td align="left">identifier</td>
+<td align="left">identifier</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>avg_dietary_adequacy</code></td>
-<td align="left">Average dietary energy supply adequacy (percent) (3-year average)</td>
+<td align="left"><code>prevalence_of_undernourishment</code></td>
+<td align="left">Prevalence of undernourishment (percent) (3-year average)</td>
+<td align="left">target</td>
+<td align="left">target</td>
 </tr>
 <tr class="even">
+<td align="left"><code>percentage_of_arable_land</code></td>
+<td align="left">Percent of arable land equipped for irrigation (percent) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">agriculture</td>
+</tr>
+<tr class="odd">
 <td align="left"><code>avg_value_of_food_production</code></td>
 <td align="left">Average value of food production (constant 2004-2006 I$/cap) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">economics</td>
+</tr>
+<tr class="even">
+<td align="left"><code>cereal_import_dependency_ratio</code></td>
+<td align="left">Cereal import dependency ratio (percent) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">economics</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>food_imports_as_share_of_merch_exports</code></td>
+<td align="left">Value of food imports in total merchandise exports (percent) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">economics</td>
+</tr>
+<tr class="even">
+<td align="left"><code>gross_domestic_product_per_capita_ppp</code></td>
+<td align="left">Gross domestic product per capita, PPP, dissemination (constant 2011 international <span class="math inline">\() |other |economics | |`food_production_variability` |Per capita food production variability (constant 2004-2006 thousand int\)</span> per capita)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>food_supply_variability</code></td>
+<td align="left">Per capita food supply variability (kcal/cap/day)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
+</tr>
+<tr class="even">
+<td align="left"><code>avg_dietary_adequacy</code></td>
+<td align="left">Average dietary energy supply adequacy (percent) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>avg_protein_supply</code></td>
+<td align="left">Average protein supply (g/cap/day) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
+</tr>
+<tr class="even">
+<td align="left"><code>avg_supply_of_protein_of_animal_origin</code></td>
+<td align="left">Average supply of protein of animal origin (g/cap/day) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>caloric_energy_from_cereals_roots_tubers</code></td>
 <td align="left">Share of dietary energy supply derived from cereals, roots and tubers (kcal/cap/day) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
 </tr>
 <tr class="even">
-<td align="left"><code>avg_protein_supply</code></td>
-<td align="left">Average protein supply (g/cap/day) (3-year average)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>avg_supply_of_protein_of_animal_origin</code></td>
-<td align="left">Average supply of protein of animal origin (g/cap/day) (3-year average)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>gross_domestic_product_per_capita_ppp</code></td>
-<td align="left">Gross domestic product per capita, PPP, dissemination (constant 2011 international $)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>prv_prevalence_of_undernourishment</code></td>
-<td align="left">Prevalence of undernourishment (percent) (3-year average)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>num_people_undernourished</code></td>
-<td align="left">Number of people undernourished (million) (3-year average)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>prv_severe_food_insecurity</code></td>
-<td align="left">Prevalence of severe food insecurity in the total population (percent) (3-year average)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>prv_moderate_food_insecurity</code></td>
-<td align="left">Prevalence of moderate or severe food insecurity in the total population (percent) (3-year average)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>num_severe_food_insecurity</code></td>
-<td align="left">Number of severely food insecure people (million) (3-year average)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>num_moderate_food_insecurity</code></td>
+<td align="left"><code>number_moderate_food_insecurity</code></td>
 <td align="left">Number of moderately or severely food insecure people (million) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>cereal_import_dependency_ratio</code></td>
-<td align="left">Cereal import dependency ratio (percent) (3-year average)</td>
+<td align="left"><code>number_severe_food_insecurity</code></td>
+<td align="left">Number of severely food insecure people (million) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
 </tr>
 <tr class="even">
-<td align="left"><code>pct_arable_land</code></td>
-<td align="left">Percent of arable land equipped for irrigation (percent) (3-year average)</td>
+<td align="left"><code>prevalence_moderate_food_insecurity</code></td>
+<td align="left">Prevalence of moderate or severe food insecurity in the total population (percent) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>val_food_imports_as_share_of_merch_exports</code></td>
-<td align="left">Value of food imports in total merchandise exports (percent) (3-year average)</td>
+<td align="left"><code>prevalence_severe_food_insecurity</code></td>
+<td align="left">Prevalence of severe food insecurity in the total population (percent) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">food security</td>
 </tr>
 <tr class="even">
-<td align="left"><code>val_political_stability</code></td>
-<td align="left">Political stability and absence of violence/terrorism (index)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>val_food_production_variability</code></td>
-<td align="left">Per capita food production variability (constant 2004-2006 thousand int$ per capita)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>val_food_supply_variability</code></td>
-<td align="left">Per capita food supply variability (kcal/cap/day)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>pct_access_to_drinking_water</code></td>
+<td align="left"><code>access_to_basic_drinking_water</code></td>
 <td align="left">Percentage of population using at least basic drinking water services (percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
 </tr>
-<tr class="even">
-<td align="left"><code>pct_access_to_sanitation_services</code></td>
+<tr class="odd">
+<td align="left"><code>access_to_basic_sanitation_services</code></td>
 <td align="left">Percentage of population using at least basic sanitation services (percent)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>pct_children_affected_by_wasting</code></td>
-<td align="left">Percentage of children under 5 years affected by wasting (percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
 </tr>
 <tr class="even">
-<td align="left"><code>pct_children_who_are_stunted</code></td>
-<td align="left">Percentage of children under 5 years of age who are stunted (percent)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>pct_children_who_are_overweight</code></td>
-<td align="left">Percentage of children under 5 years of age who are overweight (percent)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>prv_adults_who_are_overweight</code></td>
-<td align="left">Prevalence of obesity in the adult population (18 years and older)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>prv_women_with_anemia</code></td>
+<td align="left"><code>prevalence_of_anemia</code></td>
 <td align="left">Prevalence of anemia among women of reproductive age (15-49 years)</td>
+<td align="left">other</td>
+<td align="left">health</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>prevalence_of_obesity</code></td>
+<td align="left">Prevalence of obesity in the adult population (18 years and older)</td>
+<td align="left">other</td>
+<td align="left">health</td>
 </tr>
 <tr class="even">
-<td align="left"><code>prv_women_who_can_breastfeed</code></td>
+<td align="left"><code>number_people_undernourished</code></td>
+<td align="left">Number of people undernourished (million) (3-year average)</td>
+<td align="left">other</td>
+<td align="left">health</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>children_affected_by_wasting</code></td>
+<td align="left">Percentage of children under 5 years affected by wasting (percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
+</tr>
+<tr class="even">
+<td align="left"><code>children_who_are_overweight</code></td>
+<td align="left">Percentage of children under 5 years of age who are overweight (percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>children_who_are_stunted</code></td>
+<td align="left">Percentage of children under 5 years of age who are stunted (percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
+</tr>
+<tr class="even">
+<td align="left"><code>prevalence_of_breastfeeding_women</code></td>
 <td align="left">Prevalence of exclusive breastfeeding among infants 0-5 months of age</td>
+<td align="left">other</td>
+<td align="left">health</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>val_rail_line_density</code></td>
-<td align="left">Rail lines density (total route in km per 100 square km of land area)</td>
-</tr>
-<tr class="even">
-<td align="left"><code>pct_access_to_managed_drinking_water</code></td>
+<td align="left"><code>access_to_improved_drinking_water</code></td>
 <td align="left">Percentage of population using safely managed drinking water services (Percent)</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>pct_access_to_managed_sanitation_services</code></td>
-<td align="left">Percentage of population using safely managed sanitation services (Percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
 </tr>
 <tr class="even">
-<td align="left"><code>prv_low_birthrate</code></td>
+<td align="left"><code>access_to_improved_sanitation_services</code></td>
+<td align="left">Percentage of population using safely managed sanitation services (Percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>prevalence_of_low_birthrate</code></td>
 <td align="left">Prevalence of low birthweight (percent)</td>
+<td align="left">other</td>
+<td align="left">health</td>
+</tr>
+<tr class="even">
+<td align="left"><code>rail_line_density</code></td>
+<td align="left">Rail lines density (total route in km per 100 square km of land area)</td>
+<td align="left">other</td>
+<td align="left">infrastructure</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>political_stability</code></td>
+<td align="left">Political stability and absence of violence/terrorism (index)</td>
+<td align="left">other</td>
+<td align="left">politics</td>
 </tr>
 </tbody>
 </table>
