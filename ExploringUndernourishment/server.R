@@ -87,6 +87,7 @@ server <- function(input, output, session) {
                 
                 # Make
                 plt_stat_MissingData <<- FaoStat_wide %>% 
+                    select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
                     miss_var_summary() %>% 
                     left_join(x=., y=FaoStat_VariableMapping %>% select(variable, category), by=c("variable"="variable")) %>% 
                     ggplot(aes(x=stats::reorder(variable, pct_miss))) + 
@@ -184,6 +185,7 @@ server <- function(input, output, session) {
                 
                 # Make
                 plt_hist_FeatureDistributions <<- FaoStat_wide %>% 
+                    select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
                     plt_grob_MultipleHistograms(c("country", "year"))
                 
             }
