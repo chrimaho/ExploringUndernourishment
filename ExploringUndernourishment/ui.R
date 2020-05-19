@@ -6,6 +6,8 @@
 #    Author     : chrimaho                                                     #
 #    Created    : 09/May/2020                                                  #
 #    References : https://rstudio.github.io/shinydashboard/structure.html      #
+#               : https://rinterface.com/shiny/shinydashboardPlus/             #
+#               : https://shiny.rstudio.com/gallery/selectize-examples.html    #
 #    Sources    : .                                                            #
 #    Edited     : 09/May/2020 - Initial creation                               #
 #                                                                              #
