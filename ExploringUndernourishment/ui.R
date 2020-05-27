@@ -66,7 +66,8 @@ sidebar <- dashboardSidebar(
         
         # Info 
         menuItem(
-            "Introduction", 
+            text="Introduction",
+            selected=TRUE,
             tabName="info",
             icon=icon("info-circle"),
             badgeLabel="info",
@@ -75,7 +76,8 @@ sidebar <- dashboardSidebar(
         
         # Disclaimer
         menuItem(
-            "Disclaimer",
+            text="Disclaimer",
+            # selected=TRUE,
             icon=icon("exclamation-triangle"),
             tabName="disclaimer",
             badgeLabel="legal",
@@ -159,6 +161,18 @@ pag_InfoPage <- tabItem(
     h1("Exploring Undernourishment"),
     h2("A visual data exploration for our better understanding"),
     
+    # Introduction ----
+    fluidRow(
+        box(
+            title=tags$b("Introduction"),
+            width=12,
+            tags$p(HTML(sprintf(
+                "The United Nations (UN) has placed a lot of emphasis on their Sustainable Development Goals (SDG) (%s). One of which is Goal 2: Zero Hunger (UN 2020b), from which the UN has set up the Food and Agriculture Organisation (FAO 2020A). This organisation has embarked on a journey to help understand and address the worlds needs for access to food. One of the indicators that they have set up is the Prevalence of Undernourishment (FAO 2020b), which is defined as “an estimate of the proportion of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life” (FAO 2020b).",
+                tags$a("UN 2020a", href="#UN_2020_SustainableDevelopmentGoals")
+            )))
+        )
+    ),
+    
     # Research Questions ----
     fluidRow(
         box(
@@ -211,7 +225,7 @@ pag_InfoPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Disclaimer                                                               ####
+# Disclaimer                                                                ####
 #------------------------------------------------------------------------------#
 
 pag_DisclaimerPage <- tabItem(
@@ -226,7 +240,7 @@ pag_DisclaimerPage <- tabItem(
     # Data Sources ----
     fluidRow(
         box(
-            title="Data Sources",
+            title=tags$b("Data Sources"),
             width=12,
             "Source data provided by:",
             tags$li(tags$a("Food and Agriculture Organization of the United Nations", href="http://www.fao.org/home/en/"), " (FAO)."),
@@ -244,20 +258,66 @@ pag_DisclaimerPage <- tabItem(
     # Disclaimer ----
     fluidRow(
         box(
-            title="Disclaimer",
+            title=tags$b("Disclaimer"),
             width=12,
-            tags$div("The data sources are provided as Open Source, and explored as Open Source."),
-            br(),
-            tags$div("The Author has no affiliation with the UN or with FAO, other than personal interest.")
+            tags$li("The data sources are provided as Open Source, and explored as Open Source."),
+            tags$li("The Author has no affiliation with the UN or with FAO, other than personal interest.")
         )
     ),
     
     # References ----
     fluidRow(
         box(
-            title="References",
+            title=tags$b("References"),
             width=12,
-            tags$div("References.")
+            tags$li(
+                id="AbafitaAndKim_2014_DeterminantsOfHouseholdFoodSecurity",
+                "Abafita & Kim 2014, ‘Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis’, Journal of Rural Development, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613."
+            ),
+            tags$li(
+                id="FAO_2020_FoodAndAgricultureOrganisation",
+                "FAO 2020, Food and Agriculture Organisation of the United Nations, viewed 11 May 2020, <http://www.fao.org/home/en/>."
+            ),
+            tags$li(
+                id="FAO_2019_TheStateOfFoodSecurity",
+                "FAO 2019, The State of Food Security and Nutrition in the World: Safeguarding Against Economic Slowdowns and Downturns, viewed 16 May 2020, <http://www.fao.org/3/ca5162en/ca5162en.pdf>."
+            ),
+            tags$li(
+                id="FAO_2020_SustainableDevelopmentGoals",
+                "FAO 2020, Sustainable Development Goals: Indicator 2.1.1 - Prevalence of undernourishment, viewed 11 May 2020, <http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/>."
+            ),
+            tags$li(
+                id="FAO_2020_FaoStat",
+                "FAO 2020, FAOStat, viewed 7 May 2020, <http://www.fao.org/faostat/en/#data/FS>."
+            ),
+            tags$li(
+                id="FAO_2020_EnhancedParametricApproach",
+                "FAO 2020, Enhanced Parametric Approach Including In-Depth Thematic Analysis of Underlying Factors and Drivers Behind Food Security and Nutrition Trends, viewed 16 May 2020, <https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf>."
+            ),
+            tags$li(
+                id="FontellAndLuchsinger_2011_SustainableEffortsToEradicate",
+                "Fontell & Luchsinger 2011, ‘Sustainable efforts to eradicate Global hunger, undernourishment and malnutrition’, Journal of Global Business Issues, vol. 5, no. 2, pp. 79-83, ProQuest central database."
+            ),
+            tags$li(
+                id="HassirFryEtAl_2015_SocioEconomicDeterminants",
+                "Harris-Fry et al. 2015, ‘Socio-economic determinants of household food security and womens dietary diversity in rural Bangladesh: a cross-sectional study’, Journal of Health, Population and Nutrition, vol. 33, ISSN: 16060997, DOI: 10.1186/s41043-015-0022-0."
+            ),
+            tags$li(
+                id="MbolanyiEtAl_2017_DeterminantsOfHouseholdFoodSecurity",
+                "Mbolanyi et al. 2017, ‘Determinants of household food security in a rangeland area of Uganda’, African Journal of Rural Development, vol. 2, no. 2, pp. 213-23, ISSN: 2415-2838, DOI: 10.22004/ag.econ.262839."
+            ),
+            tags$li(
+                id="MughalAndFontanSers_2020_SerialProductionUndernourishment",
+                "Mughal & Fontan-Sers 2020, ‘Cereal production, undernourishment, and food insecurity in South Asia, Review of Development Economics, vol. 24, no. 2, pp. 524-45, Wiley Online Library, <https://doi-org.ezproxy.lib.uts.edu.au/10.1111/rode.12659>."
+            ),
+            tags$li(
+                id="UN_2020_SustainableDevelopmentGoals",
+                "UN 2020a, Sustainable Development Goals, viewed 11 May 2020, <https://www.un.org/sustainabledevelopment/sustainable-development-goals/>."
+            ),
+            tags$li(
+                id="UN_2020_GoalTwoZeroHunger",
+                "UN 2020b, Goal 2: Zero Hunger, viewed 11 May 2020, <https://www.un.org/sustainabledevelopment/hunger/>."
+            ),
         )
     )
     
