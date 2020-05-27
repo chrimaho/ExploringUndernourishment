@@ -58,6 +58,9 @@ header <- dashboardHeaderPlus(
 #                                                                              #
 #------------------------------------------------------------------------------#
 
+# !Note! Available badgeColor values are:
+# red, yellow, aqua, blue, light-blue, green, navy, teal, olive, lime, orange, fuchsia, purple, maroon, black
+
 sidebar <- dashboardSidebar(
     sidebarMenu(
         
@@ -70,31 +73,58 @@ sidebar <- dashboardSidebar(
             badgeColor="green"
         ),
         
-        # Overall Stats
+        # Disclaimer
         menuItem(
-            "Overall Statistics",
-            icon=icon("chart-pie"),
-            tabName="stats_total",
-            badgeLabel="big",
-            badgeColor="blue"
+            "Disclaimer",
+            icon=icon("exclamation-triangle"),
+            tabName="disclaimer",
+            badgeLabel="legal",
+            badgeColor="red"
         ),
         
-        # Feature Stats
+        # Data Description
         menuItem(
-            "Feature Statistics",
+            "Data Description",
             icon=icon("chart-pie"),
-            tabName="stats_features",
-            badgeLabel="small",
-            badgeColor="teal"
-        ),
-        
-        # Undernourishment
-        menuItem(
-            "Undernourishment",
-            tabName="undernourishment",
-            icon=icon("seedling"),
-            badgeLabel="food",
-            badgeColor="orange"
+            tabName="data_description",
+            startExpanded=TRUE,
+            
+            # Dictionary
+            menuItem(
+                "Dictionary",
+                tabName="dictionary",
+                icon=icon("book"),
+                badgeLabel="ref",
+                badgeColor="blue"
+            ),
+            
+            # Undernourishment
+            menuItem(
+                "Undernourishment",
+                tabName="undernourishment",
+                icon=icon("seedling"),
+                badgeLabel="food",
+                badgeColor="blue"
+            ),
+            
+            # Overall Stats
+            menuItem(
+                "Overall Statistics",
+                icon=icon("chart-pie"),
+                tabName="stats_total",
+                badgeLabel="big",
+                badgeColor="blue"
+            ),
+            
+            # Feature Stats
+            menuItem(
+                "Feature Statistics",
+                icon=icon("chart-pie"),
+                tabName="stats_features",
+                badgeLabel="small",
+                badgeColor="blue"
+            )
+            
         ),
         
         # Add Socials
@@ -116,15 +146,84 @@ sidebar <- dashboardSidebar(
 #                                                                              #
 #------------------------------------------------------------------------------#
 
-
 #------------------------------------------------------------------------------#
 # Information                                                               ####
 #------------------------------------------------------------------------------#
 
 pag_InfoPage <- tabItem(
+    
+    # Name ----
     tabName="info",
+    
+    # Header ----
     h1("Exploring Undernourishment"),
-    h3("A visual data exploration for our better understanding"),
+    h2("A visual data exploration for our better understanding"),
+    
+    # Research Questions ----
+    fluidRow(
+        box(
+            title=tags$b("Research Question 1"),
+            width=6,
+            h6("Question:"),
+            div("What has been the trend of Undernourishment in the last 20 years?"), br(),
+            div("Hypothesis:"),
+            div("There has been a general trend to decrease the prevelance over the last two decades."), br()
+        ),
+        box(
+            title=tags$b("Research Question 2"),
+            width=6,
+            div("Question:"),
+            div("Which country is most successfully addressing undernourishment?"), br(),
+            div("Hypothesis:"),
+            div("This."), br()
+        )
+    ),
+    fluidRow(
+        box(
+            title=tags$b("Research Question 3"),
+            width=6,
+            div("Question:"),
+            div("Have there been any substantial increases (or decreases) in undernourishment; and if so, why?"), br(),
+            div("Hypothesis:"),
+            div(""), br()
+        ),
+        box(
+            title=tags$b("Research Question 4"),
+            width=6,
+            div("Question:"),
+            div("Which of the indicators from FAO is most indicative of the prevalence of undernourishment (most influential feature)?"), br(),
+            div("Hypothesis:"),
+            div(""), br()
+        )
+    ),
+    fluidRow(
+        box(
+            title=tags$b("Research Question 5"),
+            width=6,
+            div("Question:"),
+            div("Are there any other interesting learnings to be taken from this data set? Such as: is it more important to have arable land or optimal trade routes?"), br(),
+            div("Hypothesis:"),
+            div(""), br()
+        )
+    )
+    
+)
+
+
+#------------------------------------------------------------------------------#
+# Disclaimer                                                               ####
+#------------------------------------------------------------------------------#
+
+pag_DisclaimerPage <- tabItem(
+    
+    # Name ----
+    tabName="disclaimer",
+    
+    # Header ----
+    h1("Disclaimer"),
+    h3("This is the important information"),
+    
+    # Data Sources ----
     fluidRow(
         box(
             title="Data Sources",
@@ -141,6 +240,8 @@ pag_InfoPage <- tabItem(
             tags$li(tags$a("Our World in Data: Hunger and Undernourishment", href="https://ourworldindata.org/hunger-and-undernourishment"))
         )
     ),
+    
+    # Disclaimer ----
     fluidRow(
         box(
             title="Disclaimer",
@@ -150,6 +251,32 @@ pag_InfoPage <- tabItem(
             tags$div("The Author has no affiliation with the UN or with FAO, other than personal interest.")
         )
     ),
+    
+    # References ----
+    fluidRow(
+        box(
+            title="References",
+            width=12,
+            tags$div("References.")
+        )
+    )
+    
+)
+
+
+#------------------------------------------------------------------------------#
+# Dictionary                                                                ####
+#------------------------------------------------------------------------------#
+
+pag_DictionaryPage <- tabItem(
+    
+    # Name ----
+    tabName="dictionary",
+    
+    # Header ----
+    h1("Data Dictionary"),
+    
+    # Data Dictionary ----
     fluidRow(
         box(
             title="Data Dictionary",
@@ -170,7 +297,7 @@ pag_InfoPage <- tabItem(
 pag_StatTotalPage <- tabItem(
     tabName="stats_total",
     
-    # Header
+    # Header ----
     h1("Overall Statistics"),
     
     # Distribution of target ----
@@ -267,10 +394,12 @@ pag_StatTotalPage <- tabItem(
 # Feature Statistics                                                        ####
 #------------------------------------------------------------------------------#
 
-pag_StatFaeturesPage <- tabItem(
+pag_StatFeaturesPage <- tabItem(
+    
+    # Name ----
     tabName="stats_features",
     
-    # Header
+    # Header ----
     h1("Feature-Wise Statistics"),
     
     # Distribution of all variables ----
@@ -315,6 +444,8 @@ pag_StatFaeturesPage <- tabItem(
 #------------------------------------------------------------------------------#
 
 pag_Undernourishment <- tabItem(
+    
+    # Name ----
     tabName="undernourishment",
     
     # Header ----
@@ -420,7 +551,9 @@ pag_Undernourishment <- tabItem(
 body <- dashboardBody(
     tabItems(
         pag_InfoPage,
-        pag_StatFaeturesPage,
+        pag_DisclaimerPage,
+        pag_DictionaryPage,
+        pag_StatFeaturesPage,
         pag_StatTotalPage,
         pag_Undernourishment
     )
