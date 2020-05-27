@@ -462,3 +462,57 @@ plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=
     return(plot)
 }
 
+donut_percentage <- function(value, labels, title){
+    ######################################################################################################
+    # https://www.r-graph-gallery.com/128-ring-or-donut-plot.html
+    # Create test data.
+    data <- data.frame(
+        category=labels,
+        count=c(value, (100 - value))
+    )
+    data$fraction <- data$count / sum(data$count)
+    
+    # Compute the cumulative percentages (top of each rectangle)
+    data$ymax <- cumsum(data$fraction)
+    
+    # Compute the bottom of each rectangle
+    data$ymin <- c(0, head(data$ymax, n=-1))
+    
+    # Compute label position
+    data$labelPosition <- (data$ymax + data$ymin) / 2
+    
+    # Compute a good label
+    data$label <- paste0(data$category, "\n value: ", data$count, '%')
+    
+    # Make the plot
+    ggplot(data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=category)) +
+        geom_rect() +
+        geom_label( x=3.5, aes(y=labelPosition, label=label), size=6) +
+        scale_fill_brewer(palette=4) +
+        coord_polar(theta="y") +
+        xlim(c(2, 4)) +
+        theme_void() +
+        theme(legend.position = "none") +
+        ggtitle(title) +
+        theme(plot.title = element_text(hjust = 0.5))
+}
+
+plot_confusion <- function(confusion, title){
+    ########################################################################################
+    # https://stackoverflow.com/questions/37897252/plot-confusion-matrix-in-r-using-ggplot #
+    # Expects a confusion matrix produced by caret::confusionMatrix                        #
+    ########################################################################################
+    table <- as.data.frame(confusion$table)
+    plotTable <- table %>%
+        mutate(goodbad = ifelse(table$Prediction == table$Reference, "good", "bad")) %>%
+        group_by(Reference) %>%
+        mutate(prop = Freq/sum(Freq))
+    
+    ggplot(data = plotTable, mapping = aes(x = Reference, y = Prediction, fill = goodbad, alpha = prop)) +
+        geom_tile() +
+        geom_text(aes(label = Freq), vjust = .5, fontface  = "bold", alpha = 1) +
+        scale_fill_manual(values = c(good = "green", bad = "red")) +
+        theme_bw() +
+        xlim(rev(levels(table$Reference))) +
+        ggtitle(title)
+}
