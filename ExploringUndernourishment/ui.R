@@ -93,7 +93,7 @@ sidebar <- dashboardSidebar(
             
             # Dictionary
             menuItem(
-                "Dictionary",
+                "Data Dictionary",
                 tabName="dictionary",
                 icon=icon("book"),
                 badgeLabel="ref",
@@ -129,9 +129,27 @@ sidebar <- dashboardSidebar(
             
         ),
         
+        # Research Questions
+        menuItem(
+            "Research Questions",
+            icon=icon("graduation-cap"),
+            tabName="research_questions",
+            startExpanded=TRUE,
+            
+            # General Trend
+            menuItem(
+                "General Trend",
+                icon=icon("chart-line"),
+                tabName="general_trend",
+                badgeLabel="general",
+                badgeColor="green"
+            )
+            
+        ),
+        
         # Add Socials
         tags$hr(),
-        tags$a("App By Chris Mahoney"), br(),
+        tags$a("App Developer: Chris Mahoney"), br(),
         tags$ol(tags$a(icon("linkedin"), "LinkedIn", href="https://www.linkedin.com/in/chrimaho/")),
         tags$ol(tags$a(icon("github"), "GitHub", href="https://github.com/chrimaho/ExploringUndernourishment/")),
         tags$ol(tags$a(icon("medium"), "Medium", href="https://medium.com/@chrimaho")),
@@ -158,7 +176,7 @@ pag_InfoPage <- tabItem(
     tabName="info",
     
     # Header ----
-    h1("Exploring Undernourishment"),
+    h1(tags$b("Exploring Undernourishment")),
     h2("A visual data exploration for our better understanding"),
     
     # Introduction ----
@@ -167,8 +185,17 @@ pag_InfoPage <- tabItem(
             title=tags$b("Introduction"),
             width=12,
             tags$p(HTML(sprintf(
-                "The United Nations (UN) has placed a lot of emphasis on their Sustainable Development Goals (SDG) (%s). One of which is Goal 2: Zero Hunger (UN 2020b), from which the UN has set up the Food and Agriculture Organisation (FAO 2020A). This organisation has embarked on a journey to help understand and address the worlds needs for access to food. One of the indicators that they have set up is the Prevalence of Undernourishment (FAO 2020b), which is defined as “an estimate of the proportion of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life” (FAO 2020b).",
-                tags$a("UN 2020a", href="#UN_2020_SustainableDevelopmentGoals")
+                "The %s (UN) has placed a lot of emphasis on their %s (SDG), one of which is: %s. To address this, the UN has set up the %s. This organisation has embarked on a journey to help understand and address the worlds needs for access to food. One of the indicators that they have set up is the %s, which is defined as: %s.",
+                tags$a("United Nations", href="https://www.un.org/"),
+                tags$a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"),
+                tags$a("Goal 2: Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/"),
+                tags$a("Food and Agriculture Oranisation", href="http://www.fao.org/home/en/"),
+                tags$a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/"),
+                tags$i("an estimate of the proportion of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life")
+            ))),
+            tags$p(HTML(sprintf(
+                "This app uses data provided by the %s, and a number of exploratory data analysis techniques to investigate four reserach questions, which are detailed below.",
+                tags$a("FAO", href="http://www.fao.org/faostat/en/#data/FS")
             )))
         )
     ),
@@ -176,51 +203,40 @@ pag_InfoPage <- tabItem(
     # Research Questions ----
     fluidRow(
         box(
-            title=tags$b("Research Question 1"),
+            title=tags$b("Research Area 1: General Trend"),
             width=6,
-            h6("Question:"),
-            div("What has been the trend of Undernourishment in the last 20 years?"), br(),
-            div("Hypothesis:"),
-            div("There has been a general trend to decrease the prevelance over the last two decades."), br()
+            tags$b("Question:"),
+            tags$p("What has been the trend of Undernourishment in the last 20 years?"),
+            tags$b("Hypothesis:"),
+            tags$p("There has been a general trend to decrease the prevelance over the last two decades.")
         ),
         box(
-            title=tags$b("Research Question 2"),
+            title=tags$b("Research Area 2: Most Successful Country"),
             width=6,
-            div("Question:"),
-            div("Which country is most successfully addressing undernourishment?"), br(),
-            div("Hypothesis:"),
-            div("This."), br()
+            tags$b("Question:"),
+            tags$p("Which country is most successfully addressing undernourishment?"),
+            tags$b("Hypothesis:"),
+            tags$p("South-East Asian countries (for example, Vietnam) have made substantial progress in recent decades to break out of poverty; therefore there has been an associated success trend in their prevalence of undernourishment.")
         )
     ),
     fluidRow(
         box(
-            title=tags$b("Research Question 3"),
+            title=tags$b("Research Area 3: Surprising Trends"),
             width=6,
-            div("Question:"),
-            div("Have there been any substantial increases (or decreases) in undernourishment; and if so, why?"), br(),
-            div("Hypothesis:"),
-            div(""), br()
+            tags$b("Question:"),
+            tags$p("Have there been any substantial increases (or decreases) in undernourishment?"),
+            tags$b("Hypothesis:"),
+            tags$p("Due to events happening in the Middle Eastern region of the world, this has lead to some negative results on some countries ability to address their Prevalence of Undernourishment score.")
         ),
         box(
-            title=tags$b("Research Question 4"),
+            title=tags$b("Research Area 4: Most Influential Indicator"),
             width=6,
-            div("Question:"),
-            div("Which of the indicators from FAO is most indicative of the prevalence of undernourishment (most influential feature)?"), br(),
-            div("Hypothesis:"),
-            div(""), br()
-        )
-    ),
-    fluidRow(
-        box(
-            title=tags$b("Research Question 5"),
-            width=6,
-            div("Question:"),
-            div("Are there any other interesting learnings to be taken from this data set? Such as: is it more important to have arable land or optimal trade routes?"), br(),
-            div("Hypothesis:"),
-            div(""), br()
+            tags$b("Question:"),
+            tags$p("Which of the features in the FAO data set is most indicative of the prevalence of undernourishment (most influential feature)?"),
+            tags$b("Hypothesis:"),
+            tags$p("There will be an interesting trade-off between the self-sustaining indicators (such as amount of arable land and ability to grow crops), and the free-trade indicators (such as ).")
         )
     )
-    
 )
 
 
@@ -271,51 +287,39 @@ pag_DisclaimerPage <- tabItem(
             title=tags$b("References"),
             width=12,
             tags$li(
-                id="AbafitaAndKim_2014_DeterminantsOfHouseholdFoodSecurity",
                 "Abafita & Kim 2014, ‘Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis’, Journal of Rural Development, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613."
             ),
             tags$li(
-                id="FAO_2020_FoodAndAgricultureOrganisation",
                 "FAO 2020, Food and Agriculture Organisation of the United Nations, viewed 11 May 2020, <http://www.fao.org/home/en/>."
             ),
             tags$li(
-                id="FAO_2019_TheStateOfFoodSecurity",
                 "FAO 2019, The State of Food Security and Nutrition in the World: Safeguarding Against Economic Slowdowns and Downturns, viewed 16 May 2020, <http://www.fao.org/3/ca5162en/ca5162en.pdf>."
             ),
             tags$li(
-                id="FAO_2020_SustainableDevelopmentGoals",
                 "FAO 2020, Sustainable Development Goals: Indicator 2.1.1 - Prevalence of undernourishment, viewed 11 May 2020, <http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/>."
             ),
             tags$li(
-                id="FAO_2020_FaoStat",
                 "FAO 2020, FAOStat, viewed 7 May 2020, <http://www.fao.org/faostat/en/#data/FS>."
             ),
             tags$li(
-                id="FAO_2020_EnhancedParametricApproach",
                 "FAO 2020, Enhanced Parametric Approach Including In-Depth Thematic Analysis of Underlying Factors and Drivers Behind Food Security and Nutrition Trends, viewed 16 May 2020, <https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf>."
             ),
             tags$li(
-                id="FontellAndLuchsinger_2011_SustainableEffortsToEradicate",
                 "Fontell & Luchsinger 2011, ‘Sustainable efforts to eradicate Global hunger, undernourishment and malnutrition’, Journal of Global Business Issues, vol. 5, no. 2, pp. 79-83, ProQuest central database."
             ),
             tags$li(
-                id="HassirFryEtAl_2015_SocioEconomicDeterminants",
                 "Harris-Fry et al. 2015, ‘Socio-economic determinants of household food security and womens dietary diversity in rural Bangladesh: a cross-sectional study’, Journal of Health, Population and Nutrition, vol. 33, ISSN: 16060997, DOI: 10.1186/s41043-015-0022-0."
             ),
             tags$li(
-                id="MbolanyiEtAl_2017_DeterminantsOfHouseholdFoodSecurity",
                 "Mbolanyi et al. 2017, ‘Determinants of household food security in a rangeland area of Uganda’, African Journal of Rural Development, vol. 2, no. 2, pp. 213-23, ISSN: 2415-2838, DOI: 10.22004/ag.econ.262839."
             ),
             tags$li(
-                id="MughalAndFontanSers_2020_SerialProductionUndernourishment",
                 "Mughal & Fontan-Sers 2020, ‘Cereal production, undernourishment, and food insecurity in South Asia, Review of Development Economics, vol. 24, no. 2, pp. 524-45, Wiley Online Library, <https://doi-org.ezproxy.lib.uts.edu.au/10.1111/rode.12659>."
             ),
             tags$li(
-                id="UN_2020_SustainableDevelopmentGoals",
                 "UN 2020a, Sustainable Development Goals, viewed 11 May 2020, <https://www.un.org/sustainabledevelopment/sustainable-development-goals/>."
             ),
             tags$li(
-                id="UN_2020_GoalTwoZeroHunger",
                 "UN 2020b, Goal 2: Zero Hunger, viewed 11 May 2020, <https://www.un.org/sustainabledevelopment/hunger/>."
             ),
         )
