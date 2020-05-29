@@ -135,6 +135,37 @@ str_NotRight <- function(string, num_chars) {
 }
 
 
+str_Format <- function(string, ...) {
+    #' @title String Formatter
+    #' @description Take an input string, and substitute in-string variables.
+    #' @note This is similar to the Python `string.foramt()` method.
+    #' @param string string. The string to be re-formatted. Note, each of the named arguments must be surrounded in curly brackets.
+    #' @param ... variables. A list of named variables. Note, each of these arguments must align to the variables in curly brackets from the `string` argument. These will be combined in to a list.
+    #' @return A formatted string
+    #' @example str_Format("Sammy the {animal} {verb} a {noun}.", animal="shark", verb="made", noun="car")
+    #' @references https://stackoverflow.com/questions/44763056/is-there-an-r-equivalent-of-pythons-string-format-function#answer-44763659
+    #' @author chrimaho
+    
+    # Import packages ----
+    require(stringr)
+    
+    # Validations ----
+    assert_that(is.string(string))
+    assert_that(c("stringr") %all_in% .packages(), msg="The packages 'stringr' must be mounted.")
+    
+    # Get arguments ----
+    envir <- as.environment(list(...))
+    parent.env(envir) <- .GlobalEnv
+    
+    # Perform substitution
+    string <- str_replace_all(string, "\\{", "${")
+    str_return <- str_interp(string=string, env=envir)
+    
+    # Return ----
+    return(str_return)
+    
+}
+
 
 #------------------------------------------------------------------------------#
 # Object Details                                                            ####
