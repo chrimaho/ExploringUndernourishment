@@ -20,6 +20,7 @@ source("functions.R", local=TRUE)
 # Import libraries ----
 library(tidyverse)
 library(knitr)
+library(stringr)
 library(shiny)
 library(magrittr)
 library(ggridges)
