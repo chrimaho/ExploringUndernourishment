@@ -204,19 +204,19 @@ sidebar <- dashboardSidebar(
 #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
-# Information                                                               ####
+# . Information                                                             ####
 #------------------------------------------------------------------------------#
 
 pag_InfoPage <- tabItem(
     
-    # Name ----
+    # . . Name ----
     tabName="info",
     
-    # Header ----
+    # . . Header ----
     h1(tags$b("Exploring Undernourishment")),
     h2("A visual data exploration for our better understanding"),
     
-    # Introduction ----
+    # . . Introduction ----
     fluidRow(
         box(
             title=tags$b(id="Intro", "Introduction"),
@@ -237,7 +237,7 @@ pag_InfoPage <- tabItem(
         )
     ),
     
-    # Research Questions ----
+    # . . Research Questions ----
     fluidRow(
         box(
             title=tags$b(id="RA1", "Research Area 1: General Trend"),
@@ -278,19 +278,19 @@ pag_InfoPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Disclaimer                                                                ####
+# . Disclaimer                                                              ####
 #------------------------------------------------------------------------------#
 
 pag_DisclaimerPage <- tabItem(
     
-    # Name ----
+    # . . Name ----
     tabName="disclaimer",
     
-    # Header ----
+    # . . Header ----
     h1("Disclaimer"),
     h3("This is the important information"),
     
-    # Data Sources ----
+    # . . Data Sources ----
     fluidRow(
         box(
             title=tags$b("Data Sources"),
@@ -308,7 +308,7 @@ pag_DisclaimerPage <- tabItem(
         )
     ),
     
-    # Disclaimer ----
+    # . . Disclaimer ----
     fluidRow(
         box(
             title=tags$b("Disclaimer"),
@@ -318,7 +318,7 @@ pag_DisclaimerPage <- tabItem(
         )
     ),
     
-    # References ----
+    # . . References ----
     fluidRow(
         box(
             title=tags$b("References"),
@@ -367,18 +367,18 @@ pag_DisclaimerPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Data Dictionary                                                           ####
+# . Data Dictionary                                                         ####
 #------------------------------------------------------------------------------#
 
 pag_DictionaryPage <- tabItem(
     
-    # Name ----
+    # . . Name ----
     tabName="dictionary",
     
-    # Header ----
+    # . . Header ----
     h1("Data Dictionary"),
     
-    # Data Dictionary ----
+    # . . Data Dictionary ----
     fluidRow(
         box(
             title="Data Dictionary",
@@ -393,18 +393,18 @@ pag_DictionaryPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Undernourishment                                                          ####
+# . Undernourishment                                                  ####
 #------------------------------------------------------------------------------#
 
 pag_Undernourishment <- tabItem(
     
-    # Name ----
+    # . . Name ----
     tabName="undernourishment",
     
-    # Header ----
+    # . . Header ----
     h1("Aspects to Undernourishment"),
     
-    # Dynamic part ----
+    # . . Dynamic part ----
     fluidRow(
         box(
             
@@ -467,7 +467,7 @@ pag_Undernourishment <- tabItem(
     ),
     
     
-    # Static Part ----
+    # . . Static Part ----
     fluidRow(
         box(
             h2("Static Part"),
@@ -499,18 +499,18 @@ pag_Undernourishment <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Feature Interactions                                                      ####
+# . Feature Interactions                                                    ####
 #------------------------------------------------------------------------------#
 
 pag_StatFeatureInteractionsPage <- tabItem(
     
-    # Name ----
+    # . . Name ----
     tabName="interactions",
     
-    # Header ----
+    # . . Header ----
     h1("Feature Interactions"),
     
-    # Heading3 ----
+    # . . Heading3 ----
     fluidRow(
         box(
             
@@ -568,18 +568,18 @@ pag_StatFeatureInteractionsPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Overall Statistics                                                        ####
+# . Overall Statistics                                                      ####
 #------------------------------------------------------------------------------#
 
 pag_StatTotalPage <- tabItem(
     
-    # Name ----
+    # . . Name ----
     tabName="stats_total",
     
-    # Header ----
+    # . . Header ----
     h1("Overall Statistics"),
     
-    # Distribution of target ----
+    # . . Distribution of target ----
     fluidRow(
         box(
             title="Histogram of Undernourishment",
@@ -600,7 +600,7 @@ pag_StatTotalPage <- tabItem(
         )
     ),
     
-    # Percentage of missingness ----
+    # . . Percentage of missingness ----
     fluidRow(
         box(
             title="Percentage of Missing Data per Feature",
@@ -622,7 +622,7 @@ pag_StatTotalPage <- tabItem(
         )
     ),
     
-    # Correlation of all variables ----
+    # . . Correlation of all variables ----
     fluidRow(
         box(
             title="Correlation Plot of each Feature",
@@ -644,7 +644,7 @@ pag_StatTotalPage <- tabItem(
         )
     ),
     
-    # Ridge Plot ----
+    # . . Ridge Plot ----
     fluidRow(
         box(
             title="Ridge Plot of Undernourishment per Year",
@@ -670,18 +670,18 @@ pag_StatTotalPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Feature Statistics                                                        ####
+# . Feature Statistics                                                      ####
 #------------------------------------------------------------------------------#
 
 pag_StatFeaturesPage <- tabItem(
     
-    # Name ----
+    # . . Name ----
     tabName="stats_features",
     
-    # Header ----
+    # . . Header ----
     h1("Feature-Wise Statistics"),
     
-    # Distribution of all variables ----
+    # . . Distribution of all variables ----
     fluidRow(
         box(
             title="This",
@@ -697,7 +697,7 @@ pag_StatFeaturesPage <- tabItem(
         )
     ),
     
-    # Statistics of all variables ----
+    # . . Statistics of all variables ----
     fluidRow(
         box(
             title="Data Frame Statistics",
@@ -721,7 +721,7 @@ pag_StatFeaturesPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Pull together                                                             ####
+# . Pull together                                                           ####
 #------------------------------------------------------------------------------#
 
 body <- dashboardBody(
@@ -744,7 +744,7 @@ body <- dashboardBody(
 #                                                                              #
 #------------------------------------------------------------------------------#
 
-# Set the UI ----
+# . . Set the UI ----
 ui <- dashboardPagePlus(
     header,
     sidebar,
