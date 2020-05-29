@@ -67,7 +67,7 @@ sidebar <- dashboardSidebar(
         # Info 
         menuItem(
             text="Introduction",
-            selected=TRUE,
+            # selected=TRUE,
             tabName="info",
             icon=icon("info-circle"),
             badgeLabel="info",
@@ -86,10 +86,10 @@ sidebar <- dashboardSidebar(
         
         # Data Description
         menuItem(
-            "Data Description",
+            "Data Details",
             icon=icon("chart-pie"),
             tabName="data_description",
-            # startExpanded=TRUE,
+            startExpanded=TRUE,
             
             # Dictionary
             menuItem(
@@ -106,6 +106,16 @@ sidebar <- dashboardSidebar(
                 tabName="undernourishment",
                 icon=icon("seedling"),
                 badgeLabel="food",
+                badgeColor="blue"
+            ),
+            
+            # Feature Interaction
+            menuItem(
+                "Feature Interactions",
+                tabName="interactions",
+                selected=TRUE,
+                icon=icon("project-diagram"),
+                badgeLabel="corr",
                 badgeColor="blue"
             ),
             
@@ -357,7 +367,7 @@ pag_DisclaimerPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
-# Dictionary                                                                ####
+# Data Dictionary                                                           ####
 #------------------------------------------------------------------------------#
 
 pag_DictionaryPage <- tabItem(
@@ -383,10 +393,187 @@ pag_DictionaryPage <- tabItem(
 
 
 #------------------------------------------------------------------------------#
+# Undernourishment                                                          ####
+#------------------------------------------------------------------------------#
+
+pag_Undernourishment <- tabItem(
+    
+    # Name ----
+    tabName="undernourishment",
+    
+    # Header ----
+    h1("Aspects to Undernourishment"),
+    
+    # Dynamic part ----
+    fluidRow(
+        box(
+            
+            # Sub Header
+            h2("Dynamic Part"),
+            width=12,
+            
+            # Selections
+            fluidRow(
+                title=tags$b("Selections"),
+                width=12,
+                column(
+                    width=3,
+                    selectizeInput(
+                        "undr_dynm_inbx_SelectedCountries",
+                        h4("Select Countries"),
+                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(country) %>% distinct(),
+                        selected="Thailand",
+                        multiple=TRUE,
+                    )
+                ),
+                column(
+                    width=9,
+                    sliderInput(
+                        "undr_dynm_slid_SelectedYears",
+                        h4("Select Years"),
+                        min=2000,
+                        max=2020,
+                        value=c(2001,2019),
+                        step=1,
+                        sep="",
+                        ticks=FALSE,
+                        dragRange=TRUE
+                    )
+                )
+            ),
+            
+            # Plots
+            fixedRow(
+                column(
+                    title=tags$b("Improvement Per Year"),
+                    width=6,
+                    tags$p("Section reserved for future comments.", style="color:red"),
+                    plotOutput(
+                        outputId="undr_dynm_plot_ImprovementPerYear",
+                        height="6in"
+                    )
+                ),
+                column(
+                    title=tags$b("Distribution Per Country"),
+                    width=6,
+                    tags$p("Section reserved for future comments.", style="color:red"),
+                    plotOutput(
+                        outputId="undr_dynm_plot_DistributionPerCountry",
+                        height="6in"
+                    )
+                )
+            )
+        )
+    ),
+    
+    
+    # Static Part ----
+    fluidRow(
+        box(
+            h2("Static Part"),
+            width=12,
+            column(
+                title=tags$b("Completeness of Records"),
+                width=6,
+                style="border: 1px double lightgrey;",
+                tags$p("Section reserved for future comments.", style="color:red"),
+                plotOutput(
+                    outputId="plt_undr_stat_Completeness",
+                    height="20in"
+                )
+            ),
+            column(
+                title=tags$b("Ridges per country"),
+                width=6,
+                style="border: 1px double lightgrey;",
+                tags$p("Section reserved for future comments.", style="color:red"),
+                plotOutput(
+                    outputId="plt_undr_stat_Ridges",
+                    height="20in"
+                )
+            )
+        )
+    )
+    
+)
+
+
+#------------------------------------------------------------------------------#
+# Feature Interactions                                                      ####
+#------------------------------------------------------------------------------#
+
+pag_StatFeatureInteractionsPage <- tabItem(
+    
+    # Name ----
+    tabName="interactions",
+    
+    # Header ----
+    h1("Feature Interactions"),
+    
+    # Heading3 ----
+    fluidRow(
+        box(
+            
+            h2("Dynamic Plotting"),
+            width=12,
+            
+            # Selections
+            fluidRow(
+                title=tags$b("Selections"),
+                width=12,
+                column(
+                    width=4,
+                    selectizeInput(
+                        "inta_dynm_inbx_SelectedCountries",
+                        h4("Select Countries"),
+                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(country) %>% distinct(),
+                        selected=c("Thailand", "Viet Nam"),
+                        multiple=TRUE,
+                        options=list(maxItems=5)
+                    )
+                ),
+                column(
+                    width=4,
+                    selectizeInput(
+                        "inta_dynm_inbx_SelectedXFeature",
+                        h4("Select X Feature"),
+                        choices=FaoStat_wide %>% select(-c("year", "country", "num_complete", "avg_undernourishment", "pct_complete", "cat_complete")) %>% names(),
+                        selected="avg_value_of_food_production",
+                        multiple=FALSE
+                    )
+                ),
+                column(
+                    width=4,
+                    selectizeInput(
+                        "inta_dynm_inbx_SelectedYFeature",
+                        h4("Select Y Feature"),
+                        choices=FaoStat_wide %>% select(-c("year", "country", "num_complete", "avg_undernourishment", "pct_complete", "cat_complete")) %>% names(),
+                        selected="prevalence_of_undernourishment",
+                        multiple=FALSE
+                    )
+                )
+            ),
+            
+            # Plotting
+            fluidRow(
+                width=12,
+                plotOutput(
+                    outputId="plt_inta_MultiFeatures",
+                    height="7in"
+                )
+            )
+        )
+    )
+)
+
+
+#------------------------------------------------------------------------------#
 # Overall Statistics                                                        ####
 #------------------------------------------------------------------------------#
 
 pag_StatTotalPage <- tabItem(
+    
+    # Name ----
     tabName="stats_total",
     
     # Header ----
@@ -531,110 +718,7 @@ pag_StatFeaturesPage <- tabItem(
 )
 
 
-#------------------------------------------------------------------------------#
-# Undernourishment                                                          ####
-#------------------------------------------------------------------------------#
 
-pag_Undernourishment <- tabItem(
-    
-    # Name ----
-    tabName="undernourishment",
-    
-    # Header ----
-    h1("Aspects to Undernourishment"),
-    
-    # Dynamic part ----
-    fluidRow(
-        box(
-            
-            # Sub Header
-            h2("Dynamic Part"),
-            width=12,
-            
-            # Selections
-            fluidRow(
-                title=tags$b("Selections"),
-                width=12,
-                column(
-                    width=3,
-                    selectizeInput(
-                        "undr_dynm_inbx_SelectedCountries",
-                        h4("Select Countries"),
-                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(country) %>% distinct(),
-                        selected="Thailand",
-                        multiple=TRUE,
-                    )
-                ),
-                column(
-                    width=9,
-                    sliderInput(
-                        "undr_dynm_slid_SelectedYears",
-                        h4("Select Years"),
-                        min=2000,
-                        max=2020,
-                        value=c(2001,2019),
-                        step=1,
-                        sep="",
-                        ticks=FALSE,
-                        dragRange=TRUE
-                    )
-                )
-            ),
-            
-            # Plots
-            fixedRow(
-                column(
-                    title=tags$b("Improvement Per Year"),
-                    width=6,
-                    tags$p("Section reserved for future comments.", style="color:red"),
-                    plotOutput(
-                        outputId="undr_dynm_plot_ImprovementPerYear",
-                        height="6in"
-                    )
-                ),
-                column(
-                    title=tags$b("Distribution Per Country"),
-                    width=6,
-                    tags$p("Section reserved for future comments.", style="color:red"),
-                    plotOutput(
-                        outputId="undr_dynm_plot_DistributionPerCountry",
-                        height="6in"
-                    )
-                )
-            )
-        )
-    ),
-    
-    
-    # Static Part ----
-    fluidRow(
-        box(
-            h2("Static Part"),
-            width=12,
-            column(
-                title=tags$b("Completeness of Records"),
-                width=6,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
-                plotOutput(
-                    outputId="plt_undr_stat_Completeness",
-                    height="20in"
-                )
-            ),
-            column(
-                title=tags$b("Ridges per country"),
-                width=6,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
-                plotOutput(
-                    outputId="plt_undr_stat_Ridges",
-                    height="20in"
-                )
-            )
-        )
-    )
-    
-)
 
 #------------------------------------------------------------------------------#
 # Pull together                                                             ####
@@ -645,9 +729,10 @@ body <- dashboardBody(
         pag_InfoPage,
         pag_DisclaimerPage,
         pag_DictionaryPage,
+        pag_Undernourishment,
+        pag_StatFeatureInteractionsPage,
         pag_StatFeaturesPage,
-        pag_StatTotalPage,
-        pag_Undernourishment
+        pag_StatTotalPage
     )
 )
 
