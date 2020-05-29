@@ -338,4 +338,38 @@ server <- function(input, output, session) {
         }
     )
     
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    Feature Interactions                                                   ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    # . . Set Data ----
+    dat_inta_dynm_InputData <- reactive({
+        FaoStat_wide %>% 
+            mutate(year=as.numeric(as.character(year))) %>% 
+            filter(cat_complete!="empty") %>% 
+            return()
+    })
+    
+    # . . Plot Data ----
+    output$plt_inta_MultiFeatures <- renderPlot(
+        expr={
+            
+            # Make
+            plt_inta_MultiFeatures <<- dat_inta_dynm_InputData() %>% 
+                plt_comb_MultiFeaturesMultiPlots(
+                    DataFrame=.,
+                    Countries=input$inta_dynm_inbx_SelectedCountries,
+                    x_Feature=input$inta_dynm_inbx_SelectedXFeature,
+                    y_Feature=input$inta_dynm_inbx_SelectedYFeature
+                )
+                
+            # Return
+            plt_inta_MultiFeatures %>% return()
+            
+        }
+    )
+
 }
