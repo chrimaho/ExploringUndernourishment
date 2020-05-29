@@ -89,7 +89,7 @@ sidebar <- dashboardSidebar(
             "Data Description",
             icon=icon("chart-pie"),
             tabName="data_description",
-            startExpanded=TRUE,
+            # startExpanded=TRUE,
             
             # Dictionary
             menuItem(
@@ -139,10 +139,37 @@ sidebar <- dashboardSidebar(
             # General Trend
             menuItem(
                 "General Trend",
-                icon=icon("chart-line"),
+                icon=icon("chart-bar"),
                 tabName="general_trend",
                 badgeLabel="general",
-                badgeColor="green"
+                badgeColor="aqua"
+            ),
+            
+            # Most Successful
+            menuItem(
+                "Most Successful",
+                icon=icon("thumbs-up"),
+                tabName="most_successful",
+                badgeLabel="good",
+                badgeColor="aqua"
+            ),
+            
+            # Surprising Trends
+            menuItem(
+                "Surprising Trends",
+                icon=icon("chart-line"),
+                tabName="surprising_trends",
+                badgeLabel="wow",
+                badgeColor="aqua"
+            ),
+            
+            # Most Influential
+            menuItem(
+                "Most Influential",
+                icon=icon("check-square"),
+                tabName="most_influential",
+                badgeLabel="strong",
+                badgeColor="aqua"
             )
             
         ),
@@ -287,7 +314,8 @@ pag_DisclaimerPage <- tabItem(
             title=tags$b("References"),
             width=12,
             tags$li(
-                "Abafita & Kim 2014, ‘Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis’, Journal of Rural Development, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613."
+                "Abafita & Kim 2014, ‘Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis’, Journal of Rural Development, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613.",
+                HTML('FAO 2020d, Enhanced Parametric Approach Including In-Depth Thematic Analysis of Underlying Factors and Drivers Behind Food Security and Nutrition Trends, viewed 16 May 2020, &lt;<a href="https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf">https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf"</a>')
             ),
             tags$li(
                 "FAO 2020, Food and Agriculture Organisation of the United Nations, viewed 11 May 2020, <http://www.fao.org/home/en/>."
