@@ -519,7 +519,7 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
     
     # Prep
     data <- DataFrame %>% 
-        filter(country %in% sel_Countries) %>% 
+        filter(country %in% Countries) %>% 
         select(country, x_Feature, y_Feature)
     
     # Histogram
@@ -527,19 +527,22 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
         select(country, x_Feature) %>% 
         na.omit() %>% 
         ggplot(aes_string(x=x_Feature, colour="country", fill="country")) +
-        geom_density(aes(y=..count..*10), alpha=0.2) +
+        geom_density(aes(y=..count..*10), alpha=0.2, size=1) +
         theme(
-            legend.position="None",
+            legend.position="top",
             axis.title.x=element_blank()
         ) +
         labs(
+            fill="Country",
+            colour="Country",
             y="Count"
         )
     
     # Dot
     dots <- data %>% 
         ggplot(aes_string(x=x_Feature, y=y_Feature, colour="country")) +
-        geom_point(size=1, alpha=0.5) +
+        geom_density2d(alpha=0.1, size=1, n=50) +
+        geom_point(alpha=0.7, size=3) +
         theme(
             legend.position="None"
         ) +
@@ -553,7 +556,7 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
         select(country, y_Feature) %>% 
         na.omit() %>% 
         ggplot(aes_string(x="country", y=y_Feature, colour="country", fill="country")) +
-        geom_violin(alpha=0.2) +
+        geom_violin(alpha=0.2, size=1) +
         theme(
             axis.title.y=element_blank()
         ) +
@@ -563,11 +566,6 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
             x="Country"
         )
     
-    # Check
-    print(hist)
-    print(dots)
-    print(viol)
-    
     # Create
     plt_Return <- arrangeGrob(
         hist, dots, viol, 
@@ -575,9 +573,7 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
             c(1,1,NA),
             c(2,2,3),
             c(2,2,3)
-        ),
-        top="Title",
-        heights=c(1,2,2)
+        )
     )
     
     # Fix
