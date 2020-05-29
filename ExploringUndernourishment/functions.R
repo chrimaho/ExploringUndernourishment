@@ -493,6 +493,102 @@ plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=
     return(plot)
 }
 
+
+plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_Feature) {
+    #' @title Plot Multiple Features on Multiple Plots
+    #' @description Uses three plots: Density, Point and Violin. Can only input two features at a time (x & y dimensions).
+    #' @note Awesome and convenient plotting skillz.
+    #' @param DataFrame data.frame. The data frame to be checked. Make sure it's in Wiiiide format.
+    #' @param Countries character vector. The countris to be compared
+    #' @param x_Feature string. The feature to be plot on the x-axis.
+    #' @param y_Feature string. The feature to be plot on the y-axis.
+    #' @return A ggplot object containing all the relevant info.
+    #' @reference https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
+    #' @author chrimaho
+    
+    # Validations ----
+    assert_that(is.data.frame(DataFrame))
+    assert_that("country" %in% names(DataFrame), msg="'DataFrame' must contain one feature called 'country'.")
+    assert_that(is.character(Countries))
+    assert_that(is.string(x_Feature))
+    assert_that(is.string(y_Feature))
+    assert_that(length(Countries)<6, msg="Please limit to max 5 countries.")
+    assert_that(x_Feature %in% names(DataFrame), msg=paste0("The feature '", x_Feature, "' must be a feature of 'DataFrame'."))
+    assert_that(y_Feature %in% names(DataFrame), msg=paste0("The feature '", y_Feature, "' must be a feature of 'DataFrame'."))
+    assert_that(Countries %all_in% unique(FaoStat_wide[, "country", drop=T]), msg="All of the countries provided in 'Countries' must be legitimate countries, as provided in DataFrame['country'].")
+    
+    # Prep
+    data <- DataFrame %>% 
+        filter(country %in% sel_Countries) %>% 
+        select(country, x_Feature, y_Feature)
+    
+    # Histogram
+    hist <- data %>%
+        select(country, x_Feature) %>% 
+        na.omit() %>% 
+        ggplot(aes_string(x=x_Feature, colour="country", fill="country")) +
+        geom_density(aes(y=..count..*10), alpha=0.2) +
+        theme(
+            legend.position="None",
+            axis.title.x=element_blank()
+        ) +
+        labs(
+            y="Count"
+        )
+    
+    # Dot
+    dots <- data %>% 
+        ggplot(aes_string(x=x_Feature, y=y_Feature, colour="country")) +
+        geom_point(size=1, alpha=0.5) +
+        theme(
+            legend.position="None"
+        ) +
+        labs(
+            x=x_Feature %>% str_replace_all("_", " ") %>% str_to_title(),
+            y=y_Feature %>% str_replace_all("_", " ") %>% str_to_title()
+        )
+    
+    # Violin
+    viol <- data %>% 
+        select(country, y_Feature) %>% 
+        na.omit() %>% 
+        ggplot(aes_string(x="country", y=y_Feature, colour="country", fill="country")) +
+        geom_violin(alpha=0.2) +
+        theme(
+            axis.title.y=element_blank()
+        ) +
+        labs(
+            fill="Country",
+            colour="Country",
+            x="Country"
+        )
+    
+    # Check
+    print(hist)
+    print(dots)
+    print(viol)
+    
+    # Create
+    plt_Return <- arrangeGrob(
+        hist, dots, viol, 
+        layout_matrix=rbind(
+            c(1,1,NA),
+            c(2,2,3),
+            c(2,2,3)
+        ),
+        top="Title",
+        heights=c(1,2,2)
+    )
+    
+    # Fix
+    plt_Return %<>% as_ggplot()
+    
+    # Return ----
+    return(plt_Return)
+    
+}
+
+
 donut_percentage <- function(value, labels, title){
     ######################################################################################################
     # https://www.r-graph-gallery.com/128-ring-or-donut-plot.html
