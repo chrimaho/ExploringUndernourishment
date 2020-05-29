@@ -129,7 +129,7 @@ if (!exists("FaoStat_long")) {
         }) %>% 
         
         #remove unnecessary columns
-        select(country,year,variable,value,-contains(c("item","unit"))) %>% 
+        select(country,region,year,variable,value,-contains(c("item","unit"))) %>% 
         
         #order data
         arrange(country,year,variable)
@@ -173,7 +173,7 @@ if (!exists("FaoStat_wide")) {
         }) %>% 
         
         # Reorder Columns
-        select(country, year, prevalence_of_undernourishment, everything()) %>% 
+        select(country, region, year, prevalence_of_undernourishment, everything()) %>% 
         
         # Reorder Rows
         arrange(country,year)
