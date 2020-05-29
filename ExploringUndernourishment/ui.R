@@ -64,7 +64,7 @@ header <- dashboardHeaderPlus(
 sidebar <- dashboardSidebar(
     sidebarMenu(
         
-        # Info 
+        # . . Info ----
         menuItem(
             text="Introduction",
             # selected=TRUE,
@@ -74,7 +74,7 @@ sidebar <- dashboardSidebar(
             badgeColor="green"
         ),
         
-        # Disclaimer
+        # . . Disclaimer ----
         menuItem(
             text="Disclaimer",
             # selected=TRUE,
@@ -84,7 +84,7 @@ sidebar <- dashboardSidebar(
             badgeColor="red"
         ),
         
-        # Data Description
+        # . . Data Description ----
         menuItem(
             "Data Details",
             icon=icon("chart-pie"),
@@ -139,7 +139,7 @@ sidebar <- dashboardSidebar(
             
         ),
         
-        # Research Questions
+        # . . Research Questions ----
         menuItem(
             "Research Questions",
             icon=icon("graduation-cap"),
@@ -184,7 +184,7 @@ sidebar <- dashboardSidebar(
             
         ),
         
-        # Add Socials
+        # . . Socials ----
         tags$hr(),
         tags$a("App Developer: Chris Mahoney"), br(),
         tags$ol(tags$a(icon("linkedin"), "LinkedIn", href="https://www.linkedin.com/in/chrimaho/")),
