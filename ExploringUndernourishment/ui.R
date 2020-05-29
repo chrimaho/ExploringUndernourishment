@@ -209,16 +209,16 @@ pag_InfoPage <- tabItem(
     # Introduction ----
     fluidRow(
         box(
-            title=tags$b("Introduction"),
+            title=tags$b(id="Intro", "Introduction"),
             width=12,
-            tags$p(HTML(sprintf(
-                "The %s (UN) has placed a lot of emphasis on their %s (SDG), one of which is: %s. To address this, the UN has set up the %s. This organisation has embarked on a journey to help understand and address the worlds needs for access to food. One of the indicators that they have set up is the %s, which is defined as: %s.",
-                tags$a("United Nations", href="https://www.un.org/"),
-                tags$a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"),
-                tags$a("Goal 2: Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/"),
-                tags$a("Food and Agriculture Oranisation", href="http://www.fao.org/home/en/"),
-                tags$a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/"),
-                tags$i("an estimate of the proportion of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life")
+            tags$p(HTML(str_Format(
+                "The {UN} (UN) has placed a lot of emphasis on their {SDG} (SDG), one of which is: {ZH}. To address this, the UN has set up the {FAO}. This organisation has embarked on a journey to help understand and address the worlds needs for access to food. One of the indicators that they have set up is the {PoU}, which is defined as: {def}.",
+                UN=tags$a("United Nations", href="https://www.un.org/"),
+                SDG=tags$a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"),
+                ZH=tags$a("Goal 2: Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/"),
+                FAO=tags$a("Food and Agriculture Oranisation", href="http://www.fao.org/home/en/"),
+                PoU=tags$a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/"),
+                def=tags$i("an estimate of the proportion of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life")
             ))),
             tags$p(HTML(sprintf(
                 "This app uses data provided by the %s, and a number of exploratory data analysis techniques to investigate four reserach questions, which are detailed below.",
@@ -230,7 +230,7 @@ pag_InfoPage <- tabItem(
     # Research Questions ----
     fluidRow(
         box(
-            title=tags$b("Research Area 1: General Trend"),
+            title=tags$b(id="RA1", "Research Area 1: General Trend"),
             width=6,
             tags$b("Question:"),
             tags$p("What has been the trend of Undernourishment in the last 20 years?"),
@@ -314,12 +314,12 @@ pag_DisclaimerPage <- tabItem(
             title=tags$b("References"),
             width=12,
             tags$li(
-                "Abafita & Kim 2014, ‘Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis’, Journal of Rural Development, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613.",
-                HTML('FAO 2020d, Enhanced Parametric Approach Including In-Depth Thematic Analysis of Underlying Factors and Drivers Behind Food Security and Nutrition Trends, viewed 16 May 2020, &lt;<a href="https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf">https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf"</a>')
+                "Abafita & Kim 2014, ‘Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis’, Journal of Rural Development, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613."
             ),
-            tags$li(
-                "FAO 2020, Food and Agriculture Organisation of the United Nations, viewed 11 May 2020, <http://www.fao.org/home/en/>."
-            ),
+            tags$li(HTML(str_Format(
+                "FAO 2020, Food and Agriculture Organisation of the United Nations, viewed 11 May 2020, <{link}>.",
+                link=tags$a("http://www.fao.org/home/en/", href="http://www.fao.org/home/en/")
+            ))),
             tags$li(
                 "FAO 2019, The State of Food Security and Nutrition in the World: Safeguarding Against Economic Slowdowns and Downturns, viewed 16 May 2020, <http://www.fao.org/3/ca5162en/ca5162en.pdf>."
             ),
