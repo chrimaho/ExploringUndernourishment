@@ -95,6 +95,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Data Dictionary",
                 tabName="dictionary",
+                selected=TRUE,
                 icon=icon("book"),
                 badgeLabel="ref",
                 badgeColor="blue"
@@ -131,8 +132,8 @@ sidebar <- dashboardSidebar(
             # Feature Stats
             menuItem(
                 "Feature Statistics",
-                icon=icon("chart-pie"),
                 tabName="stats_features",
+                icon=icon("chart-pie"),
                 badgeLabel="small",
                 badgeColor="blue"
             )
@@ -142,16 +143,16 @@ sidebar <- dashboardSidebar(
         # . . Research Questions ----
         menuItem(
             "Research Questions",
-            icon=icon("graduation-cap"),
             tabName="research_questions",
+            icon=icon("graduation-cap"),
             startExpanded=TRUE,
             
             # General Trend
             menuItem(
                 "General Trend",
-                icon=icon("chart-line"),
                 tabName="general_trend",
                 # selected=TRUE,
+                icon=icon("chart-line"),
                 badgeLabel="general",
                 badgeColor="aqua"
             ),
@@ -159,9 +160,9 @@ sidebar <- dashboardSidebar(
             # Most Successful
             menuItem(
                 "Most Successful",
-                icon=icon("thumbs-up"),
                 tabName="most_successful",
-                selected=TRUE,
+                # selected=TRUE,
+                icon=icon("thumbs-up"),
                 badgeLabel="good",
                 badgeColor="aqua"
             ),
@@ -169,8 +170,8 @@ sidebar <- dashboardSidebar(
             # Surprising Trends
             menuItem(
                 "Surprising Trends",
-                icon=icon("surprise"),
                 tabName="surprising_trends",
+                icon=icon("surprise"),
                 badgeLabel="wow",
                 badgeColor="aqua"
             ),
@@ -178,8 +179,8 @@ sidebar <- dashboardSidebar(
             # Most Influential
             menuItem(
                 "Most Influential",
-                icon=icon("check-square"),
                 tabName="most_influential",
+                icon=icon("check-square"),
                 badgeLabel="strong",
                 badgeColor="aqua"
             )
@@ -857,13 +858,13 @@ pag_ReseMostSuccessful <- tabItem(
                         numericInput(
                             inputId="rese_succ_numb_NumberCountries",
                             h4("Select Number of Countries"),
-                            value=20
+                            value=10
                         )
                     ),
                     column(
                         width=6,
                         selectizeInput(
-                            inputId="rese_genr_inbx_SelectedCountries",
+                            inputId="rese_succ_inbx_SelectedRegion",
                             h4("Group by Region"),
                             choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region) %>% distinct() %>% pull() %>% c("All", .),
                             selected=c("All"),
@@ -872,7 +873,7 @@ pag_ReseMostSuccessful <- tabItem(
                     )
                 ),
                 fluidRow(
-                    plotOutput(
+                    plotlyOutput(
                         outputId="plt_rese_succ_TopCountries"
                     )
                 )
