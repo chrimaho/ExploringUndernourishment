@@ -12,19 +12,16 @@
 #==============================================================================#
 
 
-#------------------------------------------------------------------------------#
-# Define the Server                                                         ####
-#------------------------------------------------------------------------------#
-
 server <- function(input, output, session) {
     
     
     #------------------------------------------------------------------------------#
     #                                                                              #
-    #    Information                                                            ####
+    #    Data Dictionary                                                        ####
     #                                                                              #
     #------------------------------------------------------------------------------#
     
+    # . . Data Dictionary Table ----
     output$tbl_info_DataDictionary <- DT::renderDataTable(
         expr={
             FaoStat_VariableMapping
@@ -42,11 +39,172 @@ server <- function(input, output, session) {
     
     #------------------------------------------------------------------------------#
     #                                                                              #
+    #    Undernourishment                                                       ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    #------------------------------------------------------------------------------#
+    # . Dynamic Part                                                            ####
+    #------------------------------------------------------------------------------#
+    
+    # . . Set Data ----
+    dat_undr_dynm_InputData <- reactive({
+        FaoStat_wide %>% 
+            mutate(year=as.numeric(as.character(year))) %>% 
+            filter(cat_complete!="empty") %>% 
+            filter(between(year, input$undr_dynm_slid_SelectedYears[1], input$undr_dynm_slid_SelectedYears[2])) %>%
+            {if (!"All" %in% input$undr_dynm_inbx_SelectedCountries) {filter(., country %in% input$undr_dynm_inbx_SelectedCountries)}} %>%
+            return()
+    })
+    
+    # . . Left Side ----
+    output$undr_dynm_plot_ImprovementPerYear <- renderPlot(
+        expr={
+            dat_undr_dynm_InputData() %>% 
+                ggplot() +
+                geom_line(aes(year, prevalence_of_undernourishment, colour=country)) +
+                scale_x_continuous(breaks=seq(input$undr_dynm_slid_SelectedYears[1], input$undr_dynm_slid_SelectedYears[2], 1)) +
+                labs(
+                    title="Country Improvement per Year",
+                    subtitle="'Prevalence of Undernourishment' per 'Country' per 'Year'",
+                    x="Year",
+                    y="Prevalence of Undernourishment"
+                )
+        }
+    )
+    
+    # . . Right Side ----
+    output$undr_dynm_plot_DistributionPerCountry <- renderPlot(
+        expr={
+            dat_undr_dynm_InputData() %>% 
+                {ggplot(., aes(prevalence_of_undernourishment, reorder(country, desc(avg_undernourishment)), fill=reorder(country, desc(avg_undernourishment)))) +
+                        geom_density_ridges(alpha=0.8) + 
+                        scale_fill_manual(values=colorRampPalette(brewer.pal(9, "Greens"))(nrow(unique(.["country"])))) +
+                        theme(legend.position="none") +
+                        scale_x_continuous(sec.axis=dup_axis()) +
+                        labs(
+                            title="Undernourishment Per Country",
+                            subtitle="Average 'Prevalence of Undernourishment' per 'Country'",
+                            y="Country",
+                            x="Prevalence of Undernourishment"
+                        )
+                }
+        }
+    )
+    
+    
+    #------------------------------------------------------------------------------#
+    # . Static Part                                                             ####
+    #------------------------------------------------------------------------------#
+    
+    # . . Left Side ----
+    output$plt_undr_stat_Completeness <- renderPlot(
+        expr={
+            
+            # Optimise to save future load time.
+            if (!exists("plt_undr_stat_Completeness")) {
+                
+                # Make
+                plt_undr_stat_Completeness <<- FaoStat_wide %>% 
+                    select(country, pct_complete, cat_complete) %>%
+                    distinct() %>% 
+                    ggplot(aes(reorder(country, pct_complete), pct_complete, colour=cat_complete, fill=cat_complete)) +
+                    geom_col(width=0.2, alpha=0.3, size=0) +
+                    geom_point(size=3) +
+                    coord_flip() +
+                    scale_y_continuous(sec.axis=dup_axis()) +
+                    theme(legend.position="top") +
+                    labs(
+                        title="Completeness of Records",
+                        subtitle="'Prevalence of Undernourishment' per 'Country'",
+                        y="Percentage of non-NA records",
+                        x="Country",
+                        fill="Completeness",
+                        colour="Completeness"
+                    )
+                
+            }
+            
+            # Return
+            plt_undr_stat_Completeness %>% return()
+            
+        }
+    )
+    
+    # . . Right Side ----
+    output$plt_undr_stat_Ridges <- renderPlot(
+        expr={
+            
+            # Optimise to save future load time.
+            if (!exists("plt_undr_stat_Ridges")) {
+                
+                # Make
+                plt_undr_stat_Ridges <<- FaoStat_wide %>% 
+                    filter(cat_complete!="empty") %>% 
+                    {ggplot(., aes(prevalence_of_undernourishment, reorder(country, desc(avg_undernourishment)), fill=reorder(country, desc(avg_undernourishment)))) +
+                            geom_density_ridges(alpha=0.8) + 
+                            scale_fill_manual(values=colorRampPalette(brewer.pal(9, "Greens"))(nrow(unique(.["country"])))) +
+                            theme(legend.position="none") +
+                            scale_x_continuous(sec.axis=dup_axis()) +
+                            labs(
+                                title="Undernourishment Per Country",
+                                subtitle="Average 'Prevalence of Undernourishment' per 'Country'",
+                                y="Country",
+                                x="Prevalence of Undernourishment"
+                            )
+                    }
+                
+            }
+            
+            # Return
+            plt_undr_stat_Ridges %>% return()
+        }
+    )
+    
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    Feature Interactions                                                   ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    # . . Set Data ----
+    dat_inta_dynm_InputData <- reactive({
+        FaoStat_wide %>% 
+            mutate(year=as.numeric(as.character(year))) %>% 
+            filter(cat_complete!="empty") %>% 
+            return()
+    })
+    
+    # . . Plot Data ----
+    output$plt_inta_MultiFeatures <- renderPlot(
+        expr={
+            
+            # Make
+            plt_inta_MultiFeatures <<- dat_inta_dynm_InputData() %>% 
+                plt_comb_MultiFeaturesMultiPlots(
+                    DataFrame=.,
+                    Countries=input$inta_dynm_inbx_SelectedCountries,
+                    x_Feature=input$inta_dynm_inbx_SelectedXFeature,
+                    y_Feature=input$inta_dynm_inbx_SelectedYFeature
+                )
+            
+            # Return
+            plt_inta_MultiFeatures %>% return()
+            
+        }
+    )
+    
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
     #    Overall Statistics                                                     ####
     #                                                                              #
     #------------------------------------------------------------------------------#
     
-    # Histogram Plot ----
+    # . . Histogram Plot ----
     output$plt_stat_PrevUndrOverall <- renderPlot(
         expr={
             
@@ -78,7 +236,7 @@ server <- function(input, output, session) {
         }
     )
     
-    # MissingNess Plot ----
+    # . . MissingNess Plot ----
     output$plt_stat_MissingData <- renderPlot(
         expr={
             
@@ -123,7 +281,7 @@ server <- function(input, output, session) {
         }
     )
     
-    # Correlation Plot ----
+    # . . Correlation Plot ----
     output$plt_corr_AllVariables <- renderPlot(
         expr={
             # Can't optimise this one because 'corrplot()' doesn't actually return a plot object...
@@ -140,7 +298,7 @@ server <- function(input, output, session) {
     )
     
     
-    # GGRidges Plot ----
+    # . . GGRidges Plot ----
     output$plt_ridg_UndernourishmentByYear <- renderPlot(
         expr={
             
@@ -176,7 +334,7 @@ server <- function(input, output, session) {
     #                                                                              #
     #------------------------------------------------------------------------------#
     
-    # Distributions Per Feature ----
+    # . . Distributions Per Feature ----
     output$plt_hist_FeatureDistributions <- renderPlot(
         expr={
             
@@ -196,7 +354,7 @@ server <- function(input, output, session) {
         }
     )
     
-    # Statistics Per Feature ----
+    # . . Statistics Per Feature ----
     output$tbl_stat_DataFrameStats <- DT::renderDataTable(
         expr={
             FaoStat_wide %>%
@@ -214,162 +372,5 @@ server <- function(input, output, session) {
     
     
     
-    #------------------------------------------------------------------------------#
-    #                                                                              #
-    #    Undernourishment                                                       ####
-    #                                                                              #
-    #------------------------------------------------------------------------------#
     
-    #------------------------------------------------------------------------------#
-    # Dynamic Part                                                              ####
-    #------------------------------------------------------------------------------#
-    
-    # Set Data ----
-    dat_undr_dynm_InputData <- reactive({
-        FaoStat_wide %>% 
-            mutate(year=as.numeric(as.character(year))) %>% 
-            filter(cat_complete!="empty") %>% 
-            filter(between(year, input$undr_dynm_slid_SelectedYears[1], input$undr_dynm_slid_SelectedYears[2])) %>%
-            {if (!"All" %in% input$undr_dynm_inbx_SelectedCountries) {filter(., country %in% input$undr_dynm_inbx_SelectedCountries)}} %>%
-            return()
-    })
-    
-    # Left Side ----
-    output$undr_dynm_plot_ImprovementPerYear <- renderPlot(
-        expr={
-            dat_undr_dynm_InputData() %>% 
-                ggplot() +
-                geom_line(aes(year, prevalence_of_undernourishment, colour=country)) +
-                scale_x_continuous(breaks=seq(input$undr_dynm_slid_SelectedYears[1], input$undr_dynm_slid_SelectedYears[2], 1)) +
-                labs(
-                    title="Country Improvement per Year",
-                    subtitle="'Prevalence of Undernourishment' per 'Country' per 'Year'",
-                    x="Year",
-                    y="Prevalence of Undernourishment"
-                )
-        }
-    )
-    
-    # Right Side ----
-    output$undr_dynm_plot_DistributionPerCountry <- renderPlot(
-        expr={
-            dat_undr_dynm_InputData() %>% 
-                {ggplot(., aes(prevalence_of_undernourishment, reorder(country, desc(avg_undernourishment)), fill=reorder(country, desc(avg_undernourishment)))) +
-                        geom_density_ridges(alpha=0.8) + 
-                        scale_fill_manual(values=colorRampPalette(brewer.pal(9, "Greens"))(nrow(unique(.["country"])))) +
-                        theme(legend.position="none") +
-                        scale_x_continuous(sec.axis=dup_axis()) +
-                        labs(
-                            title="Undernourishment Per Country",
-                            subtitle="Average 'Prevalence of Undernourishment' per 'Country'",
-                            y="Country",
-                            x="Prevalence of Undernourishment"
-                        )
-                }
-        }
-    )
-    
-    
-    #------------------------------------------------------------------------------#
-    # Static Part                                                               ####
-    #------------------------------------------------------------------------------#
-    
-    # Left Side ----
-    output$plt_undr_stat_Completeness <- renderPlot(
-        expr={
-            
-            # Optimise to save future load time.
-            if (!exists("plt_undr_stat_Completeness")) {
-                
-                # Make
-                plt_undr_stat_Completeness <<- FaoStat_wide %>% 
-                    select(country, pct_complete, cat_complete) %>%
-                    distinct() %>% 
-                    ggplot(aes(reorder(country, pct_complete), pct_complete, colour=cat_complete, fill=cat_complete)) +
-                    geom_col(width=0.2, alpha=0.3, size=0) +
-                    geom_point(size=3) +
-                    coord_flip() +
-                    scale_y_continuous(sec.axis=dup_axis()) +
-                    theme(legend.position="top") +
-                    labs(
-                        title="Completeness of Records",
-                        subtitle="'Prevalence of Undernourishment' per 'Country'",
-                        y="Percentage of non-NA records",
-                        x="Country",
-                        fill="Completeness",
-                        colour="Completeness"
-                    )
-                
-            }
-            
-            # Return
-            plt_undr_stat_Completeness %>% return()
-            
-        }
-    )
-    
-    # Right Side ----
-    output$plt_undr_stat_Ridges <- renderPlot(
-        expr={
-            
-            # Optimise to save future load time.
-            if (!exists("plt_undr_stat_Ridges")) {
-                
-                # Make
-                plt_undr_stat_Ridges <<- FaoStat_wide %>% 
-                    filter(cat_complete!="empty") %>% 
-                    {ggplot(., aes(prevalence_of_undernourishment, reorder(country, desc(avg_undernourishment)), fill=reorder(country, desc(avg_undernourishment)))) +
-                            geom_density_ridges(alpha=0.8) + 
-                            scale_fill_manual(values=colorRampPalette(brewer.pal(9, "Greens"))(nrow(unique(.["country"])))) +
-                            theme(legend.position="none") +
-                            scale_x_continuous(sec.axis=dup_axis()) +
-                            labs(
-                                title="Undernourishment Per Country",
-                                subtitle="Average 'Prevalence of Undernourishment' per 'Country'",
-                                y="Country",
-                                x="Prevalence of Undernourishment"
-                            )
-                    }
-                
-            }
-            
-            # Return
-            plt_undr_stat_Ridges %>% return()
-        }
-    )
-    
-    
-    #------------------------------------------------------------------------------#
-    #                                                                              #
-    #    Feature Interactions                                                   ####
-    #                                                                              #
-    #------------------------------------------------------------------------------#
-    
-    # . . Set Data ----
-    dat_inta_dynm_InputData <- reactive({
-        FaoStat_wide %>% 
-            mutate(year=as.numeric(as.character(year))) %>% 
-            filter(cat_complete!="empty") %>% 
-            return()
-    })
-    
-    # . . Plot Data ----
-    output$plt_inta_MultiFeatures <- renderPlot(
-        expr={
-            
-            # Make
-            plt_inta_MultiFeatures <<- dat_inta_dynm_InputData() %>% 
-                plt_comb_MultiFeaturesMultiPlots(
-                    DataFrame=.,
-                    Countries=input$inta_dynm_inbx_SelectedCountries,
-                    x_Feature=input$inta_dynm_inbx_SelectedXFeature,
-                    y_Feature=input$inta_dynm_inbx_SelectedYFeature
-                )
-                
-            # Return
-            plt_inta_MultiFeatures %>% return()
-            
-        }
-    )
-
 }
