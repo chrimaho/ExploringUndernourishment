@@ -471,7 +471,7 @@ server <- function(input, output, session) {
     )
     
     # . . Country Trend Data ----
-    dat_rese_cntr_InputData <- reactive({
+    dat_rese_ctry_InputData <- reactive({
         sel_country <- input$rese_genr_inbx_SelectedCountries %>% str_split(": ", simplify=T) %>% as.vector() %>% tail(1)
         FaoStat_wide %>% 
             mutate(year=as.numeric(as.character(year))) %>% 
@@ -488,7 +488,7 @@ server <- function(input, output, session) {
     # . . Country Trend Plot ----
     output$plt_rese_genr_CountryTrend <- renderPlot(
         expr={
-            dat_rese_cntr_InputData() %>% 
+            dat_rese_ctry_InputData() %>% 
                 {
                     ggplot(data=., aes(x=year)) +
                         geom_line(
@@ -525,12 +525,71 @@ server <- function(input, output, session) {
     #------------------------------------------------------------------------------#
     
     # . . Set Data ----
-    
+    dat_rese_succ_InputData <- reactive({
+        FaoStat_wide %>% 
+            mutate(year=as.numeric(as.character(year))) %>% 
+            filter(cat_complete!="empty") %>% 
+            {if (input$rese_succ_inbx_SelectedRegion != "All") {filter(., region==input$rese_succ_inbx_SelectedRegion)} else {.}} %>% 
+            filter(!is.na(prevalence_of_undernourishment)) %>% 
+            select(country, region, year, prevalence_of_undernourishment) %>% 
+            pivot_wider(names_from=year, values_from=prevalence_of_undernourishment, names_prefix="yr_") %>% 
+            mutate(improvement=(yr_2018-yr_2011)/yr_2011*100) %>% 
+            mutate(improvement=round(improvement,2)) %>% 
+            select(country, improvement, everything()) %>% 
+            arrange(improvement) %>%
+            return()
+    })
     
     # . . Set Plot ----
-    
+    output$plt_rese_succ_TopCountries <- renderPlotly(
+        expr={
+            dat_rese_succ_InputData() %>% 
+                head(input$rese_succ_numb_NumberCountries) %>% 
+                pivot_longer(contains("yr_"), names_to="year", values_to="prevalence_of_undernourishment") %>% 
+                mutate(
+                    year=str_replace_all(year, "yr_", ""),
+                    year=as.character(year),
+                    year=as.numeric(year)
+                ) %>% 
+                {
+                    ggplot(data=., aes(x=year)) +
+                        geom_line(
+                            aes(y=prevalence_of_undernourishment, colour=country),
+                            size=1,
+                            alpha=0.5,
+                            arrow=arrow(length=unit(0.2, "inches"))
+                        ) +
+                        scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
+                        theme(panel.grid.minor.x=element_blank()) +
+                        labs(
+                            title=paste0(tags$b("Prevalence of Undernourishment"), "\n",
+                                "Trend per Year per Country", "\n",
+                                "For '", input$rese_succ_inbx_SelectedRegion, "' Region", "\n",
+                                "For top '", input$rese_succ_numb_NumberCountries, "' Countries"
+                            ),
+                            y="Prevalence of Undernourishment",
+                            x="Year",
+                            colour="Country"
+                        )
+                }
+        }
+    )
     
     # . . Set Table ----
+    output$tbl_succ_TopCountries <- DT::renderDataTable(
+        expr={
+            dat_rese_succ_InputData() %>% 
+                return()
+        },
+        options=list(
+            pageLength=input$rese_succ_numb_NumberCountries,
+            # dom="ft",
+            scrollX=TRUE,
+            autoWidth=TRUE,
+            columnDefs=list(list(ClassName="dt-left", width="auto", targets="_all"))
+        )
+    )
+    
     
     
 }
