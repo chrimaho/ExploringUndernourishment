@@ -372,5 +372,165 @@ server <- function(input, output, session) {
     
     
     
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    General Trends                                                         ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    # . . Overall Trend ----
+    output$plt_rese_genr_OverallTrend <- renderPlot(
+        expr={
+            
+            # Optimise
+            if (!exists("plt_rese_genr_OverallTrend")) {
+                
+                # Make
+                plt_rese_genr_OverallTrend <<- FaoStat_wide %>% 
+                    filter(!is.na(prevalence_of_undernourishment)) %>%
+                    group_by(year) %>% 
+                    summarise(avg_yearly_undernourishment=mean(prevalence_of_undernourishment)) %>% 
+                    ungroup() %>% 
+                    mutate(year=as.numeric(as.character(year))) %>% 
+                    mutate(fit=lm(avg_yearly_undernourishment~year, data=.) %>% fitted.values()) %>% 
+                    {
+                        ggplot(data=., aes(x=year)) +
+                            geom_line(
+                                aes(y=avg_yearly_undernourishment, colour="PoU"),
+                                size=1,
+                                arrow=arrow(length=unit(0.3, "inches"))
+                            ) +
+                            geom_line(
+                                aes(y=fit, colour="Trend"),
+                                size=1,
+                                arrow=arrow(length=unit(0.3, "inches"))
+                            ) +
+                            scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
+                            scale_color_manual(values=c("forestgreen", "blue")) +
+                            theme(panel.grid.minor.x=element_blank()) +
+                            labs(
+                                title="Prevalence of Undernourishment",
+                                subtitle="Trend per Year",
+                                y="Prevalence of Undernourishment",
+                                x="Year",
+                                colour="Value"
+                            )
+                    }
+                
+            }
+            
+            # Return
+            plt_rese_genr_OverallTrend %>% return()
+            
+        }
+    )
+    
+    # . . Regional Trend Data ----
+    dat_rese_regi_InputData <- reactive({
+        FaoStat_wide %>% 
+            mutate(year=as.numeric(as.character(year))) %>% 
+            filter(cat_complete!="empty") %>% 
+            filter(region==input$rese_genr_inbx_SelectedRegions) %>% 
+            filter(!is.na(prevalence_of_undernourishment)) %>% 
+            group_by(region,year) %>% 
+            summarise(avg_regional_undernourishment=mean(prevalence_of_undernourishment, na.rm=T)) %>% 
+            ungroup() %>% 
+            mutate(fit=lm(avg_regional_undernourishment~year, data=.) %>% fitted.values()) %>% 
+            return()
+    })
+    
+    # . . Regional Trend Plot ----
+    output$plt_rese_genr_RegionalTrend <- renderPlot(
+        expr={
+            dat_rese_regi_InputData() %>% 
+                {
+                    ggplot(data=., aes(x=year)) +
+                        geom_line(
+                            aes(y=avg_regional_undernourishment, colour="PoU"),
+                            size=1,
+                            arrow=arrow(length=unit(0.3, "inches"))
+                        ) +
+                        geom_line(
+                            aes(y=fit, colour="Trend"),
+                            size=1,
+                            arrow=arrow(length=unit(0.3, "inches"))
+                        ) +
+                        scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
+                        scale_color_manual(values=c("darkorange", "blue")) +
+                        theme(panel.grid.minor.x=element_blank()) +
+                        labs(
+                            title="Prevalence of Undernourishment",
+                            subtitle=paste("Trend per Year","\n","For Region: ",input$rese_genr_inbx_SelectedRegions),
+                            y="Prevalence of Undernourishment",
+                            x="Year",
+                            colour="Value"
+                        )
+                } %>% 
+                return()
+        }
+    )
+    
+    # . . Country Trend Data ----
+    dat_rese_cntr_InputData <- reactive({
+        sel_country <- input$rese_genr_inbx_SelectedCountries %>% str_split(": ", simplify=T) %>% as.vector() %>% tail(1)
+        FaoStat_wide %>% 
+            mutate(year=as.numeric(as.character(year))) %>% 
+            filter(cat_complete!="empty") %>% 
+            filter(country==sel_country) %>% 
+            filter(!is.na(prevalence_of_undernourishment)) %>% 
+            group_by(country,year) %>% 
+            summarise(avg_country_undernourishment=mean(prevalence_of_undernourishment, na.rm=T)) %>% 
+            ungroup() %>% 
+            mutate(fit=lm(avg_country_undernourishment~year, data=.) %>% fitted.values()) %>% 
+            return()
+    })
+    
+    # . . Country Trend Plot ----
+    output$plt_rese_genr_CountryTrend <- renderPlot(
+        expr={
+            dat_rese_cntr_InputData() %>% 
+                {
+                    ggplot(data=., aes(x=year)) +
+                        geom_line(
+                            aes(y=avg_country_undernourishment, colour="PoU"),
+                            size=1,
+                            arrow=arrow(length=unit(0.3, "inches"))
+                        ) +
+                        geom_line(
+                            aes(y=fit, colour="Trend"),
+                            size=1,
+                            arrow=arrow(length=unit(0.3, "inches"))
+                        ) +
+                        scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
+                        scale_color_manual(values=c("magenta", "blue")) +
+                        theme(panel.grid.minor.x=element_blank()) +
+                        labs(
+                            title="Prevalence of Undernourishment",
+                            subtitle=paste("Trend per Year","\n","For Country: ",input$rese_genr_inbx_SelectedCountries %>% str_split(": ", simplify=T) %>% as.vector() %>% tail(1)),
+                            y="Prevalence of Undernourishment",
+                            x="Year",
+                            colour="Value"
+                        )
+                } %>% 
+                return()
+        }
+    )
+    
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    Most Successful                                                        ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    # . . Set Data ----
+    
+    
+    # . . Set Plot ----
+    
+    
+    # . . Set Table ----
+    
     
 }
