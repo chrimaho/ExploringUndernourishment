@@ -113,7 +113,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Feature Interactions",
                 tabName="interactions",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("project-diagram"),
                 badgeLabel="corr",
                 badgeColor="blue"
@@ -151,6 +151,7 @@ sidebar <- dashboardSidebar(
                 "General Trend",
                 icon=icon("chart-bar"),
                 tabName="general_trend",
+                selected=TRUE,
                 badgeLabel="general",
                 badgeColor="aqua"
             ),
@@ -738,6 +739,70 @@ pag_StatFeaturesPage <- tabItem(
 # . General Trend                                                           ####
 #------------------------------------------------------------------------------#
 
+pag_ReseGeneralTrend <- tabItem(
+    
+    # . . Name ----
+    tabName="general_trend",
+    
+    # . . Header ----
+    h1("General Trend"),
+    
+    # . . Overall Trend ----
+    fluidRow(
+        box(
+            title="Overall Trend",
+            width=12,
+            column(
+                width=4,
+                tags$p("Section reserved for comments")
+            ),
+            column(
+                width=8,
+                plotOutput(
+                    outputId="plt_rese_genr_OverallTrend"
+                )
+            )
+        )
+    ),
+    
+    # . . Regional Trend ----
+    fluidRow(
+        box(
+            title="Regional Trend",
+            width=12,
+            column(
+                width=4,
+                tags$p("Section reserved for comments")
+            ),
+            column(
+                width=8,
+                plotOutput(
+                    outputId="plt_rese_genr_RegionalTrend"
+                )
+            )
+        )
+    ),
+    
+    # . . Country Trend ----
+    fluidRow(
+        box(
+            title="Country Trend",
+            width=12,
+            column(
+                width=4,
+                tags$p("Section reserved for comments")
+            ),
+            column(
+                width=8,
+                plotOutput(
+                    outputId="plt_rese_genr_CountryTrend"
+                )
+            )
+        )
+    )
+    
+)
+
 
 
 #------------------------------------------------------------------------------#
@@ -749,13 +814,20 @@ pag_StatFeaturesPage <- tabItem(
 # . . Pull together ----
 body <- dashboardBody(
     tabItems(
+        
+        # Beginning
         pag_InfoPage,
         pag_DisclaimerPage,
+        
+        # Data Details
         pag_DictionaryPage,
         pag_Undernourishment,
         pag_StatFeatureInteractionsPage,
         pag_StatFeaturesPage,
-        pag_StatTotalPage
+        pag_StatTotalPage,
+        
+        # Research Questions
+        pag_ReseGeneralTrend
     )
 )
 
