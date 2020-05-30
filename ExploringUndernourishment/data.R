@@ -124,6 +124,7 @@ if (!exists("FaoStat_long")) {
                 rename("description"="item") %>% 
                 distinct() %>% 
                 rbind(c("country", "The country being recorded")) %>% 
+                rbind(c("region", "The region of the country being recorded")) %>% 
                 rbind(c("year", "The year of record"))
             return(x)
         }) %>% 
@@ -192,7 +193,7 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
     mutate(category=case_when(
         
         # Identifier
-        variable %in% c("country", "year") ~ "identifier"
+        variable %in% c("country", "region", "year") ~ "identifier"
         
         # Target
         ,variable %in% c("prevalence_of_undernourishment") ~ "target"
@@ -242,10 +243,57 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
         ,variable %in% c("political_stability") ~ "politics"
         
     )) %>% 
+    
+    # Set types
     mutate(type=case_when(
-        variable %in% c("country", "year") ~ "identifier"
-        ,variable %in% "prevalence_of_undernourishment" ~ "target"
+        
+        # Identifiers
+        variable %in% c("country", "region", "year") ~ "identifier"
+        
+        # Target
+        # ,variable %in% "prevalence_of_undernourishment" ~ "target"
+        
+        # Independant
+        ,variable %in% c("percentage_of_arable_land"
+                        ,"avg_value_of_food_production"
+                        ,"cereal_import_dependency_ratio"
+                        ,"food_imports_as_share_of_merch_exports"
+                        ,"gross_domestic_product_per_capita_ppp"
+                        ,"food_production_variability"
+                        ,"food_supply_variability"
+                        ,"avg_dietary_adequacy"
+                        ,"avg_protein_supply"
+                        ,"avg_supply_of_protein_of_animal_origin"
+                        ,"caloric_energy_from_cereals_roots_tubers"
+                        ,"access_to_basic_drinking_water"
+                        ,"access_to_basic_sanitation_services"
+                        ,"access_to_improved_drinking_water"
+                        ,"access_to_improved_sanitation_services"
+                        ,"rail_line_density"
+                        ,"political_stability"
+                        ) ~ "independant"
+        
+        # Dependant
+        ,variable %in% c("prevalence_of_undernourishment"
+                        ,"prevalence_of_obesity"
+                        ,"number_people_undernourished"
+                        ,"number_moderate_food_insecurity"
+                        ,"number_severe_food_insecurity"
+                        ,"prevalence_moderate_food_insecurity"
+                        ,"prevalence_severe_food_insecurity"
+                        ,"prevalence_of_anemia"
+                        ,"prevalence_of_obesity"
+                        ,"number_people_undernourished"
+                        ,"children_affected_by_wasting"
+                        ,"children_who_are_overweight"
+                        ,"children_who_are_stunted"
+                        ,"prevalence_of_breastfeeding_women"
+                        ,"prevalence_of_low_birthrate"
+                        ) ~ "dependant"
+        
+        # Other
         ,TRUE ~ "other"
+        
     )) %>% 
     arrange(factor(category, levels=c("identifier", "target", "agriculture", "economics", "food security", "health", "infrastructure", "politics")))
 
