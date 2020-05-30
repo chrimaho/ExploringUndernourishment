@@ -149,9 +149,9 @@ sidebar <- dashboardSidebar(
             # General Trend
             menuItem(
                 "General Trend",
-                icon=icon("chart-bar"),
+                icon=icon("chart-line"),
                 tabName="general_trend",
-                selected=TRUE,
+                # selected=TRUE,
                 badgeLabel="general",
                 badgeColor="aqua"
             ),
@@ -161,6 +161,7 @@ sidebar <- dashboardSidebar(
                 "Most Successful",
                 icon=icon("thumbs-up"),
                 tabName="most_successful",
+                selected=TRUE,
                 badgeLabel="good",
                 badgeColor="aqua"
             ),
@@ -168,7 +169,7 @@ sidebar <- dashboardSidebar(
             # Surprising Trends
             menuItem(
                 "Surprising Trends",
-                icon=icon("chart-line"),
+                icon=icon("surprise"),
                 tabName="surprising_trends",
                 badgeLabel="wow",
                 badgeColor="aqua"
@@ -750,7 +751,7 @@ pag_ReseGeneralTrend <- tabItem(
     # . . Overall Trend ----
     fluidRow(
         box(
-            title="Overall Trend",
+            title=tags$b("Overall Trend"),
             width=12,
             column(
                 width=4,
@@ -768,7 +769,7 @@ pag_ReseGeneralTrend <- tabItem(
     # . . Regional Trend ----
     fluidRow(
         box(
-            title="Regional Trend",
+            title=tags$b("Regional Trend"),
             width=12,
             column(
                 width=4,
@@ -776,8 +777,19 @@ pag_ReseGeneralTrend <- tabItem(
             ),
             column(
                 width=8,
-                plotOutput(
-                    outputId="plt_rese_genr_RegionalTrend"
+                fluidRow(
+                    selectizeInput(
+                        inputId="rese_genr_inbx_SelectedRegions",
+                        h4("Select Region"),
+                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region) %>% distinct() %>% pull(),
+                        selected=c("Asia & Pacific"),
+                        multiple=FALSE
+                    )
+                ),
+                fluidRow(
+                    plotOutput(
+                        outputId="plt_rese_genr_RegionalTrend"
+                    )
                 )
             )
         )
@@ -786,7 +798,7 @@ pag_ReseGeneralTrend <- tabItem(
     # . . Country Trend ----
     fluidRow(
         box(
-            title="Country Trend",
+            title=tags$b("Country Trend"),
             width=12,
             column(
                 width=4,
@@ -794,8 +806,19 @@ pag_ReseGeneralTrend <- tabItem(
             ),
             column(
                 width=8,
-                plotOutput(
-                    outputId="plt_rese_genr_CountryTrend"
+                fluidRow(
+                    selectizeInput(
+                        inputId="rese_genr_inbx_SelectedCountries",
+                        h4("Select Country"),
+                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region,country) %>% distinct() %>% mutate(value=paste(region, country, sep=": ")) %>% select(value) %>% arrange(value) %>% pull(),
+                        selected=c("Asia & Pacific: Viet Nam"),
+                        multiple=FALSE
+                    )
+                ),
+                fluidRow(
+                    plotOutput(
+                        outputId="plt_rese_genr_CountryTrend"
+                    )
                 )
             )
         )
@@ -803,6 +826,69 @@ pag_ReseGeneralTrend <- tabItem(
     
 )
 
+
+#------------------------------------------------------------------------------#
+# . Most Successful                                                         ####
+#------------------------------------------------------------------------------#
+
+pag_ReseMostSuccessful <- tabItem(
+    
+    # . . Name ----
+    tabName="most_successful",
+    
+    # . . Header ----
+    h1("Most Successful Countries"),
+    
+    # . . Comment and Plot ----
+    fluidRow(
+        box(
+            title=tags$b("Overall"),
+            width=12,
+            column(
+                width=4,
+                tags$p("Section reserved for comments")
+            ),
+            column(
+                width=8,
+                fluidRow(
+                    width=8,
+                    column(
+                        width=6,
+                        numericInput(
+                            inputId="rese_succ_numb_NumberCountries",
+                            h4("Select Number of Countries"),
+                            value=20
+                        )
+                    ),
+                    column(
+                        width=6,
+                        selectizeInput(
+                            inputId="rese_genr_inbx_SelectedCountries",
+                            h4("Group by Region"),
+                            choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region) %>% distinct() %>% pull() %>% c("All", .),
+                            selected=c("All"),
+                            multiple=FALSE
+                        )
+                    )
+                ),
+                fluidRow(
+                    plotOutput(
+                        outputId="plt_rese_succ_TopCountries"
+                    )
+                )
+            )
+        )
+    ),
+    
+    # . . Table ----
+    fluidRow(
+        box(
+            title=tags$b("Table"),
+            width=12,
+            DT::dataTableOutput(outputId="tbl_succ_TopCountries")
+        )
+    )
+)
 
 
 #------------------------------------------------------------------------------#
@@ -827,7 +913,9 @@ body <- dashboardBody(
         pag_StatTotalPage,
         
         # Research Questions
-        pag_ReseGeneralTrend
+        pag_ReseGeneralTrend,
+        pag_ReseMostSuccessful
+        
     )
 )
 
