@@ -524,8 +524,8 @@ server <- function(input, output, session) {
     #                                                                              #
     #------------------------------------------------------------------------------#
     
-    # . . Set Data ----
-    dat_rese_succ_InputData <- reactive({
+    # . . Set Data for Top Countries ----
+    dat_rese_succ_TopCountries <- reactive({
         FaoStat_wide %>% 
             mutate(year=as.numeric(as.character(year))) %>% 
             filter(cat_complete!="empty") %>% 
@@ -540,10 +540,10 @@ server <- function(input, output, session) {
             return()
     })
     
-    # . . Set Plot ----
+    # . . Set Plot for Top Countries ----
     output$plt_rese_succ_TopCountries <- renderPlotly(
         expr={
-            dat_rese_succ_InputData() %>% 
+            dat_rese_succ_TopCountries() %>% 
                 head(input$rese_succ_numb_NumberCountries) %>% 
                 pivot_longer(contains("yr_"), names_to="year", values_to="prevalence_of_undernourishment") %>% 
                 mutate(
@@ -578,7 +578,7 @@ server <- function(input, output, session) {
     # . . Set Table ----
     output$tbl_succ_TopCountries <- DT::renderDataTable(
         expr={
-            dat_rese_succ_InputData() %>% 
+            dat_rese_succ_TopCountries() %>% 
                 return()
         },
         options=list(
@@ -590,6 +590,70 @@ server <- function(input, output, session) {
         )
     )
     
+    # . . Set Data for Single Country ----
+    dat_rese_succ_SingleCountry <- reactive({
+        
+        # Determine Country selection
+        sel_country <- input$rese_succ_inbx_SelectedCountries %>% 
+            str_split(": ", simplify=T) %>% 
+            as.vector() %>% 
+            tail(1)
+        
+        # Determine Predictor features
+        val_predictors <- FaoStat_VariableMapping %>% 
+            filter(type=="independant") %>% 
+            select(variable) %>% 
+            pull()
+        
+        # Set data
+        FaoStat_wide %>% 
+            mutate(year=as.numeric(as.character(year))) %>% 
+            filter(country %in% sel_country) %>% 
+            select(country, year, prevalence_of_undernourishment, all_of(predictors)) %>%
+            pivot_longer(-c(country, year)) %>% 
+            mutate(name=name %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
+            return()
+        
+    })
     
+    # . . Set Plot for Sinlge Country ----
+    output$plt_rese_succ_SingleCountry <- renderPlot(
+        expr={
+            
+            # Determine Country selection
+            sel_country <- input$rese_succ_inbx_SelectedCountries %>% 
+                str_split(": ", simplify=T) %>% 
+                as.vector() %>% 
+                tail(1)
+            
+            # Make Plot
+            dat_rese_succ_SingleCountry() %>% 
+            {
+                ggplot(data=., aes(x=year, colour=name, fill=name)) +
+                    geom_area(
+                        aes(y=value),
+                        position="identity",
+                        size=1,
+                        alpha=0.1
+                    ) +
+                    scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
+                    theme(
+                        panel.grid.minor.x=element_blank(),
+                        axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
+                        legend.position="none"
+                    ) +
+                    facet_wrap(~name, scales="free_y", ncol=3) +
+                    labs(
+                        title="Predictor Features over Time",
+                        subtitle=paste0("For Countries: ", paste(sel_country, collapse=", ")),
+                        y="Value",
+                        x="Year",
+                        colour="Country",
+                        fill="Country"
+                    )
+            } %>% 
+                return()
+        }
+    )
     
 }
