@@ -95,7 +95,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Data Dictionary",
                 tabName="dictionary",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("book"),
                 badgeLabel="ref",
                 badgeColor="blue"
@@ -161,7 +161,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Successful",
                 tabName="most_successful",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("thumbs-up"),
                 badgeLabel="good",
                 badgeColor="aqua"
@@ -887,6 +887,36 @@ pag_ReseMostSuccessful <- tabItem(
             title=tags$b("Table"),
             width=12,
             DT::dataTableOutput(outputId="tbl_succ_TopCountries")
+        )
+    ),
+    
+    # . . Predictor Features ----
+    fluidRow(
+        box(
+            title=tags$b("Predictor Fratures"),
+            width=12,
+            fluidRow(
+                column(
+                    width=6,
+                    tags$p("Reserved for comment")
+                ),
+                column(
+                    width=6,
+                    selectizeInput(
+                        inputId="rese_succ_inbx_SelectedCountries",
+                        h4("Select Country"),
+                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region,country) %>% distinct() %>% mutate(value=paste(region, country, sep=": ")) %>% select(value) %>% arrange(value) %>% pull(),
+                        selected=c("Asia & Pacific: Viet Nam"),
+                        multiple=FALSE
+                    )
+                )
+            ),
+            fluidRow(
+                plotOutput(
+                    outputId="plt_rese_succ_SingleCountry",
+                    height="8in"
+                )
+            )
         )
     )
 )
