@@ -217,39 +217,42 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
         ,variable %in% c("percentage_of_arable_land") ~ "agriculture"
         
         # Economics
-        ,variable %in% c("cereal_import_dependency_ratio"
-                        ,"avg_value_of_food_production"
-                        ,"food_imports_as_share_of_merch_exports"
-                        ,"gross_domestic_product_per_capita_ppp"
-                        ) ~ "economics"
+        ,variable %in% c(
+            "cereal_import_dependency_ratio",
+            "avg_value_of_food_production",
+            "food_imports_as_share_of_merch_exports",
+            "gross_domestic_product_per_capita_ppp"
+        ) ~ "economics"
         
         # Food Security
-        ,variable %in% c("avg_supply_of_protein_of_animal_origin"
-                        ,"caloric_energy_from_cereals_roots_tubers"
-                        ,"food_production_variability"
-                        ,"food_supply_variability"
-                        ,"avg_dietary_adequacy"
-                        ,"avg_protein_supply"
-                        ,"prevalence_moderate_food_insecurity"
-                        ,"number_moderate_food_insecurity"
-                        ,"prevalence_severe_food_insecurity"
-                        ,"number_severe_food_insecurity"
-                        ) ~ "food security"
+        ,variable %in% c(
+            "avg_supply_of_protein_of_animal_origin",
+            "caloric_energy_from_cereals_roots_tubers",
+            "food_production_variability",
+            "food_supply_variability",
+            "avg_dietary_adequacy",
+            "avg_protein_supply",
+            "prevalence_moderate_food_insecurity",
+            "number_moderate_food_insecurity",
+            "prevalence_severe_food_insecurity",
+            "number_severe_food_insecurity"
+        ) ~ "food security"
         
         # Health
-        ,variable %in% c("access_to_basic_drinking_water"
-                        ,"access_to_basic_sanitation_services"
-                        ,"access_to_improved_drinking_water"
-                        ,"access_to_improved_sanitation_services"
-                        ,"prevalence_of_anemia"
-                        ,"prevalence_of_obesity"
-                        ,"number_people_undernourished"
-                        ,"prevalence_of_low_birthrate"
-                        ,"children_affected_by_wasting"
-                        ,"children_who_are_stunted"
-                        ,"children_who_are_overweight"
-                        ,"prevalence_of_breastfeeding_women" 
-                        ) ~ "health"
+        ,variable %in% c(
+            "access_to_basic_drinking_water",
+            "access_to_basic_sanitation_services",
+            "access_to_improved_drinking_water",
+            "access_to_improved_sanitation_services",
+            "prevalence_of_anemia",
+            "prevalence_of_obesity",
+            "number_people_undernourished",
+            "prevalence_of_low_birthrate",
+            "children_affected_by_wasting",
+            "children_who_are_stunted",
+            "children_who_are_overweight",
+            "prevalence_of_breastfeeding_women" 
+        ) ~ "health"
         
         # Infrastructure
         ,variable %in% c("rail_line_density") ~ "infrastructure"
@@ -266,42 +269,44 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
         variable %in% c("country", "region", "year") ~ "identifier"
         
         # Independant
-        ,variable %in% c("percentage_of_arable_land"
-                        ,"avg_value_of_food_production"
-                        ,"cereal_import_dependency_ratio"
-                        ,"food_imports_as_share_of_merch_exports"
-                        ,"gross_domestic_product_per_capita_ppp"
-                        ,"food_production_variability"
-                        ,"food_supply_variability"
-                        ,"avg_dietary_adequacy"
-                        ,"avg_protein_supply"
-                        ,"avg_supply_of_protein_of_animal_origin"
-                        ,"caloric_energy_from_cereals_roots_tubers"
-                        ,"access_to_basic_drinking_water"
-                        ,"access_to_basic_sanitation_services"
-                        ,"access_to_improved_drinking_water"
-                        ,"access_to_improved_sanitation_services"
-                        ,"rail_line_density"
-                        ,"political_stability"
-                        ) ~ "independant"
+        ,variable %in% c(
+            "percentage_of_arable_land",
+            "avg_value_of_food_production",
+            "cereal_import_dependency_ratio",
+            "food_imports_as_share_of_merch_exports",
+            "gross_domestic_product_per_capita_ppp",
+            "food_production_variability",
+            "food_supply_variability",
+            "avg_dietary_adequacy",
+            "avg_protein_supply",
+            "avg_supply_of_protein_of_animal_origin",
+            "caloric_energy_from_cereals_roots_tubers",
+            "access_to_basic_drinking_water",
+            "access_to_basic_sanitation_services",
+            "access_to_improved_drinking_water",
+            "access_to_improved_sanitation_services",
+            "rail_line_density",
+            "political_stability"
+        ) ~ "independant"
         
         # Dependant
-        ,variable %in% c("prevalence_of_undernourishment"
-                        ,"prevalence_of_obesity"
-                        ,"number_people_undernourished"
-                        ,"number_moderate_food_insecurity"
-                        ,"number_severe_food_insecurity"
-                        ,"prevalence_moderate_food_insecurity"
-                        ,"prevalence_severe_food_insecurity"
-                        ,"prevalence_of_anemia"
-                        ,"prevalence_of_obesity"
-                        ,"number_people_undernourished"
-                        ,"children_affected_by_wasting"
-                        ,"children_who_are_overweight"
-                        ,"children_who_are_stunted"
-                        ,"prevalence_of_breastfeeding_women"
-                        ,"prevalence_of_low_birthrate"
-                        ) ~ "dependant"
+        ,variable %in% c(
+            "prevalence_of_undernourishment",
+            "prevalence_of_obesity",
+            "number_people_undernourished",
+            "number_moderate_food_insecurity",
+            "number_severe_food_insecurity",
+            "prevalence_moderate_food_insecurity",
+            "prevalence_severe_food_insecurity",
+            "prevalence_of_anemia",
+            "prevalence_of_obesity",
+            "number_people_undernourished",
+            "children_affected_by_wasting",
+            "children_who_are_overweight",
+            "children_who_are_stunted",
+            "prevalence_of_breastfeeding_women",
+            "prevalence_of_low_birthrate"
+        ) ~ "dependant"
         
         # Other
         ,TRUE ~ "other"
