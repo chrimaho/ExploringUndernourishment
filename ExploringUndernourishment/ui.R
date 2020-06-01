@@ -115,7 +115,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Feature Interactions",
                 tabName="interactions",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("project-diagram"),
                 badgeLabel="corr",
                 badgeColor="blue"
@@ -181,6 +181,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Influential",
                 tabName="most_influential",
+                selected=TRUE,
                 icon=icon("check-square"),
                 badgeLabel="strong",
                 badgeColor="aqua"
@@ -960,6 +961,36 @@ pag_ReseMostInfluential <- tabItem(
             width=12,
             column(
                 width=4,
+                tags$p("Reserved for comments.")
+            ),
+            column(
+                width=8,
+                plotOutput(
+                    outputId="plt_infl_VariableImportance"
+                )
+            )
+        )
+    ),
+    
+    # . . Partial Dependancy Plots ----
+    fluidRow(
+        box(
+            title=tags$b("Partial Dependancy Plots"),
+            width=12,
+            fluidRow(
+                column(
+                    width=12,
+                    tags$p("Reserved for comments.")
+                )
+            ),
+            fluidRow(
+                column(
+                    width=12,
+                    plotOutput(
+                        outputId="plt_infl_PartialDependancy",
+                        height="12in"
+                    )
+                )
             )
         )
     )
