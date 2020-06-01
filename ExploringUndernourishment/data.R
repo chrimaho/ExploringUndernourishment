@@ -318,6 +318,23 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
 
 
 #------------------------------------------------------------------------------#
+# . Set FaoStat_yearly                                                      ####
+#------------------------------------------------------------------------------#
+
+# . . Instantiate ----
+FaoStat_yearly <- FaoStat_wide %>%
+    mutate(year=as.numeric(as.character(year))) %>%
+    filter(cat_complete!="empty") %>%
+    filter(!is.na(prevalence_of_undernourishment)) %>%
+    select(country, region, year, prevalence_of_undernourishment) %>%
+    pivot_wider(names_from=year, values_from=prevalence_of_undernourishment, names_prefix="yr_") %>%
+    mutate(improvement=(yr_2018-yr_2011)/yr_2011*100) %>%
+    mutate(improvement=round(improvement,2)) %>%
+    select(country, improvement, everything()) %>%
+    arrange(improvement)
+
+
+#------------------------------------------------------------------------------#
 # . Save Data                                                               ####
 #------------------------------------------------------------------------------#
 
