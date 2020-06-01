@@ -342,11 +342,25 @@ FaoStat_yearly <- FaoStat_wide %>%
 pro_DataPath <- "./data/processed"
 
 # . . Long ----
-if (!file.exists(paste0(pro_DataPath, "/FaoStat_long.rds"))) {
-    FaoStat_long %>% saveRDS(paste0(pro_DataPath, "/FaoStat_long.rds"))
-}
+FaoStat_long %>% 
+    write_rds(
+        paste0(pro_DataPath, "/FaoStat_long.rds")
+    )
 
 # . . Wide ----
-if (!file.exists(paste0(pro_DataPath, "/FaoStat_wide.rds"))) {
-    FaoStat_wide %>% saveRDS(paste0(pro_DataPath, "/FaoStat_wide.rds"))
-}
+FaoStat_wide %>% 
+    write_rds(
+        paste0(pro_DataPath, "/FaoStat_wide.rds")
+    )
+
+# . . Mapping ----
+FaoStat_VariableMapping %>% 
+    write_rds(
+        paste0(pro_DataPath, "/FaoStat_VariableMapping.rds")
+    )
+
+# . . Yearly ----
+FaoStat_yearly %>% 
+    write_rds(
+        paste0(pro_DataPath, "/FaoStat_yearly.rds")
+    )
