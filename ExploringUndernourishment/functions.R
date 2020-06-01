@@ -586,6 +586,86 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
 }
 
 
+plt_PartialDependencyPlots <- function(Model, TrainData, VarImpData) {
+    #' @title Plot Partial Dependency Plots
+    #' @description Describe.
+    #' @note Note.
+    #' @param Model model. The model to be checked. Must be of `class='train'`. The result of the `caret::train()` function.
+    #' @param TrainData data.frame. The data.frame containing the data to be checked against. This should be the same data fed to the `x` parameter of the `caret::train()` function.
+    #' @param VarImpData data.frame. The variables that should have the PDP's created for. Can either be a single-column data.frame containing the feature names, or a character vector containing the feature names, or the result of running the `caret::varImp()` function.
+    #' @return A Grob of Plots.
+    #' @author chrimaho
+    
+    # Validations ----
+    assert_that(class(Model)=="train", msg="'Model' must be of class='train'.")
+    assert_that(is.data.frame(TrainData))
+    if (class(VarImpData)=="varImp.train") {
+        VarImpData %<>% 
+            extract2("importance") %>% 
+            rownames_to_column("features") %>% 
+            arrange(desc(Overall)) %>% 
+            select(features) %>% 
+            pull()
+        assert_that(VarImpData %all_in% names(TrainData), msg="The row features in 'VarImpData' must match the column features in 'TrainData'.")
+    } else if (is.data.frame(VarImpData)) {
+        assert_that(ncol(VarImpData)==1, msg="'VarImpData' must be a single-column data frame.")
+        VarImpData %<>% 
+            pull()
+        assert_that(VarImpData %all_in% names(TrainData), msg="The rows in 'VarImpData' must match the column features in 'TrainData'.")
+    } else if (is.vector(VarImpData)) {
+        assert_that(VarImpData %all_in% names(TrainData), msg="The features given in 'VarImpData' must match the column features in 'TrainData'.")
+    }
+    
+    # Set Up ----
+    iter <- 0
+    objs <<- list()
+    
+    # Loop ----
+    for (feature in VarImpData) {
+        iter <- iter + 1
+        assign(
+            "temp",
+            partial(
+                Model,
+                pred.var=feature,
+                plot=TRUE,
+                plot.engine="ggplot2",
+                rug=TRUE,
+                type="regression",
+                prob=TRUE,
+                parallel=FALSE,
+                chull=TRUE,
+                train=TrainData
+            ) + 
+                labs(
+                    subtitle=paste0("PDP for: ", feature %>% str_replace_all("_", " ") %>% str_to_title()),
+                    y="\u0394 PoU"
+                )
+        )
+        objs[[iter]] <<- temp
+    }
+    
+    # Grob ----
+    grob <- arrangeGrob(
+        grobs=objs, 
+        ncol=3, 
+        top=grid::textGrob("Partial Dependency Plots", gp=grid::gpar(fontface="bold", fontsize="20"))
+    )
+    
+    # Plot ----
+    plot <- grob %>% as_ggplot()
+    
+    # Return ----
+    return(plot)
+    
+}
+
+
+#------------------------------------------------------------------------------#
+# . Miscellaneous                                                           ####
+#------------------------------------------------------------------------------#
+
+
 donut_percentage <- function(value, labels, title){
     ######################################################################################################
     # https://www.r-graph-gallery.com/128-ring-or-donut-plot.html
