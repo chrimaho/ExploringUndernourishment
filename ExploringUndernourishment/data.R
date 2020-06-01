@@ -16,10 +16,13 @@
 
 
 #------------------------------------------------------------------------------#
-# Import Data                                                               ####
+# . Import Data                                                             ####
 #------------------------------------------------------------------------------#
 
+# . . Set Path ----
 raw_DataPath <- "./data/raw"
+
+# . . Do Import ----
 for (file in list.files(raw_DataPath, pattern="*.csv")) {
     filename <- str_remove(file, ".csv")
     assign(paste0("raw_",filename)
@@ -29,10 +32,10 @@ for (file in list.files(raw_DataPath, pattern="*.csv")) {
 
 
 #------------------------------------------------------------------------------#
-# Clean All Data                                                            ####
+# . Clean All Data                                                          ####
 #------------------------------------------------------------------------------#
 
-# All ----
+# . . Clean ----
 for (data in ls(pattern="raw_*")) {
     if (!is.data.frame(get(data))) next
     assign(str_remove(data, "raw_")
@@ -45,22 +48,22 @@ for (data in ls(pattern="raw_*")) {
 
 
 #------------------------------------------------------------------------------#
-# Clean Specific Data                                                       ####
+# . Set FaoStat_long                                                        ####
 #------------------------------------------------------------------------------#
 
-# FaoStat Long ----
+# . . Check if exists ----
 if (!exists("FaoStat_long")) {
     
-    # Make FaoStat long
+    # . . Instantiate ----
     FaoStat_long <- FaoStat %>% 
         
-        #remove unnecessary columns
+        # . . Remove columns ----
         select(-contains(c("domain","element","code","flag","note"))) %>% 
         
-        #rename country column
+        # . . Fix country column ----
         rename("country"="area") %>% 
         
-        #map variable names 
+        # . . Map variable names ----
         mutate(variable = case_when(
             
             # Target
@@ -109,7 +112,7 @@ if (!exists("FaoStat_long")) {
             
         )) %>% 
         
-        #fix units
+        # . . Fix the units ----
         mutate(value=ifelse(unit=="%", value/100, value)
                ,value=ifelse(unit=="millions", value*1e+06, value)
                ,year=str_Right(year,4)
@@ -117,7 +120,7 @@ if (!exists("FaoStat_long")) {
                ,year=as.factor(year)
                ) %>% 
         
-        #extract mapping
+        # . . Extract feature mapping ----
         (function(x){
             FaoStat_VariableMapping <<- x %>% 
                 select(variable,item) %>% 
@@ -129,26 +132,29 @@ if (!exists("FaoStat_long")) {
             return(x)
         }) %>% 
         
-        #remove unnecessary columns
+        # . . Remove unnecessary columns ----
         select(country,region,year,variable,value,-contains(c("item","unit"))) %>% 
         
-        #order data
+        # . . Order data ----
         arrange(country,year,variable)
     
 }
 
 
-# FaoStat Wide ----
+#------------------------------------------------------------------------------#
+# . Set FaoStat_wide                                                        ####
+#------------------------------------------------------------------------------#
 
+# . . Check if exists ----
 if (!exists("FaoStat_wide")) {
     
-    # Make FaoStat_wide ----
+    # . . Instantiate ----
     FaoStat_wide <- FaoStat_long %>% 
         
-        # Make Wider
+        # . . Pivot wider ----
         pivot_wider(names_from="variable", values_from="value") %>% 
         
-        # Add Completeness
+        # . . Add Completeness ----
         (function(x){
             x %>% 
                 select(country, prevalence_of_undernourishment) %>% 
@@ -173,23 +179,32 @@ if (!exists("FaoStat_wide")) {
                 return()
         }) %>% 
         
-        # Reorder Columns
+        # . . Reorder Columns ----
         select(country, region, year, prevalence_of_undernourishment, everything()) %>% 
         
-        # Reorder Rows
+        # . . Reorder Rows ----
         arrange(country,year)
 
 }
 
 
-# FaoStat VariableMapping ----
+#------------------------------------------------------------------------------#
+# . Set FaoStat_Variable_Mapping                                            ####
+#------------------------------------------------------------------------------#
+
+
+# . . Re-Instantiate ----
 FaoStat_VariableMapping <- FaoStat_wide %>% 
+    
+    # . . Set up ----
     select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
     names %>% 
     data.frame("variable"=., stringsAsFactors=FALSE) %>% 
-    left_join(y=FaoStat_VariableMapping, by=c("variable"="variable")) %>% 
     
-    # Add Category mapping
+    # . . Join on itself ----
+    left_join(x=., y=FaoStat_VariableMapping, by=c("variable"="variable")) %>% 
+    
+    # . . Add Category mapping ----
     mutate(category=case_when(
         
         # Identifier
@@ -244,14 +259,11 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
         
     )) %>% 
     
-    # Set types
+    # . . Set types ----
     mutate(type=case_when(
         
         # Identifiers
         variable %in% c("country", "region", "year") ~ "identifier"
-        
-        # Target
-        # ,variable %in% "prevalence_of_undernourishment" ~ "target"
         
         # Independant
         ,variable %in% c("percentage_of_arable_land"
@@ -295,21 +307,24 @@ FaoStat_VariableMapping <- FaoStat_wide %>%
         ,TRUE ~ "other"
         
     )) %>% 
+    
+    # . . Rearrange ----
     arrange(factor(category, levels=c("identifier", "target", "agriculture", "economics", "food security", "health", "infrastructure", "politics")))
 
 
 #------------------------------------------------------------------------------#
-# Save Data                                                                 ####
+# . Save Data                                                               ####
 #------------------------------------------------------------------------------#
 
+# . . Set path ----
 pro_DataPath <- "./data/processed"
 
-# Long ----
+# . . Long ----
 if (!file.exists(paste0(pro_DataPath, "/FaoStat_long.rds"))) {
     FaoStat_long %>% saveRDS(paste0(pro_DataPath, "/FaoStat_long.rds"))
 }
 
-# Wide ----
+# . . Wide ----
 if (!file.exists(paste0(pro_DataPath, "/FaoStat_wide.rds"))) {
     FaoStat_wide %>% saveRDS(paste0(pro_DataPath, "/FaoStat_wide.rds"))
 }
