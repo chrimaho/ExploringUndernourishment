@@ -48,6 +48,7 @@ library(ggridges)
 # Modeling
 library(caret)
 library(gbm)
+library(pdp)
 library(tictoc)
 
 # Set defaults ----
@@ -60,6 +61,9 @@ options(scipen = 999)
 
 # Process Data ----
 source("data.R", local=TRUE)
+
+# Process Model ----
+source("model.R", local=TRUE)
 
 # Define UI ----
 source("ui.R", local=TRUE)
