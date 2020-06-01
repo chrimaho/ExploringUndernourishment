@@ -18,28 +18,36 @@ options(shiny.autoreload=TRUE)
 source("functions.R", local=TRUE)
 
 # Import libraries ----
+
+# Basics
 library(tidyverse)
 library(knitr)
 library(stringr)
-library(shiny)
 library(magrittr)
-library(ggridges)
 library(rprojroot)
 library(assertthat)
 library(naniar)
-library(plotly)
+library(lubridate)
+library(dynutils)
+
+# Shiny
 library(shiny)
 library(shinyWidgets)
 library(shinydashboard)
 library(shinydashboardPlus)
-library(dynutils)
+
+# Visualisations
+library(plotly)
+library(RColorBrewer)
 library(gridExtra)
 library(ggpubr)
 library(GGally)
 library(corrplot)
-library(RColorBrewer)
 library(ggridges)
-library(lubridate)
+
+# Modeling
+library(caret)
+library(gbm)
 
 # Set defaults ----
 theme_set(theme_bw())
