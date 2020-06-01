@@ -541,8 +541,9 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
     # Dot
     dots <- data %>% 
         ggplot(aes_string(x=x_Feature, y=y_Feature, colour="country")) +
-        geom_density2d(alpha=0.1, size=1, n=50) +
-        geom_point(alpha=0.7, size=3) +
+        geom_density2d(alpha=0.1, size=1) +
+        geom_point(alpha=0.7, size=5) +
+        geom_line(alpha=0.3, size=1) +
         theme(
             legend.position="None"
         ) +
