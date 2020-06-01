@@ -701,7 +701,7 @@ server <- function(input, output, session) {
         expr={
             
             # Optimise
-            if (!exists("plt_infl_VariableImportance")) {
+            if (!exists("plt_infl_PartialDependancy.rds")) {
                 
                 if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
                     
@@ -717,9 +717,15 @@ server <- function(input, output, session) {
                     
                 }
                 
+                write_rds(
+                    x=plt_infl_PartialDependancy,
+                    path="./figure/plt_infl_PartialDependancy.rds",
+                    compress="none"
+                )
+                
             }
             
-            plt_infl_VariableImportance %>% return()
+            plt_infl_PartialDependancy %>% return()
             
         }
         
