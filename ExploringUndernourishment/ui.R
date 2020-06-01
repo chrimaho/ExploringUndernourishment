@@ -105,6 +105,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Undernourishment",
                 tabName="undernourishment",
+                # selected=TRUE,
                 icon=icon("seedling"),
                 badgeLabel="food",
                 badgeColor="blue"
@@ -114,7 +115,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Feature Interactions",
                 tabName="interactions",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("project-diagram"),
                 badgeLabel="corr",
                 badgeColor="blue"
@@ -161,7 +162,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Successful",
                 tabName="most_successful",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("thumbs-up"),
                 badgeLabel="good",
                 badgeColor="aqua"
@@ -392,7 +393,7 @@ pag_DictionaryPage <- tabItem(
     # . . Data Dictionary ----
     fluidRow(
         box(
-            title="Data Dictionary",
+            title=tags$b("Data Dictionary"),
             width=12,
             tags$div("A data dictionary is provided to ensure there is a description provided for each variable in the data table."),
             tags$br(),
@@ -420,7 +421,7 @@ pag_Undernourishment <- tabItem(
         box(
             
             # Sub Header
-            h2("Dynamic Part"),
+            tags$b("Dynamic Part"),
             width=12,
             
             # Selections
@@ -432,7 +433,7 @@ pag_Undernourishment <- tabItem(
                     selectizeInput(
                         "undr_dynm_inbx_SelectedCountries",
                         h4("Select Countries"),
-                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(country) %>% distinct(),
+                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(country) %>% distinct() %>% pull(),
                         selected="Thailand",
                         multiple=TRUE,
                     )
@@ -458,8 +459,12 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Improvement Per Year"),
                     width=6,
-                    tags$p("Section reserved for future comments.", style="color:red"),
-                    plotOutput(
+                    tags$p("The chart below shows the change in the Prevelance of Undernourishment per year, for the selected countries. Use the selections above to change the country and the years to focus in on relevant parts."),
+                    tags$body("Some key call-outs include:"),
+                    tags$li("Thailand has had a very steep descent between 2001 and 2007, followed by a slight plateau to 2010, then a steady decline to 2018."),
+                    tags$li("Angola has had a steady and consistent decrease over all the years."),
+                    tags$li("Afganistan has had a constant decrease from 2002 to 2011, followed by an increase to 2018 with a trend to plateau thereafter."),
+                    plotlyOutput(
                         outputId="undr_dynm_plot_ImprovementPerYear",
                         height="6in"
                     )
@@ -467,7 +472,11 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Distribution Per Country"),
                     width=6,
-                    tags$p("Section reserved for future comments.", style="color:red"),
+                    tags$p("Adjusting the controls above will update the chart below by adding more countries to the plot, or adjusting the yearly comparisons. Needless to say, each country will have a distinct shape for their Prevelance of Undernourishment, as they have all adopted different strategies and options for addressing the issue."),
+                    tags$body("Some key call-outs include:"),
+                    tags$li("Brunei shows a very strong, tight grouping close to zero, indicating they have a good score, and are doing well to maintain it."),
+                    tags$li("Central Aftican Republic has an inconsistent and unstable score, spread out over a broad range of scores, indicating that there has been a broad-reaching change in their scores over time."),
+                    tags$li("Bangladesh has a tight clustering, but not close to zero, indicating that there is not any change in their scores over time, and no effor to improve."),
                     plotOutput(
                         outputId="undr_dynm_plot_DistributionPerCountry",
                         height="6in"
@@ -481,23 +490,23 @@ pag_Undernourishment <- tabItem(
     # . . Static Part ----
     fluidRow(
         box(
-            h2("Static Part"),
+            tags$h5(tags$b("Static Part")),
             width=12,
             column(
-                title=tags$b("Completeness of Records"),
+                # title=tags$b("Completeness of Records"),
                 width=6,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
+                tags$p("Most of the countries will full scores are ones the ones that are expected to have low scores in this area (steriotypical 'third-world' countries); and most of the missing scores are from well-off countries (steriotypical 'first-world' countries'). This indicates toward a bias in the data collection strategy, assuming that these countries in the first-world do not have any issues with their Undernourishment. This is an unfair assumption when considering examples such as the Aboriginal Australians or the Indian Americans or the Native Africans in South Africa. Therefore attention needs to be paid to collect data in these countries."),
+                tags$p("Moreover, there are examples of 'third-world' countries that are still missing data. what about Palau or Grenada or Tajikistan? These countries also deserve to have data collected for them."),
                 plotOutput(
                     outputId="plt_undr_stat_Completeness",
                     height="20in"
                 )
             ),
             column(
-                title=tags$b("Ridges per country"),
+                # title=tags$b("Ridges per country"),
                 width=6,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
+                tags$p("There are many countries which show strong and consistent results, close to zero (for example, Belarus, Ukraine and Malaysia); indicating a strong and consistent effort to maintain a low PoU score. There are also some countries with a long and broad score (like Djibouti, Rwanda and Ethiopia), indicating big changes in their score over time; either positive or negative."),
+                tags$p("However, there also appears to be a third category, one where there is a distint bi-nomial pattern (such as Botswana, Peru and Lebanon), which indicates that there has either been a drop followed by a rise in scores, or lot of high scores followed by a steep drop and a lot of low scores. Either way, the patterns for these countries are intrigueing and worth further exploration."),
                 plotOutput(
                     outputId="plt_undr_stat_Ridges",
                     height="20in"
@@ -525,7 +534,7 @@ pag_StatFeatureInteractionsPage <- tabItem(
     fluidRow(
         box(
             
-            h2("Dynamic Plotting"),
+            tags$b("Dynamic Plotting"),
             width=12,
             
             # Selections
@@ -565,12 +574,22 @@ pag_StatFeatureInteractionsPage <- tabItem(
                 )
             ),
             
+            # Comments
+            fluidRow(
+                column(
+                    width=11,
+                    tags$p("My Comment.")
+                )
+            ),
+            
             # Plotting
             fluidRow(
+                column(
                 width=12,
-                plotOutput(
-                    outputId="plt_inta_MultiFeatures",
-                    height="7in"
+                    plotOutput(
+                        outputId="plt_inta_MultiFeatures",
+                        height="7in"
+                    )
                 )
             )
         )
@@ -923,6 +942,32 @@ pag_ReseMostSuccessful <- tabItem(
 
 
 #------------------------------------------------------------------------------#
+# . Most Influential                                                        ####
+#------------------------------------------------------------------------------#
+
+pag_ReseMostInfluential <- tabItem(
+    
+    # . . Name ----
+    tabName="most_influential",
+    
+    # . . Header ----
+    h1("Most Influential Features"),
+    
+    # . . Comment and Plot ----
+    fluidRow(
+        box(
+            title=tags$b("Overview"),
+            width=12,
+            column(
+                width=4,
+            )
+        )
+    )
+    
+)
+
+
+#------------------------------------------------------------------------------#
 #                                                                              #
 #    Finalise                                                               ####
 #                                                                              #
@@ -945,7 +990,8 @@ body <- dashboardBody(
         
         # Research Questions
         pag_ReseGeneralTrend,
-        pag_ReseMostSuccessful
+        pag_ReseMostSuccessful,
+        pag_ReseMostInfluential
         
     )
 )
