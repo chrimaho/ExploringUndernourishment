@@ -172,6 +172,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Surprising Trends",
                 tabName="surprising_trends",
+                selected=TRUE,
                 icon=icon("surprise"),
                 badgeLabel="wow",
                 badgeColor="aqua"
@@ -181,7 +182,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Influential",
                 tabName="most_influential",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("check-square"),
                 badgeLabel="strong",
                 badgeColor="aqua"
@@ -617,13 +618,13 @@ pag_StatTotalPage <- tabItem(
             width=12,
             column(
                 width=5,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
+                # style="border: 1px double lightgrey;",
+                tags$p("Section reserved for future comments."),
             ),
             column(
                 title="Graph",
                 width=7,
-                style="border: 1px double lightgrey;",
+                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_stat_PrevUndrOverall"
                 )
@@ -638,13 +639,13 @@ pag_StatTotalPage <- tabItem(
             width=12,
             column(
                 width=5,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
+                # style="border: 1px double lightgrey;",
+                tags$p("Section reserved for future comments."),
             ),
             column(
                 title="Graph",
                 width=7,
-                style="border: 1px double lightgrey;",
+                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_stat_MissingData",
                     height="6in"
@@ -660,13 +661,13 @@ pag_StatTotalPage <- tabItem(
             width=12,
             column(
                 width=5,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
+                # style="border: 1px double lightgrey;",
+                tags$p("Section reserved for future comments."),
             ),
             column(
                 title="Corrplot",
                 width=7,
-                style="border: 1px double lightgrey;",
+                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_corr_AllVariables",
                     height="7in"
@@ -682,13 +683,13 @@ pag_StatTotalPage <- tabItem(
             width=12,
             column(
                 width=5,
-                style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments.", style="color:red"),
+                # style="border: 1px double lightgrey;",
+                tags$p("Section reserved for future comments."),
             ),
             column(
                 title="Ridge Plot",
                 width=7,
-                style="border: 1px double lightgrey;",
+                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_ridg_UndernourishmentByYear", 
                     height="6in"
@@ -717,7 +718,7 @@ pag_StatFeaturesPage <- tabItem(
         box(
             title="This",
             width=12,
-            tags$p("Section reserved for future comments.", style="color:red"),
+            tags$p("Section reserved for future comments."),
             column(
                 width=12,
                 plotOutput(
@@ -943,6 +944,47 @@ pag_ReseMostSuccessful <- tabItem(
 
 
 #------------------------------------------------------------------------------#
+# . Surprising Trends                                                       ####
+#------------------------------------------------------------------------------#
+
+pag_ReseSurprisingTrends <- tabItem(
+    
+    # . . Name ----
+    tabName="surprising_trends",
+    
+    # . . Header ----
+    h1("Some Surprising Trends In The Data"),
+    
+    # . . Comment and Plot ----
+    fluidRow(
+        box(
+            title=tags$b("Overview"),
+            width=12,
+            column(
+                width=4,
+                tags$p("Reserved for comments.")
+            )
+        )
+    ),
+    
+    fluidRow(
+        box(
+            title=tags$b("Something"),
+            width=12,
+            column(
+                width=12,
+                plotlyOutput(
+                    outputId="plt_surp_AllCountries",
+                    height="8in"
+                )
+            )
+        )
+    )
+    
+)
+
+
+#------------------------------------------------------------------------------#
 # . Most Influential                                                        ####
 #------------------------------------------------------------------------------#
 
@@ -1022,6 +1064,7 @@ body <- dashboardBody(
         # Research Questions
         pag_ReseGeneralTrend,
         pag_ReseMostSuccessful,
+        pag_ReseSurprisingTrends,
         pag_ReseMostInfluential
         
     )
