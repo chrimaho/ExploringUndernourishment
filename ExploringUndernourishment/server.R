@@ -664,6 +664,16 @@ server <- function(input, output, session) {
     
     #------------------------------------------------------------------------------#
     #                                                                              #
+    #    Surprising Trends                                                      ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    
+    
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
     #    Most Influential                                                       ####
     #                                                                              #
     #------------------------------------------------------------------------------#
@@ -700,15 +710,18 @@ server <- function(input, output, session) {
     output$plt_infl_PartialDependancy <- renderPlot(
         expr={
             
-            # Optimise
+            # Check if exists in local environment
             if (!exists("plt_infl_PartialDependancy.rds")) {
                 
+                # Check if exists in local directory
                 if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
                     
+                    # Load
                     plt_infl_PartialDependancy <<- read_rds("./figure/plt_infl_PartialDependancy.rds")
                     
                 } else {
                     
+                    # Run PDP function
                     plt_infl_PartialDependancy <<- plt_PartialDependencyPlots(
                         mod_gbm_Model,
                         mod_data_Raw,
@@ -717,6 +730,7 @@ server <- function(input, output, session) {
                     
                 }
                 
+                # Save file
                 write_rds(
                     x=plt_infl_PartialDependancy,
                     path="./figure/plt_infl_PartialDependancy.rds",
@@ -725,6 +739,7 @@ server <- function(input, output, session) {
                 
             }
             
+            # Render
             plt_infl_PartialDependancy %>% return()
             
         }
