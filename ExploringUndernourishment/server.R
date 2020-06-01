@@ -660,4 +660,69 @@ server <- function(input, output, session) {
         }
     )
     
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    Most Influential                                                       ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    # . . Variable Importance ----
+    output$plt_infl_VariableImportance <- renderPlot(
+        expr={
+                
+                plt_infl_VariableImportance <<- mod_gbm_VariableImportance %>% 
+                    extract2("importance") %>% 
+                    rownames_to_column("variable") %>% 
+                    select("variable","score"="Overall") %>% 
+                    ggplot(aes(reorder(variable,score), score, label=round(score,2))) +
+                    geom_col(width=0.15, fill="darkgrey") +
+                    geom_point(size=4, colour="blue") +
+                    geom_label(hjust=-0.2) +
+                    scale_y_continuous(breaks=seq(0,100,10)) +
+                    theme(panel.grid.minor.x=element_blank()) +
+                    coord_flip() +
+                    labs(
+                        title="Variable Importance Plot",
+                        subtitle="Based on the output of a GBM Model",
+                        y="Importance",
+                        x="Variable"
+                    )
+                
+            plt_infl_VariableImportance %>% return()
+            
+        }
+        
+    )
+    
+    # . . Partial Dependency Plots ----
+    output$plt_infl_PartialDependancy <- renderPlot(
+        expr={
+            
+            # Optimise
+            if (!exists("plt_infl_VariableImportance")) {
+                
+                if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
+                    
+                    plt_infl_PartialDependancy <<- read_rds("./figure/plt_infl_PartialDependancy.rds")
+                    
+                } else {
+                    
+                    plt_infl_PartialDependancy <<- plt_PartialDependencyPlots(
+                        mod_gbm_Model,
+                        mod_data_Raw,
+                        mod_gbm_VariableImportance
+                    )
+                    
+                }
+                
+            }
+            
+            plt_infl_VariableImportance %>% return()
+            
+        }
+        
+    )
+    
 }
