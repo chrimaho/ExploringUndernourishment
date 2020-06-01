@@ -58,12 +58,16 @@ server <- function(input, output, session) {
     })
     
     # . . Left Side ----
-    output$undr_dynm_plot_ImprovementPerYear <- renderPlot(
+    output$undr_dynm_plot_ImprovementPerYear <- renderPlotly(
         expr={
             dat_undr_dynm_InputData() %>% 
                 ggplot() +
                 geom_line(aes(year, prevalence_of_undernourishment, colour=country)) +
                 scale_x_continuous(breaks=seq(input$undr_dynm_slid_SelectedYears[1], input$undr_dynm_slid_SelectedYears[2], 1)) +
+                theme(
+                    axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
+                    panel.grid.minor.x=element_blank()
+                ) +
                 labs(
                     title="Country Improvement per Year",
                     subtitle="'Prevalence of Undernourishment' per 'Country' per 'Year'",
