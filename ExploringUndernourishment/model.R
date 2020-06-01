@@ -152,4 +152,30 @@ if (file.exists("./model/mod_gbm_Model.rds")) {
 #------------------------------------------------------------------------------#
 
 # . . Get Variables ----
-mod_gbm_VariableImportance <- varImp(mod_gbm_fit)
+mod_gbm_VariableImportance <- varImp(mod_gbm_Model)
+
+# . . Partial Dependency ----
+# Optimise
+if (!exists("plt_infl_PartialDependancy.rds")) {
+    
+    if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
+        
+        plt_infl_PartialDependancy <<- read_rds("./figure/plt_infl_PartialDependancy.rds")
+        
+    } else {
+        
+        plt_infl_PartialDependancy <<- plt_PartialDependencyPlots(
+            mod_gbm_Model,
+            mod_data_Raw,
+            mod_gbm_VariableImportance
+        )
+        
+        write_rds(
+            x=plt_infl_PartialDependancy,
+            path="./figure/plt_infl_PartialDependancy.rds",
+            compress="none"
+        )
+        
+    }
+    
+}
