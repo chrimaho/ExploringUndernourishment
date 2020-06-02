@@ -714,6 +714,67 @@ plt_PartialDependencyPlots <- function(Model, TrainData, VarImpData) {
 }
 
 
+#------------------------------------------------------------------------------#
+# . plt_FeatureCorrelationsByTarget                                         ####
+#------------------------------------------------------------------------------#
+plt_FeatureCorrelationsByTarget <- function(DataFrame, Target, Exclude=NA) {
+    #' @title Feature Correlations by Target
+    #' @description To create a series of dot-plot correlations for each variable against a given target variable.
+    #' @note Add a note for the developer.
+    #' @param DataFrame data.frame. The `data.frame` to be used for plotting.
+    #' @param Target string atomic. The name of the target feature
+    #' @param Exclude character vector. Names that should be excluded from the plotting.
+    #' @return A Plot of Grobs
+    #' @author chrimaho
+    
+    # . . Validations ----
+    assert_that(is.data.frame(DataFrame))
+    assert_that(is.string(Target))
+    assert_that(is.atomic(Target))
+    if (!is.na(Exclude)) assert_that(is.character(Exclude))
+    assert_that(Target %in% names(DataFrame), msg=paste0("'", Target, "' must be a feature in 'DataFrame'."))
+    if (!is.na(Exclude)) {
+        assert_that(Exclude %all_in% names(DataFrame), msg="All of the features listed in 'Exclude' must be features in 'DataFrame'.")
+    }
+    
+    # . . Set up ----
+    iter <- 0
+    objs <<- list()
+    
+    # . . Do work ----
+    for (feature in names(DataFrame)) {
+        if (feature %in% Exclude) next
+        if (feature %in% Target) next
+        if (DataFrame %>% extract2(feature) %>% class != "numeric") next
+        iter <- iter + 1
+        assign(
+            "temp",
+            DataFrame %>% 
+                ggplot(aes_string(feature, Target)) +
+                geom_point(alpha=0.1) +
+                geom_smooth(size=1, fill="blue", alpha=0.1) +
+                labs(
+                    subtitle=paste0("Correlation for: ", feature %>% str_replace_all("_", " ") %>% str_to_title()),
+                    x=feature %>% str_replace_all("_", " ") %>% str_to_title(),
+                    y=Target %>% str_replace_all("_", " ") %>% str_to_title()
+                )
+        )
+        objs[[iter]] <- temp
+    }
+    
+    grob <- arrangeGrob(
+        grobs=objs,
+        ncol=3,
+        top=grid::textGrob("Feature Correlations By Target", gp=grid::gpar(fontface="bold", fontsize="20"))
+    )
+    
+    plot <- grob %>% as_ggplot()
+    
+    # . . Return ----
+    return(plot)
+    
+}
+
 
 #------------------------------------------------------------------------------#
 #                                                                              #
