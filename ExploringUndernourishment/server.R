@@ -166,6 +166,48 @@ server <- function(input, output, session) {
     )
     
     
+    #------------------------------------------------------------------------------#
+    # . Features by Target                                                      ####
+    #------------------------------------------------------------------------------#
+    
+    output$plt_undr_FeaturesByTarget <- renderPlot(
+        expr={
+            
+            # Check if exists in local environment
+            if (!exists("plt_undr_FeaturesByTarget")) {
+                
+                # Check if exists in local directory
+                if (file.exists("./figure/plt_undr_FeaturesByTarget.rds")) {
+                    
+                    # Load
+                    plt_undr_FeaturesByTarget <<- read_rds("./figure/plt_undr_FeaturesByTarget.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_undr_FeaturesByTarget <<- plt_FeatureCorrelationsByTarget(
+                        FaoStat_wide, 
+                        "prevalence_of_undernourishment", 
+                        c("avg_undernourishment","pct_complete")
+                    )
+                    
+                    # Save
+                    write_rds(
+                        x=plt_undr_FeaturesByTarget,
+                        path="./figure/plt_undr_FeaturesByTarget.rds",
+                        compress="none"
+                    )
+                    
+                }
+                
+            }
+            
+            return(plt_undr_FeaturesByTarget)
+            
+        }
+    )
+    
+    
     
     #------------------------------------------------------------------------------#
     #                                                                              #
@@ -290,7 +332,7 @@ server <- function(input, output, session) {
         expr={
             # Can't optimise this one because 'corrplot()' doesn't actually return a plot object...
             FaoStat_wide %>% 
-                select(-country, -year, -contains("_complete"), -contains("avg_undernourishment")) %>% 
+                select(-country, -region, -year, -contains("_complete"), -contains("avg_undernourishment")) %>% 
                 extract(ncol(.):1) %>% 
                 cor(use="pairwise.complete.obs") %>% 
                 corrplot(method="pie"
@@ -342,13 +384,30 @@ server <- function(input, output, session) {
     output$plt_hist_FeatureDistributions <- renderPlot(
         expr={
             
-            # Optimise to save future load time.
+            # Check if exists in local environment
             if (!exists("plt_hist_FeatureDistributions")) {
                 
-                # Make
-                plt_hist_FeatureDistributions <<- FaoStat_wide %>% 
-                    select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
-                    plt_grob_MultipleHistograms(c("country", "year"))
+                # Check if exists in local directory
+                if (file.exists("./figure/plt_hist_FeatureDistributions.rds")) {
+                    
+                    # Load
+                    plt_hist_FeatureDistributions <<- read_rds("./figure/plt_hist_FeatureDistributions.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_hist_FeatureDistributions <<- FaoStat_wide %>% 
+                        select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
+                        plt_grob_MultipleHistograms(ExcludeFeatures=c("country", "region", "year"))
+                    
+                    # Save
+                    write_rds(
+                        x=plt_hist_FeatureDistributions,
+                        path="./figure/plt_hist_FeatureDistributions.rds",
+                        compress="none"
+                    )
+                    
+                }
                 
             }
             
@@ -530,17 +589,9 @@ server <- function(input, output, session) {
     
     # . . Set Data for Top Countries ----
     dat_rese_succ_TopCountries <- reactive({
-        FaoStat_wide %>% 
-            mutate(year=as.numeric(as.character(year))) %>% 
-            filter(cat_complete!="empty") %>% 
+        
+        FaoStat_yearly %>% 
             {if (input$rese_succ_inbx_SelectedRegion != "All") {filter(., region==input$rese_succ_inbx_SelectedRegion)} else {.}} %>% 
-            filter(!is.na(prevalence_of_undernourishment)) %>% 
-            select(country, region, year, prevalence_of_undernourishment) %>% 
-            pivot_wider(names_from=year, values_from=prevalence_of_undernourishment, names_prefix="yr_") %>% 
-            mutate(improvement=(yr_2018-yr_2011)/yr_2011*100) %>% 
-            mutate(improvement=round(improvement,2)) %>% 
-            select(country, improvement, everything()) %>% 
-            arrange(improvement) %>%
             return()
     })
     
@@ -613,7 +664,7 @@ server <- function(input, output, session) {
         FaoStat_wide %>% 
             mutate(year=as.numeric(as.character(year))) %>% 
             filter(country %in% sel_country) %>% 
-            select(country, year, prevalence_of_undernourishment, all_of(predictors)) %>%
+            select(country, year, prevalence_of_undernourishment, all_of(val_predictors)) %>%
             pivot_longer(-c(country, year)) %>% 
             mutate(name=name %>% str_replace_all("_", " ") %>% str_to_title()) %>% 
             return()
@@ -656,7 +707,7 @@ server <- function(input, output, session) {
                         fill="Country"
                     )
             } %>% 
-                return()
+            return()
         }
     )
     
@@ -668,8 +719,154 @@ server <- function(input, output, session) {
     #                                                                              #
     #------------------------------------------------------------------------------#
     
+    # . . Increasing Country Tends ----
+    output$plt_surp_AllCountries <- renderPlotly(
+        expr={
+            FaoStat_wide %>% 
+                filter(country %in% {
+                    FaoStat_yearly %>% 
+                        filter(improvement>30) %>% 
+                        select(country) %>% 
+                        pull()
+                }) %>% 
+                mutate(year=as.numeric(as.character(year))) %>% 
+                {
+                    ggplot(data=., aes(year, prevalence_of_undernourishment, colour=country)) +
+                        geom_line() +
+                        scale_x_continuous(breaks=seq(min(.["year"]),max(.["year"]))) +
+                        theme(
+                            axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
+                            panel.grid.minor.x=element_blank()
+                        ) +
+                        labs(
+                            title="Trends per Country",
+                            x="Year",
+                            y="Prevalence of Undernourishment",
+                            colour="Country"
+                        )
+                } %>% 
+                ggplotly() %>% 
+                return()
+        }
+    )
     
+    # . . Arable Land ----
+    output$plt_surp_ArableLand <- renderPlotly(
+        expr={
+            
+            FaoStat_wide %>% 
+                ggplot(aes(percentage_of_arable_land, prevalence_of_undernourishment, colour=country)) +
+                geom_point(alpha=0.4) +
+                theme(
+                    legend.position="none"
+                ) +
+                labs(
+                    title="Arable Land per Country",
+                    x="Percentage of Arable Land",
+                    y="Prevalence of Undernourishment"
+                )
+            
+        }
+    )
     
+    # . . Change in GDP ----
+    output$plt_surp_ChangeInGDP <- renderPlotly(
+        expr={
+            
+            FaoStat_wide %>% 
+                # filter(!country %in% c(
+                #     "China, Macao SAR",
+                #     "United Arab Emirates",
+                #     "Brunei Darussalam",
+                #     "Kuwait",
+                #     "Saudi Arabia",
+                #     "Angola",
+                #     "Panama",
+                #     "Dominican Republic",
+                #     "Botswana",
+                #     "Oman",
+                #     "Cyprus",
+                #     "Trinidad and Tobago",
+                #     "Estonia",
+                #     "Japan",
+                #     "Slovakia",
+                #     "Malaysia",
+                #     "Kazakhstan",
+                #     "Chile",
+                #     "Mauritius",
+                #     "Croatia"
+                #     )) %>% 
+                # filter(country %in% c(
+                #     "Eswatini",
+                #     "Timor-Leste",
+                #     "Zambia",
+                #     "India"
+                # )) %>% 
+                {
+                    ggplot(data=.) +
+                    geom_point(
+                        data=., 
+                        aes(
+                            gross_domestic_product_per_capita_ppp, 
+                            prevalence_of_undernourishment, 
+                            colour=country
+                        ), 
+                        size=2, 
+                        alpha=0.1
+                    ) +
+                    geom_line(
+                        data=., 
+                        aes(
+                            gross_domestic_product_per_capita_ppp, 
+                            prevalence_of_undernourishment, 
+                            colour=country
+                        ), 
+                        size=0.5, 
+                        alpha=0.1
+                    ) +
+                    geom_point(
+                        data=. %>% filter(country %in% c(
+                            "Eswatini",
+                            "Timor-Leste",
+                            "Zambia",
+                            "India"
+                        )),
+                        aes(
+                            gross_domestic_product_per_capita_ppp, 
+                            prevalence_of_undernourishment, 
+                            colour=country
+                        ), 
+                        size=3, 
+                        alpha=0.6
+                    ) +
+                        geom_line(
+                            data=. %>% filter(country %in% c(
+                                "Eswatini",
+                                "Timor-Leste",
+                                "Zambia",
+                                "India"
+                            )),
+                            aes(
+                                gross_domestic_product_per_capita_ppp, 
+                                prevalence_of_undernourishment, 
+                                colour=country
+                            ), 
+                            size=1, 
+                            alpha=0.6
+                        ) +
+                    coord_cartesian(xlim=c(0,20000)) +
+                    theme(
+                        legend.position="none"
+                    ) +
+                    labs(
+                        title="GDP vs PoU",
+                        y="Prevalence of Undernourishment",
+                        x="GDP per Capita"
+                    )
+                }
+            
+        }
+    )
     
     
     #------------------------------------------------------------------------------#
@@ -711,7 +908,7 @@ server <- function(input, output, session) {
         expr={
             
             # Check if exists in local environment
-            if (!exists("plt_infl_PartialDependancy.rds")) {
+            if (!exists("plt_infl_PartialDependancy")) {
                 
                 # Check if exists in local directory
                 if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
