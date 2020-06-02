@@ -765,7 +765,7 @@ plt_FeatureCorrelationsByTarget <- function(DataFrame, Target, Exclude=NA) {
     grob <- arrangeGrob(
         grobs=objs,
         ncol=3,
-        top=grid::textGrob("Feature Correlations By Target", gp=grid::gpar(fontface="bold", fontsize="20"))
+        top=grid::textGrob(paste0("Feature Correlations By:", Target %>% str_replace_all("_", " ") %>% str_to_title()), gp=grid::gpar(fontface="bold", fontsize="20"))
     )
     
     plot <- grob %>% as_ggplot()
