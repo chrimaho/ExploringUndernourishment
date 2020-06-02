@@ -13,66 +13,78 @@
 
 
 #------------------------------------------------------------------------------#
-# Programmatic Tools                                                        ####
+#                                                                              #
+#    Programmatic Tools                                                     ####
+#                                                                              #
 #------------------------------------------------------------------------------#
 
+
+#------------------------------------------------------------------------------#
+# . str_Left                                                                ####
+#------------------------------------------------------------------------------#
 str_Left <- function(string, num_chars) {
     #' @title Subset Left
     #' @description Subset the `string` argument to only include the left-most `num_chars` number of characters.
-    #' Is similar to SQL and VB function LEFT().
+    #' @note Is similar to `SQL` and `VB` function `LEFT()`.
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
-    #' @return A text string of length 'num_chars' that corresponds to the left most number of characters from the 'string' option.
+    #' @return A text string of length `num_chars` that corresponds to the left most number of characters from the `string` option.
     #' @author chrimaho
     
-    # Validations
+    # . . Validations ----
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
     assert_that(length(num_chars)==1)
     
-    # Do work
+    # . . Do work ----
     return <- str_sub(string, end=num_chars)
     
-    # Return
+    # . . Return ----
     return(return)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . str_NotLeft                                                             ####
+#------------------------------------------------------------------------------#
 str_NotLeft <- function(string, num_chars) {
     #' @title Subset Not Left
     #' @description Subset the `string` argument excluding the left-most `num_chars` number of characters.
-    #' Is similar to SQL and VB function LEFT().
+    #' @note Is similar to `SQL` and `VB` function `LEFT()`.
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
-    #' @return A text string of length 'num_chars' that corresponds to the left most number of characters from the 'string' option.
+    #' @return A text string of length `num_chars` that corresponds to the left most number of characters from the `string` option.
     #' @author chrimaho
     
-    # Validations
+    # . . Validations ----
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
     assert_that(length(num_chars)==1)
     
-    # Do work
+    # . . Do work ----
     return <- str_sub(string, start=num_chars-1)
     
-    # Return
+    # . . Return ----
     return(return)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . str_Mid                                                                 ####
+#------------------------------------------------------------------------------#
 str_Mid <- function(string, start_num, num_chars) {
     #' @title Subset Left
     #' @description Subset the mid-point in a string, starting from a specified position and extends to a specified length.
-    #' Is similar to SQL and VB function MID().
+    #' @note Is similar to `SQL` and `VB` function `MID()`.
     #' @param string character. The text string you want to select from; must be an atopic string.
     #' @param start_num numeric. The starting position of the mid-text string you want to select from; must be an atomic numeric type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
-    #' @return A text string of length 'num_chars' that corresponds to the characters from the 'start_num' starting position from the 'string' option.
+    #' @return A text string of length `num_chars` that corresponds to the characters from the 'start_num' starting position from the `string` option.
     #' @author chrimaho
     
-    # Validations
+    # . . Validations ----
     assert_that(is.character(string))
     assert_that(is.character(string)) 
     assert_that(is.numeric(start_num))
@@ -80,61 +92,70 @@ str_Mid <- function(string, start_num, num_chars) {
     assert_that(is.numeric(num_chars))
     assert_that(length(num_chars)==1) 
     
-    # Do work
+    # . . Do work
     return <- str_sub(string, start_num, start_num + num_chars - 1)
     
-    # Return
+    # . . Return
     return(return)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . str_Right                                                               ####
+#------------------------------------------------------------------------------#
 str_Right <- function(string, num_chars) {
     #' @title Subset Right
     #' @description Subset the `string` argument to only include the right-most `num_chars` number of characters.
-    #' Is similar to SQL and VB function RIGHT().
+    #' @note Is similar to `SQL` and `VB` function `RIGHT()`.
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
-    #' @return A text string of length 'num_chars' that corresponds to the right most number of characters from the 'string' option.
+    #' @return A text string of length `num_chars` that corresponds to the right most number of characters from the `string` option.
     #' @author chrimaho
     
-    # Validations
+    # . . Validations ----
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
     assert_that(length(num_chars)==1)
     
-    # Do work
+    # . . Do work ----
     return <- str_sub(string, start=-num_chars)
     
-    # Return
+    # . . Return ----
     return(return)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . str_NotRight                                                            ####
+#------------------------------------------------------------------------------#
 str_NotRight <- function(string, num_chars) {
     #' @title Subset Not Right
     #' @description Subset the `string` argument excluting the right-most `num_chars` number of characters.
-    #' Is similar to SQL and VB function RIGHT().
+    #' @note Is similar to `SQL` and `VB` function `RIGHT()`.
     #' @param string character. The text string you want to select from; must be an character type.
     #' @param num_chars numeric. The number of characters that you want to select; must be an atomic numeric type.
-    #' @return A text string of length 'num_chars' that corresponds to the right most number of characters from the 'string' option.
+    #' @return A text string of length `num_chars` that corresponds to the right most number of characters from the `string` option.
     #' @author chrimaho
     
-    # Validations:
+    # . . Validations ----
     assert_that(is.character(string))
     assert_that(is.numeric(num_chars))
     assert_that(length(num_chars)==1)
     
-    # Do work
+    # . . Do work ----
     return <- str_sub(string, end=-num_chars-1)
     
-    # Return
+    # . . Return ----
     return(return)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . str_Format                                                              ####
+#------------------------------------------------------------------------------#
 str_Format <- function(string, ...) {
     #' @title String Formatter
     #' @description Take an input string, and substitute in-string variables.
@@ -146,51 +167,60 @@ str_Format <- function(string, ...) {
     #' @references https://stackoverflow.com/questions/44763056/is-there-an-r-equivalent-of-pythons-string-format-function#answer-44763659
     #' @author chrimaho
     
-    # Import packages ----
+    # . . Import packages ----
     require(stringr)
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.string(string))
     assert_that(c("stringr") %all_in% .packages(), msg="The packages 'stringr' must be mounted.")
     
-    # Get arguments ----
+    # . . Get arguments ----
     envir <- as.environment(list(...))
     parent.env(envir) <- .GlobalEnv
     
-    # Perform substitution
+    # . . Perform substitution
     string <- str_replace_all(string, "\\{", "${")
     str_return <- str_interp(string=string, env=envir)
     
-    # Return ----
+    # . . Return ----
     return(str_return)
     
 }
 
 
+
 #------------------------------------------------------------------------------#
-# Object Details                                                            ####
+#                                                                              #
+#    Object Details                                                         ####
+#                                                                              #
 #------------------------------------------------------------------------------#
 
 
+#------------------------------------------------------------------------------#
+# . get_PrintDataReturn                                                     ####
+#------------------------------------------------------------------------------#
 get_PrintDataReturn <- function(DataFrame) {
     #' @title Print Then Return
     #' @description Print the `data.frame`, then return it. Best to use this in the middle of a `dplyr` pipe.
-    #' @note Probably the easyiest, yet most useful function I've ever written.
+    #' @note Probably the easyiest, yet most useful function I've ever written...
     #' @param DataFrame data.frame. The `data.frame` you want printed.
     #' @return The original `data.frame`.
     #' @author chrimaho
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.data.frame(DataFrame))
     
-    # Do work ----
+    # . . Do work ----
     print(DataFrame)
     
-    # Return ----
+    # . . Return ----
     return(DataFrame)
 }
 
 
+#------------------------------------------------------------------------------#
+# . get_PrintStatReturn                                                     ####
+#------------------------------------------------------------------------------#
 get_PrintStatReturn <- function(DataFrame) {
     #' @title Print Stats Then Return
     #' @description Print dataframe statistics, then return the original dataframe.
@@ -198,17 +228,20 @@ get_PrintStatReturn <- function(DataFrame) {
     #' @param DataFrame data.frame. The dataframe you want checked.
     #' @return The original dataframe.
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.data.frame(DataFrame))
     
-    # Do work ----
+    # . . Do work ----
     print(get_DataFrameStatistics(DataFrame))
     
-    # Return ----
+    # . . Return ----
     return(DataFrame)
 }
 
 
+#------------------------------------------------------------------------------#
+# . get_DataFrameStatistics                                                 ####
+#------------------------------------------------------------------------------#
 get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
     #' @title Get `data.frame` Statistics.
     #' @description Get some key statistics from a `data.frame`.
@@ -219,11 +252,11 @@ get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
     #' @return A `data.frame` containing the information about `DataFrame`.
     #' @author chrimaho
     
-    # Load packages:
+    # . . Load packages ----
     require(e1071)
     require(gmodels)
         
-    # Assertions:
+    # . . Assertions ----
     assert_that(is.data.frame(DataFrame))
     assert_that("e1071" %in% .packages(), msg="'e1071' is not loaded.")
     assert_that("gmodels" %in% .packages(), msg="'gmodels' is not loaded.")
@@ -232,7 +265,7 @@ get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
     assert_that(is.numeric(signif))
     assert_that(signif %% 1 == 0, msg="'signif' must be an integer.")
     
-    # Do work:
+    # Do work ----
     dat <- data.frame(length       = nrow(DataFrame)
                       ,class        = sapply(DataFrame, function(x) class(x))
                       ,type         = sapply(DataFrame, function(x) typeof(x))
@@ -276,7 +309,7 @@ get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
         rownames_to_column("variable") %>% 
         mutate_at(c("pct_distinct","pct_na","mean","std.dev","skewness","kurtosis","norm_test"), round, signif)
     
-    # Return:
+    # . . Return ----
     return (dat)
     
 }
@@ -284,10 +317,15 @@ get_DataFrameStatistics <- function(DataFrame, p_val=0.95, signif=5) {
 
 
 #------------------------------------------------------------------------------#
-# Data Visualisation Tools                                                  ####
+#                                                                              #
+#    Data Visualisation Tools                                               ####
+#                                                                              #
 #------------------------------------------------------------------------------#
 
 
+#------------------------------------------------------------------------------#
+# . plt_hist_SingleFeature                                                  ####
+#------------------------------------------------------------------------------#
 plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
     #' @title Add function title
     #' @description Add function description.
@@ -299,7 +337,7 @@ plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
     #' @return What is being returned?
     #' @author chrimaho
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.data.frame(Feature) | is.vector(Feature))
     assert_that(is.string(Name) | is.na(Name))
     assert_that(is.number(Bins) | is.na(Bins))
@@ -312,22 +350,22 @@ plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
         Feature <- data.frame(Name = Feature)
     }
     
-    # Check ----
+    # . . Check ----
     if (is.na(Bins)) {
         Bins <- Feature %>% extract(!is.na(.)) %>% unique %>% length
         if (Bins>30) {Bins <- 30}
     }
     
-    # Clean ----
+    # . . Clean ----
     Feature <- Feature %>% filter(!is.na(.))
     
-    # Set Stats ----
+    # . . Set Stats ----
     binwid <- (max(Feature) - min(Feature)) / (Bins+1)
     avg <- Feature %>% extract2(1) %>% mean
     std <- Feature %>% extract2(1) %>% sd
     num <- Feature %>% extract2(1) %>% length
     
-    # Set initial plot ----
+    # . . Set initial plot ----
     plt <- Feature %>%
         ggplot(aes_string(Name)) +
         geom_histogram(aes(y=..count..), fill="cornflowerblue", color="cornflowerblue", alpha=0.4, bins=Bins) +
@@ -343,24 +381,27 @@ plt_hist_SingleFeature <- function(Feature, Name=NA, Bins=NA) {
                             )
         )
     
-    # Resize bins ----
+    # . . Resize bins ----
     if(Bins<30){
         plt <- plt + scale_x_continuous(breaks=round(seq(min(Feature),max(Feature),by=1)))
     }
     
-    # Set theme ----
+    # . . Set theme ----
     plt <- plt +
         theme_bw() +
         theme(plot.title = element_text(hjust=0.5)) +
         theme(plot.subtitle = element_text(hjust=0.5)) +
         theme(panel.grid.major.x = element_blank())
     
-    # Return ----
+    # . . Return ----
     return(plt)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . plt_grob_MultipleHistograms                                             ####
+#------------------------------------------------------------------------------#
 plt_grob_MultipleHistograms <- function(DataFrame, ExcludeFeatures=NA) {
     #' @title Add function title
     #' @description Add function description.
@@ -370,17 +411,17 @@ plt_grob_MultipleHistograms <- function(DataFrame, ExcludeFeatures=NA) {
     #' @return What is being returned?
     #' @author chrimaho
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.data.frame(DataFrame))
     if (!is.na(ExcludeFeatures)) {
         assert_that(is.character(ExcludeFeatures))
     }
     
-    # Set Up ----
+    # . . Set Up ----
     iter <- 0
     objs <<- list()
     
-    # Do work ----
+    # . . Do work ----
     for (feature in DataFrame %>% names){
         if (feature %in% ExcludeFeatures) next
         iter <- iter + 1
@@ -391,18 +432,21 @@ plt_grob_MultipleHistograms <- function(DataFrame, ExcludeFeatures=NA) {
         objs[[iter]] <<- temp
     }
     
-    # Create Grob ----
+    # . . Create Grob ----
     grob <- arrangeGrob(grobs=objs, ncol=4)
     
-    # Create Plot ----
+    # . . Create Plot ----
     plot <- grob %>% as_ggplot()
     
-    # Return ----
+    # . . Return ----
     return(plot)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . plt_dot_DualFeature                                                     ####
+#------------------------------------------------------------------------------#
 plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=names(DataFrame)[2], GroupBy=NA, Smooth=FALSE) {
     #' @title Add function title
     #' @description Add function description.
@@ -413,7 +457,7 @@ plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=n
     #' @return What is being returned?
     #' @author chrimaho
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.data.frame(DataFrame))
     assert_that(is.string(Target))
     assert_that(is.string(Feature))
@@ -423,11 +467,11 @@ plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=n
         assert_that(isFALSE(Smooth), msg="If you define a 'GroupBy' variable, it is illogical to include a smooth line.")
     }
     
-    # Set Up ----
+    # . . Set Up ----
     plt <- DataFrame %>% 
         ggplot(aes_string(Feature, Target))
     
-    # Add Grouping ----
+    # . . Add Grouping ----
     if (is.na(GroupBy)) {
         plt <- plt + 
             geom_point()
@@ -437,13 +481,13 @@ plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=n
             theme(legend.position="none")
     }
     
-    # Add Smooth ----
+    # . . Add Smooth ----
     if (isTRUE(Smooth)) {
         plt <- plt +
             geom_smooth(colour="blue", fill="cornflowerblue")
     }
     
-    # Add Labels ----
+    # . . Add Labels ----
     plt <- plt +
         labs(
             title=paste0("Dot Plot"),
@@ -456,11 +500,14 @@ plt_dot_DualFeature <- function(DataFrame, Target=names(DataFrame)[1], Feature=n
             )
     }
     
-    # Return ----
+    # . . Return ----
     return(plt)
 }
 
 
+#------------------------------------------------------------------------------#
+# . plt_comb_FeatureAndTarget                                               ####
+#------------------------------------------------------------------------------#
 plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=NA) {
     #' @title Add function title
     #' @description Add function description.
@@ -470,7 +517,7 @@ plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=
     #' @return What is being returned?
     #' @author chrimaho
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.data.frame(DataFrame))
     assert_that(is.string(Target) | is.na(Target))
     assert_that(is.string(Feature) | is.na(Feature))
@@ -480,20 +527,23 @@ plt_comb_FeatureAndTarget <- function(DataFrame, Target=NA, Feature=NA, GroupBy=
         assert_that(c(GroupBy) %in% names(DataFrame), msg=paste0("The value for 'GroupBy' (which is '", GroupBy, "') must be a valid column name in 'DataFrame'."))
     }
     
-    # Create Distribution ----
+    # . . Create Distribution ----
     hist <- plt_hist_SingleFeature(DataFrame[Feature])
     
-    # Create comparison ----
+    # . . Create comparison ----
     comb <- plt_dot_DualFeature(DataFrame, Target, Feature, GroupBy)
     
-    # Combine ----
+    # . . Combine ----
     plot <- arrangeGrob(hist, comb, nrow=1)
     
-    # Return ----
+    # . . Return ----
     return(plot)
 }
 
 
+#------------------------------------------------------------------------------#
+# .  plt_comb_MultiFeaturesMultiPlots                                       ####
+#------------------------------------------------------------------------------#
 plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_Feature) {
     #' @title Plot Multiple Features on Multiple Plots
     #' @description Uses three plots: Density, Point and Violin. Can only input two features at a time (x & y dimensions).
@@ -506,7 +556,7 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
     #' @reference https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html
     #' @author chrimaho
     
-    # Validations ----
+    # . . Validations ----
     assert_that(is.data.frame(DataFrame))
     assert_that("country" %in% names(DataFrame), msg="'DataFrame' must contain one feature called 'country'.")
     assert_that(is.character(Countries))
@@ -517,12 +567,12 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
     assert_that(y_Feature %in% names(DataFrame), msg=paste0("The feature '", y_Feature, "' must be a feature of 'DataFrame'."))
     assert_that(Countries %all_in% unique(FaoStat_wide[, "country", drop=T]), msg="All of the countries provided in 'Countries' must be legitimate countries, as provided in DataFrame['country'].")
     
-    # Prep
+    # . . Prep ----
     data <- DataFrame %>% 
         filter(country %in% Countries) %>% 
         select(country, x_Feature, y_Feature)
     
-    # Histogram
+    # . . Histogram ----
     hist <- data %>%
         select(country, x_Feature) %>% 
         na.omit() %>% 
@@ -538,12 +588,12 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
             y="Count"
         )
     
-    # Dot
+    # . . Dot ----
     dots <- data %>% 
         ggplot(aes_string(x=x_Feature, y=y_Feature, colour="country")) +
         geom_density2d(alpha=0.1, size=1) +
         geom_point(alpha=0.7, size=5) +
-        geom_line(alpha=0.3, size=1) +
+        # geom_line(alpha=0.3, size=1) +
         theme(
             legend.position="None"
         ) +
@@ -552,7 +602,7 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
             y=y_Feature %>% str_replace_all("_", " ") %>% str_to_title()
         )
     
-    # Violin
+    # . . Violin ----
     viol <- data %>% 
         select(country, y_Feature) %>% 
         na.omit() %>% 
@@ -567,7 +617,7 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
             x="Country"
         )
     
-    # Create
+    # . . Create ----
     plt_Return <- arrangeGrob(
         hist, dots, viol, 
         layout_matrix=rbind(
@@ -577,15 +627,18 @@ plt_comb_MultiFeaturesMultiPlots <- function(DataFrame, Countries, x_Feature, y_
         )
     )
     
-    # Fix
+    # . . Fix ----
     plt_Return %<>% as_ggplot()
     
-    # Return ----
+    # . . Return ----
     return(plt_Return)
     
 }
 
 
+#------------------------------------------------------------------------------#
+# . plt_PartialDependencyPlots                                              ####
+#------------------------------------------------------------------------------#
 plt_PartialDependencyPlots <- function(Model, TrainData, VarImpData) {
     #' @title Plot Partial Dependency Plots
     #' @description Describe.
@@ -596,7 +649,7 @@ plt_PartialDependencyPlots <- function(Model, TrainData, VarImpData) {
     #' @return A Grob of Plots.
     #' @author chrimaho
     
-    # Validations ----
+    # . . Validations ----
     assert_that(class(Model)=="train", msg="'Model' must be of class='train'.")
     assert_that(is.data.frame(TrainData))
     if (class(VarImpData)=="varImp.train") {
@@ -616,11 +669,11 @@ plt_PartialDependencyPlots <- function(Model, TrainData, VarImpData) {
         assert_that(VarImpData %all_in% names(TrainData), msg="The features given in 'VarImpData' must match the column features in 'TrainData'.")
     }
     
-    # Set Up ----
+    # . . Set Up ----
     iter <- 0
     objs <<- list()
     
-    # Loop ----
+    # . . Loop ----
     for (feature in VarImpData) {
         iter <- iter + 1
         assign(
@@ -637,34 +690,36 @@ plt_PartialDependencyPlots <- function(Model, TrainData, VarImpData) {
                 chull=TRUE,
                 train=TrainData
             ) + 
-                labs(
-                    subtitle=paste0("PDP for: ", feature %>% str_replace_all("_", " ") %>% str_to_title()),
-                    y="\u0394 PoU"
-                )
+            labs(
+                subtitle=paste0("PDP for: ", feature %>% str_replace_all("_", " ") %>% str_to_title()),
+                y="\u0394 PoU"
+            )
         )
         objs[[iter]] <<- temp
     }
     
-    # Grob ----
+    # . . Grob ----
     grob <- arrangeGrob(
         grobs=objs, 
         ncol=3, 
         top=grid::textGrob("Partial Dependency Plots", gp=grid::gpar(fontface="bold", fontsize="20"))
     )
     
-    # Plot ----
+    # . . Plot ----
     plot <- grob %>% as_ggplot()
     
-    # Return ----
+    # . . Return ----
     return(plot)
     
 }
 
 
-#------------------------------------------------------------------------------#
-# . Miscellaneous                                                           ####
-#------------------------------------------------------------------------------#
 
+#------------------------------------------------------------------------------#
+#                                                                              #
+#    Miscellaneous                                                          ####
+#                                                                              #
+#------------------------------------------------------------------------------#
 
 donut_percentage <- function(value, labels, title){
     ######################################################################################################
