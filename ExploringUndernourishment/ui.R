@@ -71,13 +71,13 @@ sidebar <- dashboardSidebar(
             tabName="info",
             icon=icon("info-circle"),
             badgeLabel="info",
-            badgeColor="green"
+            badgeColor="blue"
         ),
         
         # . . Disclaimer ----
         menuItem(
             text="Disclaimer",
-            # selected=TRUE,
+            selected=TRUE,
             icon=icon("exclamation-triangle"),
             tabName="disclaimer",
             badgeLabel="legal",
@@ -98,7 +98,7 @@ sidebar <- dashboardSidebar(
                 # selected=TRUE,
                 icon=icon("book"),
                 badgeLabel="ref",
-                badgeColor="blue"
+                badgeColor="olive"
             ),
             
             # Undernourishment
@@ -108,7 +108,7 @@ sidebar <- dashboardSidebar(
                 # selected=TRUE,
                 icon=icon("seedling"),
                 badgeLabel="food",
-                badgeColor="blue"
+                badgeColor="olive"
             ),
             
             # Feature Interaction
@@ -118,7 +118,7 @@ sidebar <- dashboardSidebar(
                 # selected=TRUE,
                 icon=icon("project-diagram"),
                 badgeLabel="corr",
-                badgeColor="blue"
+                badgeColor="olive"
             ),
             
             # Overall Stats
@@ -127,7 +127,7 @@ sidebar <- dashboardSidebar(
                 icon=icon("chart-pie"),
                 tabName="stats_total",
                 badgeLabel="big",
-                badgeColor="blue"
+                badgeColor="olive"
             ),
             
             # Feature Stats
@@ -136,7 +136,7 @@ sidebar <- dashboardSidebar(
                 tabName="stats_features",
                 icon=icon("chart-pie"),
                 badgeLabel="small",
-                badgeColor="blue"
+                badgeColor="olive"
             )
             
         ),
@@ -172,7 +172,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Surprising Trends",
                 tabName="surprising_trends",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("surprise"),
                 badgeLabel="wow",
                 badgeColor="aqua"
@@ -188,6 +188,15 @@ sidebar <- dashboardSidebar(
                 badgeColor="aqua"
             )
             
+        ),
+        
+        # . . Conclusion ----
+        menuItem(
+            "Conclusion",
+            tabName="conclusion",
+            icon=icon("hourglass-end"),
+            badgeLabel="end",
+            badgeColor="fuchsia"
         ),
         
         # . . Socials ----
@@ -329,43 +338,66 @@ pag_DisclaimerPage <- tabItem(
         box(
             title=tags$b("References"),
             width=12,
-            tags$li(
-                "Abafita & Kim 2014, ‘Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis’, Journal of Rural Development, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613."
-            ),
             tags$li(HTML(str_Format(
-                "FAO 2020, Food and Agriculture Organisation of the United Nations, viewed 11 May 2020, <{link}>.",
+                "Abafita & Kim 2014, '{title}', {journal}, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613.",
+                title=tags$body("Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis"),
+                journal=tags$i("Journal of Rural Development")
+            ))),
+            tags$li(HTML(str_Format(
+                "FAO 2020, {title}, <{link}>.",
+                title=tags$i("Food and Agriculture Organisation of the United Nations"),
                 link=tags$a("http://www.fao.org/home/en/", href="http://www.fao.org/home/en/")
             ))),
-            tags$li(
-                "FAO 2019, The State of Food Security and Nutrition in the World: Safeguarding Against Economic Slowdowns and Downturns, viewed 16 May 2020, <http://www.fao.org/3/ca5162en/ca5162en.pdf>."
-            ),
-            tags$li(
-                "FAO 2020, Sustainable Development Goals: Indicator 2.1.1 - Prevalence of undernourishment, viewed 11 May 2020, <http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/>."
-            ),
-            tags$li(
-                "FAO 2020, FAOStat, viewed 7 May 2020, <http://www.fao.org/faostat/en/#data/FS>."
-            ),
-            tags$li(
-                "FAO 2020, Enhanced Parametric Approach Including In-Depth Thematic Analysis of Underlying Factors and Drivers Behind Food Security and Nutrition Trends, viewed 16 May 2020, <https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf>."
-            ),
-            tags$li(
-                "Fontell & Luchsinger 2011, ‘Sustainable efforts to eradicate Global hunger, undernourishment and malnutrition’, Journal of Global Business Issues, vol. 5, no. 2, pp. 79-83, ProQuest central database."
-            ),
-            tags$li(
-                "Harris-Fry et al. 2015, ‘Socio-economic determinants of household food security and womens dietary diversity in rural Bangladesh: a cross-sectional study’, Journal of Health, Population and Nutrition, vol. 33, ISSN: 16060997, DOI: 10.1186/s41043-015-0022-0."
-            ),
-            tags$li(
-                "Mbolanyi et al. 2017, ‘Determinants of household food security in a rangeland area of Uganda’, African Journal of Rural Development, vol. 2, no. 2, pp. 213-23, ISSN: 2415-2838, DOI: 10.22004/ag.econ.262839."
-            ),
-            tags$li(
-                "Mughal & Fontan-Sers 2020, ‘Cereal production, undernourishment, and food insecurity in South Asia, Review of Development Economics, vol. 24, no. 2, pp. 524-45, Wiley Online Library, <https://doi-org.ezproxy.lib.uts.edu.au/10.1111/rode.12659>."
-            ),
-            tags$li(
-                "UN 2020a, Sustainable Development Goals, viewed 11 May 2020, <https://www.un.org/sustainabledevelopment/sustainable-development-goals/>."
-            ),
-            tags$li(
-                "UN 2020b, Goal 2: Zero Hunger, viewed 11 May 2020, <https://www.un.org/sustainabledevelopment/hunger/>."
-            ),
+            tags$li(HTML(str_Format(
+                "FAO 2019, {title}, <{link}>.",
+                title=tags$i("The State of Food Security and Nutrition in the World: Safeguarding Against Economic Slowdowns and Downturns"),
+                link=tags$a("http://www.fao.org/3/ca5162en/ca5162en.pdf", href="http://www.fao.org/3/ca5162en/ca5162en.pdf")
+            ))),
+            tags$li(HTML(str_Format(
+                "FAO 2020, {title}, <{link}>.",
+                title=tags$i("Sustainable Development Goals: Indicator 2.1.1 - Prevalence of undernourishment"),
+                link=tags$a("http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/")
+            ))),
+            tags$li(HTML(str_Format(
+                "FAO 2020, {title}, <{link}>.",
+                title=tags$i("FAOStat"),
+                link=tags$a("http://www.fao.org/faostat/en/#data/FS", href="http://www.fao.org/faostat/en/#data/FS")
+            ))),
+            tags$li(HTML(str_Format(
+                "FAO 2020, {title},  <{link}>.",
+                title=tags$i("Enhanced Parametric Approach Including In-Depth Thematic Analysis of Underlying Factors and Drivers Behind Food Security and Nutrition Trends"),
+                link=tags$a("https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf", href="https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf")
+            ))),
+            tags$li(HTML(str_Format(
+                "Fontell & Luchsinger 2011, ‘{title}’, {journal}, vol. 5, no. 2, pp. 79-83, ProQuest central database.",
+                title=tags$body("Sustainable efforts to eradicate Global hunger, undernourishment and malnutrition"),
+                journal=tags$i("Journal of Global Business Issues")
+            ))),
+            tags$li(HTML(str_Format(
+                "Harris-Fry et al. 2015, ‘{title}’, {journal}, vol. 33, ISSN: 16060997, DOI: 10.1186/s41043-015-0022-0.",
+                title=tags$body("Socio-economic determinants of household food security and womens dietary diversity in rural Bangladesh: a cross-sectional study"),
+                journal=tags$i("Journal of Health, Population and Nutrition")
+            ))),
+            tags$li(HTML(str_Format(
+                "Mbolanyi et al. 2017, ‘{title}’, {journal}, vol. 2, no. 2, pp. 213-23, ISSN: 2415-2838, DOI: 10.22004/ag.econ.262839.",
+                title=tags$body("Determinants of household food security in a rangeland area of Uganda"),
+                journal=tags$i("African Journal of Rural Development")
+            ))),
+            tags$li(HTML(str_Format(
+                "Mughal & Fontan-Sers 2020, ‘{title}’, {journal}, vol. 24, no. 2, pp. 524-45, Wiley Online Library.",
+                title=tags$body("Cereal production, undernourishment, and food insecurity in South Asia"),
+                journal=tags$i("Review of Development Economics")
+            ))),
+            tags$li(HTML(str_Format(
+                "UN 2020a, {title}, <{link}>.",
+                title=tags$i("Sustainable Development Goals"),
+                link=tags$a("https://www.un.org/sustainabledevelopment/sustainable-development-goals/", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/")
+            ))),
+            tags$li(HTML(str_Format(
+                "UN 2020b, {title}, <{link}>.",
+                title=tags$i("Goal 2: Zero Hunger"),
+                link=tags$a("https://www.un.org/sustainabledevelopment/hunger/", href="https://www.un.org/sustainabledevelopment/hunger/")
+            ))),
         )
     )
     
@@ -423,7 +455,7 @@ pag_Undernourishment <- tabItem(
         box(
             
             # Sub Header
-            tags$b("Dynamic Part"),
+            title=tags$b("Dynamic Part"),
             width=12,
             
             # Selections
@@ -492,26 +524,51 @@ pag_Undernourishment <- tabItem(
     # . . Static Part ----
     fluidRow(
         box(
-            tags$h5(tags$b("Static Part")),
+            title=tags$b("Static Part"),
             width=12,
-            column(
-                # title=tags$b("Completeness of Records"),
-                width=6,
-                tags$p("Most of the countries will full scores are ones the ones that are expected to have low scores in this area (steriotypical 'third-world' countries); and most of the missing scores are from well-off countries (steriotypical 'first-world' countries'). This indicates toward a bias in the data collection strategy, assuming that these countries in the first-world do not have any issues with their Undernourishment. This is an unfair assumption when considering examples such as the Aboriginal Australians or the Indian Americans or the Native Africans in South Africa. Therefore attention needs to be paid to collect data in these countries."),
-                tags$p("Moreover, there are examples of 'third-world' countries that are still missing data. what about Palau or Grenada or Tajikistan? These countries also deserve to have data collected for them."),
-                plotOutput(
-                    outputId="plt_undr_stat_Completeness",
-                    height="20in"
+            fluidRow(
+                column(
+                    title=tags$b("Completeness of Records"),
+                    width=6,
+                    tags$p("Most of the countries will full scores are ones the ones that are expected to have low scores in this area (steriotypical 'third-world' countries); and most of the missing scores are from well-off countries (steriotypical 'first-world' countries'). This indicates toward a bias in the data collection strategy, assuming that these countries in the first-world do not have any issues with their Undernourishment. This is an unfair assumption when considering examples such as the Aboriginal Australians or the Indian Americans or the Native Africans in South Africa. Therefore attention needs to be paid to collect data in these countries."),
+                    tags$p("Moreover, there are examples of 'third-world' countries that are still missing data. What about Palau or Grenada or Tajikistan? These countries also deserve to have data collected for them."),
+                    plotOutput(
+                        outputId="plt_undr_stat_Completeness",
+                        height="20in"
+                    )
+                ),
+                column(
+                    title=tags$b("Ridges per country"),
+                    width=6,
+                    tags$p("There are many countries which show strong and consistent results, close to zero (for example, Belarus, Ukraine and Malaysia); indicating a strong and consistent effort to maintain a low PoU score. There are also some countries with a long and broad score (like Djibouti, Rwanda and Ethiopia), indicating big changes in their score over time; either positive or negative."),
+                    tags$p("However, there also appears to be a third category, one where there is a distint bi-nomial pattern (such as Botswana, Peru and Lebanon), which indicates that there has either been a drop followed by a rise in scores, or lot of high scores followed by a steep drop and a lot of low scores. Either way, the patterns for these countries are intrigueing and worth further exploration."),
+                    plotOutput(
+                        outputId="plt_undr_stat_Ridges",
+                        height="20in"
+                    )
+                )
+            )
+        )
+    ),
+    
+    # . . Features by Target ----
+    fluidRow(
+        box(
+            title=tags$b("Features by Target"),
+            width=12,
+            fluidRow(
+                column(
+                    width=12,
+                    tags$p("Reserved for comments."),
                 )
             ),
-            column(
-                # title=tags$b("Ridges per country"),
-                width=6,
-                tags$p("There are many countries which show strong and consistent results, close to zero (for example, Belarus, Ukraine and Malaysia); indicating a strong and consistent effort to maintain a low PoU score. There are also some countries with a long and broad score (like Djibouti, Rwanda and Ethiopia), indicating big changes in their score over time; either positive or negative."),
-                tags$p("However, there also appears to be a third category, one where there is a distint bi-nomial pattern (such as Botswana, Peru and Lebanon), which indicates that there has either been a drop followed by a rise in scores, or lot of high scores followed by a steep drop and a lot of low scores. Either way, the patterns for these countries are intrigueing and worth further exploration."),
-                plotOutput(
-                    outputId="plt_undr_stat_Ridges",
-                    height="20in"
+            fluidRow(
+                column(
+                    width=12,
+                    plotOutput(
+                        outputId="plt_undr_FeaturesByTarget",
+                        height="20in"
+                    )
                 )
             )
         )
@@ -532,11 +589,11 @@ pag_StatFeatureInteractionsPage <- tabItem(
     # . . Header ----
     h1("Feature Interactions"),
     
-    # . . Heading3 ----
+    # . . Dynamic Plotting ----
     fluidRow(
         box(
             
-            tags$b("Dynamic Plotting"),
+            title=tags$b("Dynamic Plotting"),
             width=12,
             
             # Selections
@@ -557,20 +614,20 @@ pag_StatFeatureInteractionsPage <- tabItem(
                 column(
                     width=4,
                     selectizeInput(
-                        "inta_dynm_inbx_SelectedXFeature",
-                        h4("Select X Feature"),
-                        choices=FaoStat_wide %>% select(-c("year", "country", "num_complete", "avg_undernourishment", "pct_complete", "cat_complete")) %>% names(),
-                        selected="avg_value_of_food_production",
+                        "inta_dynm_inbx_SelectedYFeature",
+                        h4("Select Y Feature"),
+                        choices=FaoStat_wide %>% select(-c("year", "region", "country", "num_complete", "avg_undernourishment", "pct_complete", "cat_complete")) %>% names(),
+                        selected="prevalence_of_undernourishment",
                         multiple=FALSE
                     )
                 ),
                 column(
                     width=4,
                     selectizeInput(
-                        "inta_dynm_inbx_SelectedYFeature",
-                        h4("Select Y Feature"),
-                        choices=FaoStat_wide %>% select(-c("year", "country", "num_complete", "avg_undernourishment", "pct_complete", "cat_complete")) %>% names(),
-                        selected="prevalence_of_undernourishment",
+                        "inta_dynm_inbx_SelectedXFeature",
+                        h4("Select X Feature"),
+                        choices=FaoStat_wide %>% select(-c("year", "region", "country", "num_complete", "avg_undernourishment", "pct_complete", "cat_complete")) %>% names(),
+                        selected="avg_value_of_food_production",
                         multiple=FALSE
                     )
                 )
@@ -716,7 +773,7 @@ pag_StatFeaturesPage <- tabItem(
     # . . Distribution of all variables ----
     fluidRow(
         box(
-            title="This",
+            title=tags$b("This"),
             width=12,
             tags$p("Section reserved for future comments."),
             column(
@@ -955,27 +1012,58 @@ pag_ReseSurprisingTrends <- tabItem(
     # . . Header ----
     h1("Some Surprising Trends In The Data"),
     
-    # . . Comment and Plot ----
+    # . . Increasing Country Trends ----
     fluidRow(
         box(
-            title=tags$b("Overview"),
+            title=tags$b("Increasing Trends per Country"),
             width=12,
             column(
                 width=4,
                 tags$p("Reserved for comments.")
+            ),
+            column(
+                width=8,
+                plotlyOutput(
+                    outputId="plt_surp_AllCountries",
+                    height="4in"
+                )
             )
         )
     ),
     
+    # . . Arable Land ----
     fluidRow(
         box(
-            title=tags$b("Something"),
+            title=tags$b("Arable Land per Country"),
             width=12,
             column(
-                width=12,
+                width=4,
+                tags$p("Reserved for comments.")
+            ),
+            column(
+                width=8,
                 plotlyOutput(
-                    outputId="plt_surp_AllCountries",
-                    height="8in"
+                    outputId="plt_surp_ArableLand",
+                    height="4in"
+                )
+            )
+        )
+    ),
+    
+    # . . Change in GDP ----
+    fluidRow(
+        box(
+            title=tags$b("Change in GDP"),
+            width=12,
+            column(
+                width=4,
+                tags$p("Reserved for comments.")
+            ),
+            column(
+                width=8,
+                plotlyOutput(
+                    outputId="plt_surp_ChangeInGDP",
+                    height="4in"
                 )
             )
         )
@@ -1040,6 +1128,40 @@ pag_ReseMostInfluential <- tabItem(
 )
 
 
+
+#------------------------------------------------------------------------------#
+#                                                                              #
+#    Conclusion                                                             ####
+#                                                                              #
+#------------------------------------------------------------------------------#
+
+# . . Conclusion ----
+pag_Conclusion <- tabItem(
+    
+    # . . Name ----
+    tabName="conclusion",
+    
+    # . . Header ----
+    h1("Conclusion"),
+    
+    fluidRow(
+        box(
+            title=tags$b("Conclusion"),
+            width=12,
+            column(
+                width=6,
+                tags$p("Reserved for comments.")
+            ),
+            column(
+                width=6,
+                tags$p("More comments.")
+            )
+        )
+    )
+    
+)
+
+
 #------------------------------------------------------------------------------#
 #                                                                              #
 #    Finalise                                                               ####
@@ -1065,7 +1187,10 @@ body <- dashboardBody(
         pag_ReseGeneralTrend,
         pag_ReseMostSuccessful,
         pag_ReseSurprisingTrends,
-        pag_ReseMostInfluential
+        pag_ReseMostInfluential,
+        
+        # Conclusion
+        pag_Conclusion
         
     )
 )
