@@ -64,6 +64,8 @@ header <- dashboardHeaderPlus(
 sidebar <- dashboardSidebar(
     sidebarMenu(
         
+        id="SidebarMenu",
+        
         # . . Info ----
         menuItem(
             text="Introduction",
@@ -125,8 +127,8 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Overall Statistics",
                 icon=icon("chart-pie"),
-                selected=TRUE,
                 tabName="stats_total",
+                # selected=TRUE,
                 badgeLabel="big",
                 badgeColor="olive"
             ),
@@ -135,6 +137,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Feature Statistics",
                 tabName="stats_features",
+                selected=TRUE,
                 icon=icon("chart-pie"),
                 badgeLabel="small",
                 badgeColor="olive"
@@ -882,6 +885,15 @@ pag_StatFeaturesPage <- tabItem(
             title=tags$b("This", id="FeatStats"),
             width=12,
             tags$p("Section reserved for future comments."),
+            tags$p(
+                tags$body("This is a test"),
+                tags$body("of a link"),
+                actionLink(
+                    "link_feat_VariableDistributions_ToOverallStatistics",
+                    "of a link"
+                ),
+                tags$body("to another page.")
+            ),
             column(
                 width=12,
                 plotOutput(
@@ -1279,10 +1291,14 @@ body <- dashboardBody(
     
     # Define header tags
     tags$head(
-        tags$link(
-            rel="stylesheet",
-            type="text/css",
-            href="app.css"
+        tagList(
+            # useShinyjs(),
+            # extendShinyjs("www/app.js", functions = c("updateHistory")),
+            tags$link(
+                rel="stylesheet",
+                type="text/css",
+                href="app.css"
+            )
         )
     ),
     
