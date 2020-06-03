@@ -311,6 +311,8 @@ server <- function(input, output, session) {
                         palette="Dark2", 
                         aesthetics=c("colour", "fill")
                     ) +
+                    scale_y_continuous(breaks=seq(0,100,10), limits=c(0,100)) +
+                    theme(panel.grid.minor.x=element_blank()) +
                     labs(
                         title="Percentage of Missing Values",
                         subtitle="Ordered by percentage missing",
