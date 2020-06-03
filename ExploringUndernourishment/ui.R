@@ -105,7 +105,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Undernourishment",
                 tabName="undernourishment",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("seedling"),
                 badgeLabel="food",
                 badgeColor="olive"
@@ -125,6 +125,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Overall Statistics",
                 icon=icon("chart-pie"),
+                selected=TRUE,
                 tabName="stats_total",
                 badgeLabel="big",
                 badgeColor="olive"
@@ -397,7 +398,7 @@ pag_DisclaimerPage <- tabItem(
                 "UN 2020b, {title}, <{link}>.",
                 title=tags$i("Goal 2: Zero Hunger"),
                 link=tags$a("https://www.un.org/sustainabledevelopment/hunger/", href="https://www.un.org/sustainabledevelopment/hunger/")
-            ))),
+            )))
         )
     )
     
@@ -469,7 +470,7 @@ pag_Undernourishment <- tabItem(
                         h4("Select Countries"),
                         choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(country) %>% distinct() %>% pull(),
                         selected="Thailand",
-                        multiple=TRUE,
+                        multiple=TRUE
                     )
                 ),
                 column(
@@ -572,7 +573,7 @@ pag_Undernourishment <- tabItem(
                             tags$li(tags$code("Prevalence of Anemia")),
                             tags$li(tags$code("Access To Improved Drinking Water")),
                             tags$li(tags$code("Access To Improved Sanitation Services")),
-                            tags$li(tags$code("Prevalence Of Low Birth Rate")),
+                            tags$li(tags$code("Prevalence Of Low Birth Rate"))
                         )
                     ),
                     tags$ul(
@@ -581,7 +582,7 @@ pag_Undernourishment <- tabItem(
                             tags$li(tags$code("Childern Affected By Wasting")),
                             tags$li(tags$code("Children Who Are Overweight")),
                             tags$li(tags$code("Children Who Are Stunted")),
-                            tags$li(tags$code("Prevalence of Breastfeeding Women")),
+                            tags$li(tags$code("Prevalence of Breastfeeding Women"))
                         )
                     ),
                     tags$ul(
@@ -589,7 +590,7 @@ pag_Undernourishment <- tabItem(
                         tags$ul(
                             tags$li(tags$code("Avg Dietary Adequacy")),
                             tags$li(tags$code("Avg Supply Of Protein Of Animal Origin")),
-                            tags$li(tags$code("Avg Protein Supply")),
+                            tags$li(tags$code("Avg Protein Supply"))
                         )
                     ),
                     tags$p(HTML(paste0("This information is helpful for understanding exactly how the ", tags$code("Prevalence of Undernourishment"), " changes with respect to each of the other features in the data set.")))
@@ -666,11 +667,11 @@ pag_StatFeatureInteractionsPage <- tabItem(
                 )
             ),
             
-            # Comments
+            # Alert
             fluidRow(
                 column(
-                    width=11,
-                    tags$p("My Comment.")
+                    width=12,
+                    tags$p("Scroll all the way down...")
                 )
             ),
             
@@ -682,6 +683,37 @@ pag_StatFeatureInteractionsPage <- tabItem(
                         outputId="plt_inta_MultiFeatures",
                         height="7in"
                     )
+                )
+            ),
+            
+            # Comments
+            fluidRow(
+                column(
+                    width=12,
+                    tags$p("This plot provies an interactive way for the data to be explored."),
+                    tags$p("In order to use the charts effectively, note the following:"),
+                    tags$ul(
+                        tags$li("There are three charts, including one Dot-Plot in the middle, which is the main plot, one Density-Plot at the top, and one Violin-Plot to the right."),
+                        tags$li("The main Dot-Plot in the middle has the below features:"),
+                        tags$ul(
+                            tags$li("Each dot represents a data point that is the intersection between the X-Feature and the Y-Feature."),
+                            tags$li("The wavey-lines around the outside represent a 3D-Density plot. The lines encompass the data points in the same way that altitude lines encircle mountains on a map."),
+                            tags$li("The different colours represent different countries, which is consistent with the other plots.")
+                        ),
+                        tags$li("The Density-Plot at the top has the following features:"),
+                        tags$ul(
+                            tags$li("The colours are different per country."),
+                            tags$li("The lines represent the count of the number of data points, as consistent with the dot-plot below."),
+                            tags$li("The more data points, the 'higher' the lines.")
+                        ),
+                        tags$li("The Violin-Plot to the right has the following features:"),
+                        tags$ul(
+                            tags$li("The colours are different per country."),
+                            tags$li("The shapes are similar to the density plot, except they are flipped on the side, and are representing the density of data points, as consistent with the main Dot-Plot."),
+                            tags$li("The more data points, the 'fatter' the Violin.")
+                        )
+                    ),
+                    tags$p("This plot helps to understand hiw every single feature affects all other features; as grouped by each country.")
                 )
             )
         )
@@ -704,17 +736,21 @@ pag_StatTotalPage <- tabItem(
     # . . Distribution of target ----
     fluidRow(
         box(
-            title="Histogram of Undernourishment",
+            title=tags$b("Histogram of Undernourishment", id="MyRef"),
             width=12,
             column(
                 width=5,
-                # style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments."),
+                tags$p(HTML(paste0("The plot to the right shows the distribution of scores for the ", tags$code("Prevalence of Undernourishment"), " feature."))),
+                tags$p("As seen:"),
+                tags$ul(
+                    tags$li("There is a sharp peak at a score of 0.04."),
+                    tags$li("It has a long right-tail out to a score of 0.7."),
+                    tags$li("There are some bumps and inconsistencies, but nothing to indicate any multi-modal distribution.")
+                )
             ),
             column(
                 title="Graph",
                 width=7,
-                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_stat_PrevUndrOverall"
                 )
@@ -725,17 +761,30 @@ pag_StatTotalPage <- tabItem(
     # . . Percentage of missingness ----
     fluidRow(
         box(
-            title="Percentage of Missing Data per Feature",
+            title=tags$b("Percentage of Missing Data per Feature"),
             width=12,
             column(
                 width=5,
-                # style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments."),
+                tags$p("The plot to the right is a Lollipop-Plot, indicating the percentage of NA records for each feature."),
+                tags$p("The further the lollipop is to the right, the more NA records there are for that feature."),
+                tags$p("The colours of the plot indicate a differentiate between the category of each of the features, as determined by the Data Dictionary."),
+                tags$p("As seen:"),
+                tags$ul(
+                    tags$li("The top four features are all Food Security features."),
+                    tags$li("The following four top features are all health features."),
+                    tags$li("40% of the features are missing over 50% of their data; which are mostly all health or food security features."),
+                    tags$li("This level of missingness could be indicative of:"),
+                    tags$ul(
+                        tags$li("These features have only recently begun being recorded"),
+                        tags$li("There is a level of inconsistency in the countries for the collection of this data."),
+                        tags$li("Not every country is mandated to collect this data and report it back to the FAO or UN.")
+                    ),
+                    tags$li("Only the identifier columns have 100% of data collected for them.")
+                )
             ),
             column(
                 title="Graph",
                 width=7,
-                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_stat_MissingData",
                     height="6in"
@@ -747,17 +796,29 @@ pag_StatTotalPage <- tabItem(
     # . . Correlation of all variables ----
     fluidRow(
         box(
-            title="Correlation Plot of each Feature",
+            title=tags$b("Correlation Plot of each Feature"),
             width=12,
             column(
                 width=5,
-                # style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments."),
+                tags$p("For all the variables, it's important to understand how each one interacts with one another. The Plot to the right illustrates this correlation."),
+                tags$p("Note the following:"),
+                tags$ul(
+                    tags$li(HTML(paste0("The ", tags$code("Prevalence Of Undernourishment"), " feature is at the very bottom, so it is convenient to scroll the eyes along to see each variable."))),
+                    tags$li("The Red colour indicates variables that have a strong negative correlation, while the blue colours indicate variables with a strong positive correlation."),
+                    tags$li("In other words:"),
+                    tags$ul(
+                        tags$li("The \"Red'er\" it is, the stronger the Negative correlation."),
+                        tags$li("The \"Blue'er\" it is, the stronger the Positive correlation.")
+                    ),
+                    tags$li("The coser to white the colour is, the closer the correlation is to Zero'"),
+                    tags$li("The level of completeness of the pie correlates to the strength of the colour."),
+                    tags$li("The Question Marks indicate variables which have a substantially large number of NA scores, and the algorithm is unable to calculate the correlation score. These variables are in-line with the above listed variables with a large number of NA values."),
+                    tags$li("Only the bottom half of the matrix is included, as only half is needed to determine the correlation of each variable-pair.")
+                )
             ),
             column(
                 title="Corrplot",
                 width=7,
-                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_corr_AllVariables",
                     height="7in"
@@ -769,17 +830,29 @@ pag_StatTotalPage <- tabItem(
     # . . Ridge Plot ----
     fluidRow(
         box(
-            title="Ridge Plot of Undernourishment per Year",
+            title=tags$b("Ridge Plot of Undernourishment per Year", id="MyTest"),
             width=12,
             column(
                 width=5,
-                # style="border: 1px double lightgrey;",
-                tags$p("Section reserved for future comments."),
+                tags$p("This plot is perhaps the most indicative of all the plots on this page. It indicates the level of Undernourishment per year, from the earliest measurements at the top and the latest measurements at the bottom."),
+                tags$p("Note the following:"),
+                tags$ul(
+                    tags$li("The colour of the plots are just arbitrary, simply used to differentiate each year from the next."),
+                    tags$li("Each year, the scores are distinctly getting 'tighter' together, as seen by the 2001 scores being quite spread out and diverse but the scores for 2018 being quite tight and clustered close to Zero."),
+                    tags$li("Each Plot is a density distribution, showing the number of scores for that year, in a similar way a histogram also shows a distribution."),
+                    tags$li("The Plot is a little bit misleading in it's indication of negative scores. Most notably:"),
+                    tags$ul(
+                        tags$li("Each of the scores indicate it is possible to have scores below Zero."),
+                        tags$li("Contrary to what this plot indicates, it is actually not possible to have a negative PoU score."),
+                        tags$li("Each PoU score should be between 0 and 1."),
+                        tags$li("The error is caused by the algorithm used to calculate the Density diagram, and that it 'normalises' scores on either side of the min & max scores.")
+                    ),
+                    tags$li("Overall, the plot indicates an overall strong positive trend, indicating that the FAO and UN have been doing a positive job.")
+                )
             ),
             column(
                 title="Ridge Plot",
                 width=7,
-                # style="border: 1px double lightgrey;",
                 plotOutput(
                     outputId="plt_ridg_UndernourishmentByYear", 
                     height="6in"
@@ -806,7 +879,7 @@ pag_StatFeaturesPage <- tabItem(
     # . . Distribution of all variables ----
     fluidRow(
         box(
-            title=tags$b("This"),
+            title=tags$b("This", id="FeatStats"),
             width=12,
             tags$p("Section reserved for future comments."),
             column(
