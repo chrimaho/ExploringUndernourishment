@@ -562,11 +562,15 @@ pag_Undernourishment <- tabItem(
             width=12,
             fluidRow(
                 column(
-                    width=12,
+                    width=6,
                     tags$p("This visualisation may appear overwhelming at first, but it is actually quite intuitive. It can be read as follows"),
                     tags$li(HTML(paste0("Each plot shows: The ", tags$code("Prevalence of Undernourishment"), " feature on the y-axis, and a different other feature on the x-axis."))),
                     tags$li(HTML(paste0("Each plot is a consistent correlogram showing the change in ", tags$code("Prevalence of Undernourishment"), ", as that particular feature changes."))),
                     tags$li("There is a blue line added to each plot, indicating the line of best fit for each plot."), tags$br(), 
+                    tags$p(HTML(paste0("This information is helpful for understanding exactly how the ", tags$code("Prevalence of Undernourishment"), " changes with respect to each of the other features in the data set.")))
+                ),
+                column(
+                    width=6,
                     tags$p("While some features appear to be a 'cloud of data points', others appear to show an intuitive, helpful pattern. For example:"),
                     tags$ul(
                         tags$li("These features appear to like a nervous firefly on the page:"),
@@ -602,7 +606,6 @@ pag_Undernourishment <- tabItem(
                             ))
                         )
                     ),
-                    tags$p(HTML(paste0("This information is helpful for understanding exactly how the ", tags$code("Prevalence of Undernourishment"), " changes with respect to each of the other features in the data set.")))
                 )
             ),
             fluidRow(
