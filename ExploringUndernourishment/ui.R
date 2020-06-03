@@ -559,45 +559,40 @@ pag_Undernourishment <- tabItem(
             fluidRow(
                 column(
                     width=12,
-                    tags$p("While this visualisation may appear overwhelming at first, it is actually quite intuitive. It can be read as follows"),
-                    tags$li("Each plot shows: The `Prevalence of Undernourishment` feature on the y-axis, and a different other feature on the x-axis."),
-                    tags$li("Each plot is a consistent correlogram showing the change in `Prevalence of Undernourishment`, as that particular feature changes."),
+                    tags$p("This visualisation may appear overwhelming at first, but it is actually quite intuitive. It can be read as follows"),
+                    tags$li(HTML(paste0("Each plot shows: The ", tags$code("Prevalence of Undernourishment"), " feature on the y-axis, and a different other feature on the x-axis."))),
+                    tags$li(HTML(paste0("Each plot is a consistent correlogram showing the change in ", tags$code("Prevalence of Undernourishment"), ", as that particular feature changes."))),
                     tags$li("There is a blue line added to each plot, indicating the line of best fit for each plot."), tags$br(), 
                     tags$p("While some features appear to be a 'cloud of data points', others appear to show an intuitive, helpful pattern. For example:"),
-                    tags$li(HTML(paste0(
-                        "These features appear to like a nervous firefly on the page: ", 
-                        paste(
-                            tags$code("Access To Basic Drinking Water"),
-                            tags$code("Access To Basic Sanitation Services"),
-                            tags$code("Prevalence of Anemia`"),
-                            tags$code("Access To Improved Drinking Water`"),
-                            tags$code("Access To Improved Sanitation Services`"),
-                            tags$code("Prevalence Of Low Birth Rate`"),
-                            sep=", "
-                        ),
-                        "."
-                    ))),
-                    tags$li(HTML(paste0(
-                        "These features appear to be a clour of data points: ",
-                        paste(
-                            tags$code("Childern Affected By Wasting"),
-                            tags$code("Children Who Are Overweight"),
-                            tags$code("Children Who Are Stunted"),
-                            tags$code("Prevalence of Breastfeeding Women"), 
-                            sep=", "
-                        ),
-                        "."
-                    ))),
-                    tags$li(HTML(paste0(
-                        "These features appear to be really predicitve: ",
-                        paste(
-                            tags$code("Avg Dietary Adequacy"),
-                            tags$code("Avg Supply Of Protein Of Animal Origin"),
-                            tags$code("Avg Protein Supply"),
-                            sep=", "
-                        ),
-                        "."
-                    )))
+                    tags$ul(
+                        tags$li("These features appear to like a nervous firefly on the page:"),
+                        tags$ul(
+                            tags$li(tags$code("Access To Basic Drinking Water")),
+                            tags$li(tags$code("Access To Basic Sanitation Services")),
+                            tags$li(tags$code("Prevalence of Anemia")),
+                            tags$li(tags$code("Access To Improved Drinking Water")),
+                            tags$li(tags$code("Access To Improved Sanitation Services")),
+                            tags$li(tags$code("Prevalence Of Low Birth Rate")),
+                        )
+                    ),
+                    tags$ul(
+                        tags$li("These features appear like a cloud of data points:"),
+                        tags$ul(
+                            tags$li(tags$code("Childern Affected By Wasting")),
+                            tags$li(tags$code("Children Who Are Overweight")),
+                            tags$li(tags$code("Children Who Are Stunted")),
+                            tags$li(tags$code("Prevalence of Breastfeeding Women")),
+                        )
+                    ),
+                    tags$ul(
+                        tags$li("These features appear to be quite predictive and helpful:"),
+                        tags$ul(
+                            tags$li(tags$code("Avg Dietary Adequacy")),
+                            tags$li(tags$code("Avg Supply Of Protein Of Animal Origin")),
+                            tags$li(tags$code("Avg Protein Supply")),
+                        )
+                    ),
+                    tags$p(HTML(paste0("This information is helpful for understanding exactly how the ", tags$code("Prevalence of Undernourishment"), " changes with respect to each of the other features in the data set.")))
                 )
             ),
             fluidRow(
@@ -1208,6 +1203,17 @@ pag_Conclusion <- tabItem(
 
 # . . Pull together ----
 body <- dashboardBody(
+    
+    # Define header tags
+    tags$head(
+        tags$link(
+            rel="stylesheet",
+            type="text/css",
+            href="app.css"
+        )
+    ),
+    
+    # Define page items
     tabItems(
         
         # Beginning
