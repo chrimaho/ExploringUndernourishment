@@ -32,6 +32,7 @@ library(dynutils)
 
 # Shiny
 library(shiny)
+library(shinyjs)
 library(shinyWidgets)
 library(shinydashboard)
 library(shinydashboardPlus)
