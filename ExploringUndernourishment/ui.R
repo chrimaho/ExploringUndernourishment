@@ -571,29 +571,35 @@ pag_Undernourishment <- tabItem(
                     tags$ul(
                         tags$li("These features appear to like a nervous firefly on the page:"),
                         tags$ul(
-                            tags$li(tags$code("Access To Basic Drinking Water")),
-                            tags$li(tags$code("Access To Basic Sanitation Services")),
-                            tags$li(tags$code("Prevalence of Anemia")),
-                            tags$li(tags$code("Access To Improved Drinking Water")),
-                            tags$li(tags$code("Access To Improved Sanitation Services")),
-                            tags$li(tags$code("Prevalence Of Low Birth Rate"))
+                            lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                                "Access To Basic Drinking Water",
+                                "Access To Basic Sanitation Services",
+                                "Prevalence of Anemia",
+                                "Access To Improved Drinking Water",
+                                "Access To Improved Sanitation Services",
+                                "Prevalence Of Low Birth Rate"
+                            ))
                         )
                     ),
                     tags$ul(
                         tags$li("These features appear like a cloud of data points:"),
                         tags$ul(
-                            tags$li(tags$code("Childern Affected By Wasting")),
-                            tags$li(tags$code("Children Who Are Overweight")),
-                            tags$li(tags$code("Children Who Are Stunted")),
-                            tags$li(tags$code("Prevalence of Breastfeeding Women"))
+                            lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                                "Childern Affected By Wasting",
+                                "Children Who Are Overweight",
+                                "Children Who Are Stunted",
+                                "Prevalence of Breastfeeding Women"
+                            ))
                         )
                     ),
                     tags$ul(
                         tags$li("These features appear to be quite predictive and helpful:"),
                         tags$ul(
-                            tags$li(tags$code("Avg Dietary Adequacy")),
-                            tags$li(tags$code("Avg Supply Of Protein Of Animal Origin")),
-                            tags$li(tags$code("Avg Protein Supply"))
+                            lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                                "Avg Dietary Adequacy",
+                                "Avg Supply Of Protein Of Animal Origin",
+                                "Avg Protein Supply"
+                            ))
                         )
                     ),
                     tags$p(HTML(paste0("This information is helpful for understanding exactly how the ", tags$code("Prevalence of Undernourishment"), " changes with respect to each of the other features in the data set.")))
@@ -882,12 +888,26 @@ pag_StatFeaturesPage <- tabItem(
     # . . Distribution of all variables ----
     fluidRow(
         box(
-            title=tags$b("This", id="FeatStats"),
+            title=tags$b("Distribution of Each Feature", id="FeatStats"),
             width=12,
-            tags$p("Section reserved for future comments."),
+            tags$p("Each of the features included in the data set each have their own distribution; their own shape. In order to fully understand the data that is being dealt with, reviewing their distrubution is necessary."),
+            tags$p("The following information can be obtained from reviewing the distributions:"),
+            tags$ul(
+                tags$li("There are multiple features that appear to have a neat, normal distribution. Including:"),
+                tags$ul(
+                    lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                        "Political Stability",
+                        "Avg Dietary Adequacy",
+                        "Avg Protein Supply",
+                        "Avg Supply Of Protein Of Animal Origin",
+                        "Caloric Energy From Cereals Roots Tubers",
+                        "Choldren Who Are Stunted",
+                        "Prevalence of Breastfeeding Women"
+                    ))
+                )
+            ),
             tags$p(
                 tags$body("This is a test"),
-                tags$body("of a link"),
                 actionLink(
                     "link_feat_VariableDistributions_ToOverallStatistics",
                     "of a link"
