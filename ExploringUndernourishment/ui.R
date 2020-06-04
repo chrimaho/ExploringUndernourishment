@@ -1536,6 +1536,7 @@ pag_ReseMostInfluential <- tabItem(
     # . . Header ----
     h1("Most Influential Features"),
     
+    # . . Overview ----
     fluidRow(
         box(
             title=tags$b("Overview"),
@@ -1567,7 +1568,7 @@ pag_ReseMostInfluential <- tabItem(
         )
     ),
     
-    # . . Comment and Plot ----
+    # . . Variable Importance Plot ----
     fluidRow(
         box(
             title=tags$b("Variable Importance Plot"),
@@ -1591,7 +1592,7 @@ pag_ReseMostInfluential <- tabItem(
                     tags$li(
                         span("This result is consistent with the results on the"),
                         actionLink(
-                            "",
+                            "link_infl_varimp_Undernourishment_ToUndernourishment",
                             "Undernourishment"
                         ),
                         span("tab, in the Features by Target section, which saw a very strong, very consistent correlation between these two features and the target feature.")
