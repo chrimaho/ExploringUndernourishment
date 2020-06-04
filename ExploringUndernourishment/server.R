@@ -636,7 +636,10 @@ server <- function(input, output, session) {
                             arrow=arrow(length=unit(0.2, "inches"))
                         ) +
                         scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
-                        theme(panel.grid.minor.x=element_blank()) +
+                        theme(
+                            axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
+                            panel.grid.minor.x=element_blank()
+                        ) +
                         labs(
                             title=paste0(tags$b("Prevalence of Undernourishment"), "\n",
                                 "Trend per Year per Country", "\n",
@@ -757,7 +760,8 @@ server <- function(input, output, session) {
                         scale_x_continuous(breaks=seq(min(.["year"]),max(.["year"]))) +
                         theme(
                             axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
-                            panel.grid.minor.x=element_blank()
+                            panel.grid.minor.x=element_blank(),
+                            legend.position="none"
                         ) +
                         labs(
                             title="Trends per Country",
