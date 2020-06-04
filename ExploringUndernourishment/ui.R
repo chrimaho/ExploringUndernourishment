@@ -137,7 +137,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Feature Statistics",
                 tabName="stats_features",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("chart-pie"),
                 badgeLabel="small",
                 badgeColor="olive"
@@ -166,7 +166,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Successful",
                 tabName="most_successful",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("thumbs-up"),
                 badgeLabel="good",
                 badgeColor="aqua"
@@ -344,7 +344,7 @@ pag_DisclaimerPage <- tabItem(
             width=12,
             tags$li(HTML(str_Format(
                 "Abafita & Kim 2014, '{title}', {journal}, vol. 37, no. 2, pp. 129-57, DOI: 10.22004/ag.econ.196613.",
-                title=tags$body("Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis"),
+                title=tags$span("Determinants of Household Food Security in Rural Ethiopia: An Empirical Analysis"),
                 journal=tags$i("Journal of Rural Development")
             ))),
             tags$li(HTML(str_Format(
@@ -374,22 +374,22 @@ pag_DisclaimerPage <- tabItem(
             ))),
             tags$li(HTML(str_Format(
                 "Fontell & Luchsinger 2011, ‘{title}’, {journal}, vol. 5, no. 2, pp. 79-83, ProQuest central database.",
-                title=tags$body("Sustainable efforts to eradicate Global hunger, undernourishment and malnutrition"),
+                title=tags$span("Sustainable efforts to eradicate Global hunger, undernourishment and malnutrition"),
                 journal=tags$i("Journal of Global Business Issues")
             ))),
             tags$li(HTML(str_Format(
                 "Harris-Fry et al. 2015, ‘{title}’, {journal}, vol. 33, ISSN: 16060997, DOI: 10.1186/s41043-015-0022-0.",
-                title=tags$body("Socio-economic determinants of household food security and womens dietary diversity in rural Bangladesh: a cross-sectional study"),
+                title=tags$span("Socio-economic determinants of household food security and womens dietary diversity in rural Bangladesh: a cross-sectional study"),
                 journal=tags$i("Journal of Health, Population and Nutrition")
             ))),
             tags$li(HTML(str_Format(
                 "Mbolanyi et al. 2017, ‘{title}’, {journal}, vol. 2, no. 2, pp. 213-23, ISSN: 2415-2838, DOI: 10.22004/ag.econ.262839.",
-                title=tags$body("Determinants of household food security in a rangeland area of Uganda"),
+                title=tags$span("Determinants of household food security in a rangeland area of Uganda"),
                 journal=tags$i("African Journal of Rural Development")
             ))),
             tags$li(HTML(str_Format(
                 "Mughal & Fontan-Sers 2020, ‘{title}’, {journal}, vol. 24, no. 2, pp. 524-45, Wiley Online Library.",
-                title=tags$body("Cereal production, undernourishment, and food insecurity in South Asia"),
+                title=tags$span("Cereal production, undernourishment, and food insecurity in South Asia"),
                 journal=tags$i("Review of Development Economics")
             ))),
             tags$li(HTML(str_Format(
@@ -498,7 +498,7 @@ pag_Undernourishment <- tabItem(
                     title=tags$b("Improvement Per Year"),
                     width=6,
                     tags$p("The chart below shows the change in the Prevelance of Undernourishment per year, for the selected countries. Use the selections above to change the country and the years to focus in on relevant parts."),
-                    tags$body("Some key call-outs include:"),
+                    tags$span("Some key call-outs include:"),
                     tags$li("Thailand has had a very steep descent between 2001 and 2007, followed by a slight plateau to 2010, then a steady decline to 2018."),
                     tags$li("Angola has had a steady and consistent decrease over all the years."),
                     tags$li("Afganistan has had a constant decrease from 2002 to 2011, followed by an increase to 2018 with a trend to plateau thereafter."),
@@ -511,7 +511,7 @@ pag_Undernourishment <- tabItem(
                     title=tags$b("Distribution Per Country"),
                     width=6,
                     tags$p("Adjusting the controls above will update the chart below by adding more countries to the plot, or adjusting the yearly comparisons. Needless to say, each country will have a distinct shape for their Prevelance of Undernourishment, as they have all adopted different strategies and options for addressing the issue."),
-                    tags$body("Some key call-outs include:"),
+                    tags$span("Some key call-outs include:"),
                     tags$li("Brunei shows a very strong, tight grouping close to zero, indicating they have a good score, and are doing well to maintain it."),
                     tags$li("Central Aftican Republic has an inconsistent and unstable score, spread out over a broad range of scores, indicating that there has been a broad-reaching change in their scores over time."),
                     tags$li("Bangladesh has a tight clustering, but not close to zero, indicating that there is not any change in their scores over time, and no effor to improve."),
@@ -890,12 +890,12 @@ pag_StatFeaturesPage <- tabItem(
                     width=3,
                     tags$p("Each of the features included in the data set each have their own distribution; their own shape. In order to fully understand the data that is being dealt with, reviewing their distrubution is necessary."),
                     tags$p(
-                        tags$body("This is a test"),
+                        tags$span("This is a test"),
                         actionLink(
                             "link_feat_VariableDistributions_ToOverallStatistics",
                             "of a link"
                         ),
-                        tags$body("to another page.")
+                        tags$span("to another page.")
                     )
                 ),
                 column(
@@ -1029,7 +1029,16 @@ pag_ReseGeneralTrend <- tabItem(
             width=12,
             column(
                 width=4,
-                tags$p("Section reserved for comments")
+                tags$p(
+                    "The aggregated score for all countries combined is displayed to the right. The actual scores for the {PoU} are indicated in the {green} colour, while the linear trend is displayed in {blue} colour. The actual trend indicates a steady and consistent decrease between 2001 and 2012, showing an overall decrease of aproximately {score}. The tend plateaued between 2012 and 2016, with minimal decrease in the score. Then, 2017 saw an increase in the score in the first time since the data collection began; and 2018 saw an even higher increase. This trend is expected to continue in 2019." %>% 
+                    str_Format(
+                        PoU=code("Prevalence of Undernourishment"),
+                        green=span("green", style="color:forestgreen"),
+                        blue=span("blue", style="color:blue"),
+                        score=code("0.03")
+                    ) %>% 
+                    HTML()
+                )
             ),
             column(
                 width=8,
@@ -1046,19 +1055,78 @@ pag_ReseGeneralTrend <- tabItem(
             title=tags$b("Regional Trend"),
             width=12,
             column(
-                width=4,
-                tags$p("Section reserved for comments")
+                width=5,
+                tags$p(
+                    "When segmented by Region, the data tells a different story. In the plot to the right, the linear trend is maintained in {blue} while the actual values for the selected region are indicated in {orange}. The drop-down box at the top allows for the selection of different regions, so that the trend for just that region can be viewed." %>% 
+                    str_Format(
+                        blue=span("blue", style="color:blue"),
+                        orange=span("orange", style="color:darkorange")
+                    ) %>% 
+                    HTML()
+                ),
+                tags$p(
+                    tags$span("The following observations can be made:"),
+                    tags$ul(
+                        tags$li(
+                            "The {} region indicates the most consistent and steady decline over time, with no indicated increase in scores." %>% 
+                            str_Format(
+                                code("Asia & Pacific")
+                            ) %>% 
+                            HTML()
+                        ),
+                        tags$li(
+                            "The {} region also shows no sign of increasing. Albeit there have been some years along the way that have seen some minor increases, the overall trend for the region is in a positive downward direction." %>% 
+                            str_Format(
+                                code("Europe")
+                            ) %>% 
+                            HTML()
+                        ),
+                        tags$li(
+                            "The {} region shows an impressive decline before an incredibly sharp increase between 2012 and 2013, then the general trend continues to 2015 before plateauing and then increasing in 2018. This step change can either indicate a change in the data collection methods, or a change in the countries being recorded (an addition or removal of a country)" %>% 
+                            str_Format(
+                                code("Arab States")
+                            ) %>% 
+                            HTML()
+                        ),
+                        tags$li(
+                            "The {} region shows the smoothest transition of all regions, with a healthy decrease until 2014 before swinging to a steady increase since." %>% 
+                            str_Format(
+                                code("Africa")
+                            ) %>% 
+                            HTML()
+                        ),
+                        tags$li(
+                            "The {} region shows a trend typical to the others, with a steady increase to 2017 before plateauing in 2018." %>% 
+                            str_Format(
+                                code("South/Latin America")
+                            ) %>% 
+                            HTML()
+                        ),
+                        tags$li(
+                            "The {} region is the most shocking of all. It shows a sharp, drastic drop in the score to 2004, before showing a sigmoidal shape with its trough at 2012, then showing a strong, steady, unhealthy increase every year since. This shape indicates a lack of political willingness to change this curve, and poor governmental policy across the region as a whole." %>% 
+                            str_Format(
+                                code("Middle east")
+                            ) %>% 
+                            HTML()
+                        )
+                    )
+                )
             ),
             column(
-                width=8,
+                width=7,
                 fluidRow(
-                    selectizeInput(
-                        inputId="rese_genr_inbx_SelectedRegions",
-                        h4("Select Region"),
-                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region) %>% distinct() %>% pull(),
-                        selected=c("Asia & Pacific"),
-                        multiple=FALSE
-                    )
+                    column(width=1),
+                    column(
+                        width=6,
+                        selectizeInput(
+                            inputId="rese_genr_inbx_SelectedRegions",
+                            h4("Select Region"),
+                            choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region) %>% distinct() %>% pull(),
+                            selected=c("Asia & Pacific"),
+                            multiple=FALSE
+                        )
+                    ),
+                    column(width=5)
                 ),
                 fluidRow(
                     plotOutput(
@@ -1076,22 +1144,69 @@ pag_ReseGeneralTrend <- tabItem(
             width=12,
             column(
                 width=4,
-                tags$p("Section reserved for comments")
+                tags$p("This Plot shows the trend specific for each individual country. The drop-down selector can change the country as required."),
+                tags$p("Some key call-outs include:"),
+                tags$ul(
+                    tags$li(
+                        "{} indicates a strong sigmoidal oscillation between 0.3 and 0.26 with wavelengh of 10 years." %>% 
+                            str_Format(code("Iraq")) %>% HTML()
+                    ),
+                    tags$li(
+                        "{} indicates a consistent upwards trend every single year." %>% 
+                            str_Format(code("Lebanon")) %>% HTML()
+                    ),
+                    tags$li(
+                        "{} Has seen a dramatic increase since 2012. It is this score that has substantially influenced the score for the rest of the {} region" %>% 
+                            str_Format(code("Yemen"), code("Middle east")) %>% HTML()
+                    ),
+                    tags$li(
+                        "Each of the countries in {} region show positive decreses in scores. Exept for countries like {}, {}, {}, {}, {}, and {} which indicate unstable and inconsistent scores." %>% 
+                            str_Format(
+                                code("Asia & Pacific"),
+                                code("Brunei"),
+                                code("Taiwan"),
+                                code("DPRK"),
+                                code("Malaysia"),
+                                code("Maldives"),
+                                code("New Caledonia"),
+                                code("Vanuatu")
+                            ) %>% HTML()
+                    ),
+                    tags$li(
+                        "In the {} region, most of the countries have kept a consistent and impressive decreas in their score over time. Except for countries like {}, {}, {}, {}. These countries have seen an increas in their scores over time, and some remain quite high indeed." %>% 
+                            str_Format(
+                                code("Central African Republic"),
+                                code("Chat"),
+                                code("Congo"),
+                                code("Eswatini"),
+                                code("Gabon")
+                            ) %>% 
+                            HTML()
+                    )
+                )
             ),
             column(
                 width=8,
                 fluidRow(
-                    selectizeInput(
-                        inputId="rese_genr_inbx_SelectedCountries",
-                        h4("Select Country"),
-                        choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region,country) %>% distinct() %>% mutate(value=paste(region, country, sep=": ")) %>% select(value) %>% arrange(value) %>% pull(),
-                        selected=c("Asia & Pacific: Viet Nam"),
-                        multiple=FALSE
-                    )
+                    column(width=1),
+                    column(
+                        width=6,
+                        selectizeInput(
+                            inputId="rese_genr_inbx_SelectedCountries",
+                            h4("Select Country"),
+                            choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region,country) %>% distinct() %>% mutate(value=paste(region, country, sep=": ")) %>% select(value) %>% arrange(value) %>% pull(),
+                            selected=c("Asia & Pacific: Viet Nam"),
+                            multiple=FALSE
+                        )
+                    ),
+                    column(width=5)
                 ),
                 fluidRow(
-                    plotOutput(
-                        outputId="plt_rese_genr_CountryTrend"
+                    column(
+                        width=12,
+                        plotOutput(
+                            outputId="plt_rese_genr_CountryTrend"
+                        )
                     )
                 )
             )
@@ -1128,20 +1243,20 @@ pag_ReseMostSuccessful <- tabItem(
                     width=8,
                     column(
                         width=6,
-                        numericInput(
-                            inputId="rese_succ_numb_NumberCountries",
-                            h4("Select Number of Countries"),
-                            value=10
-                        )
-                    ),
-                    column(
-                        width=6,
                         selectizeInput(
                             inputId="rese_succ_inbx_SelectedRegion",
                             h4("Group by Region"),
                             choices=FaoStat_wide %>% filter(cat_complete!="empty") %>% select(region) %>% distinct() %>% pull() %>% c("All", .),
                             selected=c("All"),
                             multiple=FALSE
+                        )
+                    ),
+                    column(
+                        width=6,
+                        numericInput(
+                            inputId="rese_succ_numb_NumberCountries",
+                            h4("Select Number of Countries"),
+                            value=10
                         )
                     )
                 ),
@@ -1185,9 +1300,12 @@ pag_ReseMostSuccessful <- tabItem(
                 )
             ),
             fluidRow(
-                plotOutput(
-                    outputId="plt_rese_succ_SingleCountry",
-                    height="8in"
+                column(
+                    width=12,
+                    plotOutput(
+                        outputId="plt_rese_succ_SingleCountry",
+                        height="8in"
+                    )
                 )
             )
         )
