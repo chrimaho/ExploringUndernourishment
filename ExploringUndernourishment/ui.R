@@ -1235,7 +1235,18 @@ pag_ReseMostSuccessful <- tabItem(
             width=12,
             column(
                 width=4,
-                tags$p("Section reserved for comments")
+                tags$p("Credit where it is due, there are some very impressive reductions in the Prevalence of Undernourishment over time. This data can be explored in the chart to the right. To see the details of the each line, simply over over it."),
+                tags$p(
+                    "Countries like {}, {}, {}, and {} have begun with a score of over {}, and have each reduced their score by at least {} of their original value." %>% 
+                        str_Format(
+                            code("Angola"),
+                            code("Ethiopia"),
+                            code("Myanmar"),
+                            code("Dominican Republic"),
+                            code("0.2"),
+                            code("50%")
+                            ) %>% HTML()
+                )
             ),
             column(
                 width=8,
@@ -1274,7 +1285,30 @@ pag_ReseMostSuccessful <- tabItem(
         box(
             title=tags$b("Table"),
             width=12,
-            DT::dataTableOutput(outputId="tbl_succ_TopCountries")
+            fluidRow(
+                column(
+                    width=12,
+                    tags$p(
+                        "This table provides a pivoted overview of each country per year, including their overall score."
+                    ),
+                    tags$p(
+                        "Noting the following:"
+                    ),
+                    tags$ul(
+                        tags$li("Each line represents a different country"),
+                        tags$li("Each year is included as a different country, reading from left to right, oldest to newest."),
+                        tags$li("The overall improvement for each country is calculated as a percentage difference between the first column (2001), and the last column (2018). This score is included in the 'imprvement' column."),
+                        tags$li("The data is then ordered by this 'improvement' column, showing the countries with the highest decrease at the top, and countries with the least amount of decrease in PoU at the bottom.")
+                    ),
+                    br()
+                )
+            ),
+            fluidRow(
+                column(
+                    width=12,
+                    DT::dataTableOutput(outputId="tbl_succ_TopCountries")
+                )
+            )
         )
     ),
     
@@ -1286,7 +1320,14 @@ pag_ReseMostSuccessful <- tabItem(
             fluidRow(
                 column(
                     width=6,
-                    tags$p("Reserved for comment")
+                    tags$p("Again looking at the scores for each country, the below plots allow for easy exploration of the data for each country."),
+                    tags$p("Note that:"),
+                    tags$ul(
+                        tags$li("Each plot is a different feature of the original data. Which is effectively a different column of the original data."),
+                        tags$li("Each plot shows the x-axis as time."),
+                        tags$li("Each of the colours are simply to help easy differentiation between the variables."),
+                        tags$li("All of the plots are only showing for one country, which can be changed using the drop down box.")
+                    )
                 ),
                 column(
                     width=6,
