@@ -980,15 +980,7 @@ pag_StatFeaturesPage <- tabItem(
             fluidRow(
                 column(
                     width=3,
-                    tags$p("Each of the features included in the data set each have their own distribution; their own shape. In order to fully understand the data that is being dealt with, reviewing their distrubution is necessary."),
-                    tags$p(
-                        tags$span("This is a test"),
-                        actionLink(
-                            "link_feat_VariableDistributions_ToOverallStatistics",
-                            "of a link"
-                        ),
-                        tags$span("to another page.")
-                    )
+                    tags$p("Each of the features included in the data set each have their own distribution; their own shape. In order to fully understand the data that is being dealt with, reviewing their distrubution is necessary.")
                 ),
                 column(
                     width=4,
