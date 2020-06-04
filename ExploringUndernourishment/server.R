@@ -757,7 +757,10 @@ server <- function(input, output, session) {
                 {
                     ggplot(data=., aes(year, prevalence_of_undernourishment, colour=country)) +
                         geom_line() +
-                        scale_x_continuous(breaks=seq(min(.["year"]),max(.["year"]))) +
+                        scale_x_continuous(
+                            breaks=seq(2001,2018),
+                            limits=c(2001,2018)
+                        ) +
                         theme(
                             axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
                             panel.grid.minor.x=element_blank(),
@@ -799,34 +802,6 @@ server <- function(input, output, session) {
         expr={
             
             FaoStat_wide %>% 
-                # filter(!country %in% c(
-                #     "China, Macao SAR",
-                #     "United Arab Emirates",
-                #     "Brunei Darussalam",
-                #     "Kuwait",
-                #     "Saudi Arabia",
-                #     "Angola",
-                #     "Panama",
-                #     "Dominican Republic",
-                #     "Botswana",
-                #     "Oman",
-                #     "Cyprus",
-                #     "Trinidad and Tobago",
-                #     "Estonia",
-                #     "Japan",
-                #     "Slovakia",
-                #     "Malaysia",
-                #     "Kazakhstan",
-                #     "Chile",
-                #     "Mauritius",
-                #     "Croatia"
-                #     )) %>% 
-                # filter(country %in% c(
-                #     "Eswatini",
-                #     "Timor-Leste",
-                #     "Zambia",
-                #     "India"
-                # )) %>% 
                 {
                     ggplot(data=.) +
                     geom_point(
