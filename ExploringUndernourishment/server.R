@@ -382,19 +382,6 @@ server <- function(input, output, session) {
     #                                                                              #
     #------------------------------------------------------------------------------#
     
-    #------------------------------------------------------------------------------#
-    # . Links                                                                   ####
-    #------------------------------------------------------------------------------#
-    
-    # . . Navigate to Overall Stats page ----
-    observeEvent(input$link_feat_VariableDistributions_ToOverallStatistics, {
-        updateTabItems(
-            session,
-            "SidebarMenu",
-            "stats_total"
-        )
-    })
-    
     
     #------------------------------------------------------------------------------#
     # . Plots                                                                   ####
