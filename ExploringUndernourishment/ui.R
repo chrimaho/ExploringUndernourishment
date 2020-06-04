@@ -156,7 +156,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "General Trend",
                 tabName="general_trend",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("chart-line"),
                 badgeLabel="general",
                 badgeColor="aqua"
@@ -264,7 +264,12 @@ pag_InfoPage <- tabItem(
             tags$b("Question:"),
             tags$p("What has been the trend of Undernourishment in the last 20 years?"),
             tags$b("Hypothesis:"),
-            tags$p("There has been a general trend to decrease the prevelance over the last two decades.")
+            tags$p("There has been a general trend to decrease the prevelance over the last two decades."),
+            actionButton(
+                inputId="",
+                label="Go to General Trend page",
+                icon=icon("chart-line")
+            )
         ),
         box(
             title=tags$b("Research Area 2: Most Successful Country"),
@@ -272,7 +277,12 @@ pag_InfoPage <- tabItem(
             tags$b("Question:"),
             tags$p("Which country is most successfully addressing undernourishment?"),
             tags$b("Hypothesis:"),
-            tags$p("South-East Asian countries (for example, Vietnam) have made substantial progress in recent decades to break out of poverty; therefore there has been an associated success trend in their prevalence of undernourishment.")
+            tags$p("South-East Asian countries (for example, Vietnam) have made substantial progress in recent decades to break out of poverty; therefore there has been an associated success trend in their prevalence of undernourishment."),
+            actionButton(
+                inputId="",
+                label="Go to Most Successful page",
+                icon=icon("thumbs-up")
+            )
         )
     ),
     fluidRow(
@@ -282,7 +292,12 @@ pag_InfoPage <- tabItem(
             tags$b("Question:"),
             tags$p("Have there been any substantial increases (or decreases) in undernourishment?"),
             tags$b("Hypothesis:"),
-            tags$p("Due to events happening in the Middle Eastern region of the world, this has lead to some negative results on some countries ability to address their Prevalence of Undernourishment score.")
+            tags$p("Due to events happening in the Middle Eastern region of the world, this has lead to some negative results on some countries ability to address their Prevalence of Undernourishment score."),
+            actionButton(
+                inputId="",
+                label="Go to Surprising Trends page",
+                icon=icon("surprise")
+            )
         ),
         box(
             title=tags$b("Research Area 4: Most Influential Indicator"),
@@ -290,7 +305,12 @@ pag_InfoPage <- tabItem(
             tags$b("Question:"),
             tags$p("Which of the features in the FAO data set is most indicative of the prevalence of undernourishment (most influential feature)?"),
             tags$b("Hypothesis:"),
-            tags$p("There will be an interesting trade-off between the self-sustaining indicators (such as amount of arable land and ability to grow crops), and the free-trade indicators (such as ).")
+            tags$p("There will be an interesting trade-off between the self-sustaining indicators (such as amount of arable land and ability to grow crops), and the free-trade indicators (such as )."),
+            actionButton(
+                inputId="",
+                label="Go to Most Influential page",
+                icon=icon("check-square")
+            )
         )
     )
 )
