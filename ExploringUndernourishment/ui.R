@@ -562,7 +562,7 @@ pag_Undernourishment <- tabItem(
             width=12,
             fluidRow(
                 column(
-                    width=6,
+                    width=4,
                     tags$p("This visualisation may appear overwhelming at first, but it is actually quite intuitive. It can be read as follows"),
                     tags$li(HTML(paste0("Each plot shows: The ", tags$code("Prevalence of Undernourishment"), " feature on the y-axis, and a different other feature on the x-axis."))),
                     tags$li(HTML(paste0("Each plot is a consistent correlogram showing the change in ", tags$code("Prevalence of Undernourishment"), ", as that particular feature changes."))),
@@ -570,7 +570,7 @@ pag_Undernourishment <- tabItem(
                     tags$p(HTML(paste0("This information is helpful for understanding exactly how the ", tags$code("Prevalence of Undernourishment"), " changes with respect to each of the other features in the data set.")))
                 ),
                 column(
-                    width=6,
+                    width=8,
                     tags$p("While some features appear to be a 'cloud of data points', others appear to show an intuitive, helpful pattern. For example:"),
                     tags$ul(
                         tags$li("These features appear to like a nervous firefly on the page:"),
@@ -642,6 +642,37 @@ pag_StatFeatureInteractionsPage <- tabItem(
             title=tags$b("Dynamic Plotting"),
             width=12,
             
+            # Comments
+            fluidRow(
+                column(
+                    width=12,
+                    tags$p("This plot provies an interactive way for the data to be explored."),
+                    tags$p("In order to use the charts effectively, note the following:"),
+                    tags$ul(
+                        tags$li("There are three charts, including one Dot-Plot in the middle, which is the main plot, one Density-Plot at the top, and one Violin-Plot to the right."),
+                        tags$li("The main Dot-Plot in the middle has the below features:"),
+                        tags$ul(
+                            tags$li("Each dot represents a data point that is the intersection between the X-Feature and the Y-Feature."),
+                            tags$li("The wavey-lines around the outside represent a 3D-Density plot. The lines encompass the data points in the same way that altitude lines encircle mountains on a map."),
+                            tags$li("The different colours represent different countries, which is consistent with the other plots.")
+                        ),
+                        tags$li("The Density-Plot at the top has the following features:"),
+                        tags$ul(
+                            tags$li("The colours are different per country."),
+                            tags$li("The lines represent the count of the number of data points, as consistent with the dot-plot below."),
+                            tags$li("The more data points, the 'higher' the lines.")
+                        ),
+                        tags$li("The Violin-Plot to the right has the following features:"),
+                        tags$ul(
+                            tags$li("The colours are different per country."),
+                            tags$li("The shapes are similar to the density plot, except they are flipped on the side, and are representing the density of data points, as consistent with the main Dot-Plot."),
+                            tags$li("The more data points, the 'fatter' the Violin.")
+                        )
+                    ),
+                    tags$p("This plot helps to understand hiw every single feature affects all other features; as grouped by each country.")
+                )
+            ),
+            
             # Selections
             fluidRow(
                 title=tags$b("Selections"),
@@ -679,14 +710,6 @@ pag_StatFeatureInteractionsPage <- tabItem(
                 )
             ),
             
-            # Alert
-            fluidRow(
-                column(
-                    width=12,
-                    tags$p("Scroll all the way down...")
-                )
-            ),
-            
             # Plotting
             fluidRow(
                 column(
@@ -695,37 +718,6 @@ pag_StatFeatureInteractionsPage <- tabItem(
                         outputId="plt_inta_MultiFeatures",
                         height="7in"
                     )
-                )
-            ),
-            
-            # Comments
-            fluidRow(
-                column(
-                    width=12,
-                    tags$p("This plot provies an interactive way for the data to be explored."),
-                    tags$p("In order to use the charts effectively, note the following:"),
-                    tags$ul(
-                        tags$li("There are three charts, including one Dot-Plot in the middle, which is the main plot, one Density-Plot at the top, and one Violin-Plot to the right."),
-                        tags$li("The main Dot-Plot in the middle has the below features:"),
-                        tags$ul(
-                            tags$li("Each dot represents a data point that is the intersection between the X-Feature and the Y-Feature."),
-                            tags$li("The wavey-lines around the outside represent a 3D-Density plot. The lines encompass the data points in the same way that altitude lines encircle mountains on a map."),
-                            tags$li("The different colours represent different countries, which is consistent with the other plots.")
-                        ),
-                        tags$li("The Density-Plot at the top has the following features:"),
-                        tags$ul(
-                            tags$li("The colours are different per country."),
-                            tags$li("The lines represent the count of the number of data points, as consistent with the dot-plot below."),
-                            tags$li("The more data points, the 'higher' the lines.")
-                        ),
-                        tags$li("The Violin-Plot to the right has the following features:"),
-                        tags$ul(
-                            tags$li("The colours are different per country."),
-                            tags$li("The shapes are similar to the density plot, except they are flipped on the side, and are representing the density of data points, as consistent with the main Dot-Plot."),
-                            tags$li("The more data points, the 'fatter' the Violin.")
-                        )
-                    ),
-                    tags$p("This plot helps to understand hiw every single feature affects all other features; as grouped by each country.")
                 )
             )
         )
@@ -956,7 +948,7 @@ pag_StatFeaturesPage <- tabItem(
                                 "Prevalence Severe Food Insecurity"
                             ))
                         ),
-                        tags$li("There are also some features with left-tail distributions, indicating a negative skey:"),
+                        tags$li("There are also some features with left-tail distributions, indicating a negative skew:"),
                         tags$ul(
                             lapply(FUN=function(x) tags$li(tags$code(x)), c(
                                 "Access To Basic Drinking Water",
@@ -983,19 +975,28 @@ pag_StatFeaturesPage <- tabItem(
     # . . Statistics of all variables ----
     fluidRow(
         box(
-            title="Data Frame Statistics",
+            title=tags$b("Data Frame Statistics"),
             width=12,
-            tags$div("The following output is a table of statistics for each field of the FAO data."),
-            tags$br(),
-            tags$div("Note the following:"),
-            tags$li("The search bar has been included for ease of searching."),
-            tags$li("There are more statistical features to the right!"),
-            tags$li("The 'country' and 'year' features are both string type, and therefore do not have any statistical values."),
-            tags$br(),
-            tags$div("From this, the following information can be learnt:"),
-            tags$li("First"),
-            tags$li("Second"),
-            DT::dataTableOutput(outputId="tbl_stat_DataFrameStats")
+            fluidRow(
+                column(
+                    width=12,
+                    tags$p("The following output is a table of statistics for each field of the FAO data."),
+                    tags$p("Note the following:"),
+                    tags$ul(
+                        tags$li("The search bar has been included for ease of searching."),
+                        tags$li("There are more statistical features to the right!"),
+                        tags$li(HTML(paste("The", tags$code("country"), ",", tags$code("region"), "and", tags$code("year"), "features are all string type, and therefore do not have any statistical values."))),
+                        tags$li("Each of the important statistical measurements are included."),
+                    ),
+                    tags$p("It's important to have this level of detail available, because it will inform later analysis. It also places a numeric value to the above distrubutions, allowing the quantification of the visualisations."),
+                )
+            ),
+            fluidRow(
+                column(
+                    width=12,
+                    DT::dataTableOutput(outputId="tbl_stat_DataFrameStats")
+                )
+            )
         )
     )
 )
