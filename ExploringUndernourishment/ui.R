@@ -71,7 +71,7 @@ sidebar <- dashboardSidebar(
             text="Introduction",
             selected=TRUE,
             tabName="introduction",
-            icon=icon("info-circle"),
+            icon=icon("info"),
             badgeLabel="info",
             badgeColor="blue"
         ),
@@ -89,7 +89,7 @@ sidebar <- dashboardSidebar(
         # . . Data Description ----
         menuItem(
             "Data Details",
-            icon=icon("chart-pie"),
+            icon=icon("database"),
             tabName="data_description",
             startExpanded=TRUE,
             
@@ -126,8 +126,8 @@ sidebar <- dashboardSidebar(
             # Overall Stats
             menuItem(
                 "Overall Statistics",
-                icon=icon("chart-pie"),
                 tabName="stats_total",
+                icon=icon("chart-pie"),
                 # selected=TRUE,
                 badgeLabel="big",
                 badgeColor="olive"
@@ -138,7 +138,7 @@ sidebar <- dashboardSidebar(
                 "Feature Statistics",
                 tabName="stats_features",
                 # selected=TRUE,
-                icon=icon("chart-pie"),
+                icon=icon("chart-bar"),
                 badgeLabel="small",
                 badgeColor="olive"
             )
@@ -187,7 +187,7 @@ sidebar <- dashboardSidebar(
                 "Most Influential",
                 tabName="most_influential",
                 # selected=TRUE,
-                icon=icon("check-square"),
+                icon=icon("asterisk"),
                 badgeLabel="strong",
                 badgeColor="aqua"
             )
@@ -258,62 +258,135 @@ pag_InfoPage <- tabItem(
     
     # . . Research Questions ----
     fluidRow(
+        width=12,
         box(
-            title=tags$b(id="RA1", "Research Area 1: General Trend"),
-            width=6,
-            tags$b("Question:"),
-            tags$p("What has been the trend of Undernourishment in the last 20 years?"),
-            tags$b("Hypothesis:"),
-            tags$p("There has been a general trend to decrease the prevelance over the last two decades."),
-            actionButton(
-                inputId="",
-                label="Go to General Trend page",
-                icon=icon("chart-line")
-            )
-        ),
-        box(
-            title=tags$b("Research Area 2: Most Successful Country"),
-            width=6,
-            tags$b("Question:"),
-            tags$p("Which country is most successfully addressing undernourishment?"),
-            tags$b("Hypothesis:"),
-            tags$p("South-East Asian countries (for example, Vietnam) have made substantial progress in recent decades to break out of poverty; therefore there has been an associated success trend in their prevalence of undernourishment."),
-            actionButton(
-                inputId="",
-                label="Go to Most Successful page",
-                icon=icon("thumbs-up")
+            title=tags$b(icon("graduation-cap"), "Research Questions"),
+            width=12,
+            fluidRow(
+                box(
+                    title=tags$b(icon("chart-line"), "Research Area 1: General Trend"),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$b("Question:"),
+                    tags$p("What has been the trend of Undernourishment in the last 20 years?"),
+                    tags$b("Hypothesis:"),
+                    tags$p("There has been a general trend to decrease the prevelance over the last two decades."),
+                    actionButton(
+                        inputId="butn_intr_rese_GeneralTrend_GoToPage",
+                        label="Go to General Trend page",
+                        icon=icon("chart-line")
+                    )
+                ),
+                box(
+                    title=tags$b(icon("thumbs-up"), "Research Area 2: Most Successful Country"),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$b("Question:"),
+                    tags$p("Which country is most successfully addressing undernourishment?"),
+                    tags$b("Hypothesis:"),
+                    tags$p("South-East Asian countries (for example, Vietnam) have made substantial progress in recent decades to break out of poverty; therefore there has been an associated success trend in their prevalence of undernourishment."),
+                    actionButton(
+                        inputId="butn_intr_rese_MostSuccessful_GoToPage",
+                        label="Go to Most Successful page",
+                        icon=icon("thumbs-up")
+                    )
+                )
+            ),
+            fluidRow(
+                box(
+                    title=tags$b(icon("surprise"), "Research Area 3: Surprising Trends"),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$b("Question:"),
+                    tags$p("Have there been any substantial increases (or decreases) in undernourishment?"),
+                    tags$b("Hypothesis:"),
+                    tags$p("Due to events happening in the Middle Eastern region of the world, this has lead to some negative results on some countries ability to address their Prevalence of Undernourishment score."),
+                    actionButton(
+                        inputId="butn_intr_rese_SurprisingTrends_GoToPage",
+                        label="Go to Surprising Trends page",
+                        icon=icon("surprise")
+                    )
+                ),
+                box(
+                    title=tags$b(icon("asterisk"), "Research Area 4: Most Influential Indicator"),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$b("Question:"),
+                    tags$p("Which of the features in the FAO data set is most indicative of the prevalence of undernourishment (most influential feature)?"),
+                    tags$b("Hypothesis:"),
+                    tags$p("There will be an interesting trade-off between the self-sustaining indicators (such as amount of arable land and ability to grow crops), and the free-trade indicators (such as )."),
+                    actionButton(
+                        inputId="butn_intr_rese_MostInfluential_GoToPage",
+                        label="Go to Most Influential page",
+                        icon=icon("asterisk")
+                    )
+                )
             )
         )
     ),
+    
+    # . . Data Details ----
     fluidRow(
         box(
-            title=tags$b("Research Area 3: Surprising Trends"),
-            width=6,
-            tags$b("Question:"),
-            tags$p("Have there been any substantial increases (or decreases) in undernourishment?"),
-            tags$b("Hypothesis:"),
-            tags$p("Due to events happening in the Middle Eastern region of the world, this has lead to some negative results on some countries ability to address their Prevalence of Undernourishment score."),
-            actionButton(
-                inputId="",
-                label="Go to Surprising Trends page",
-                icon=icon("surprise")
-            )
-        ),
-        box(
-            title=tags$b("Research Area 4: Most Influential Indicator"),
-            width=6,
-            tags$b("Question:"),
-            tags$p("Which of the features in the FAO data set is most indicative of the prevalence of undernourishment (most influential feature)?"),
-            tags$b("Hypothesis:"),
-            tags$p("There will be an interesting trade-off between the self-sustaining indicators (such as amount of arable land and ability to grow crops), and the free-trade indicators (such as )."),
-            actionButton(
-                inputId="",
-                label="Go to Most Influential page",
-                icon=icon("check-square")
+            title=tags$b(icon("database"), "Data Details"),
+            width=12,
+            fluidRow(
+                width=12,
+                column(
+                    width=12,
+                    tags$p("There has been a number of analytical tasks undertaken to further understand the data, and it's nuances. These analyses can be found in the Data Details section, and has been set up in parallel to the specific Research Questions."),
+                    tags$p("The associated Data Detail sections are:")
+                )
+            ),
+            fluidRow(
+                width=12,
+                column(
+                    width=2,
+                    actionButton(
+                        inputId="butn_intr_data_DataDictionary_GoToPage",
+                        label="Data Dictionary",
+                        icon=icon("book")
+                    )
+                ),
+                column(
+                    width=2,
+                    actionButton(
+                        inputId="butn_intr_data_Undernourishment_GoToPage",
+                        label="Undernourishment",
+                        icon=icon("seedling")
+                    )
+                ),
+                column(
+                    width=2,
+                    actionButton(
+                        inputId="butn_intr_data_FeatureInteractions_GoToPage",
+                        label="Feature Interactions",
+                        icon=icon("project-diagram")
+                    )
+                ),
+                column(
+                    width=2,
+                    actionButton(
+                        inputId="butn_intr_data_OverallStatistics_GoToPage",
+                        label="Overall Statistics",
+                        icon=icon("chart-pie")
+                    )
+                ),
+                column(
+                    width=2,
+                    actionButton(
+                        inputId="butn_intr_data_FeatureStatistics_GoToPage",
+                        label="Feature Statistics",
+                        icon=icon("chart-bar")
+                    )
+                )
             )
         )
     )
-    
 )
 
 
