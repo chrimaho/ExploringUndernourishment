@@ -441,6 +441,7 @@ server <- function(input, output, session) {
     output$tbl_stat_DataFrameStats <- DT::renderDataTable(
         expr={
             FaoStat_wide %>%
+                select(-c(num_complete,avg_undernourishment,pct_complete,cat_complete)) %>% 
                 get_DataFrameStatistics(signif=2) %>%
                 select(-c(sum), -contains("null"))
         },
