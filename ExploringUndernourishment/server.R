@@ -25,6 +25,87 @@ server <- function(input, output, session) {
     # . Links                                                                   ####
     #------------------------------------------------------------------------------#
     
+    # . . GeneralTrend page ----
+    observeEvent(input$butn_intr_rese_GeneralTrend_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "general_trend"
+        )
+    })
+    
+    # . . MostSuccessful page ----
+    observeEvent(input$butn_intr_rese_MostSuccessful_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "most_successful"
+        )
+    })
+    
+    # . . SurprisingTrends page ----
+    observeEvent(input$butn_intr_rese_SurprisingTrends_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "surprising_trends"
+        )
+    })
+    
+    # . . MostInfluential page ----
+    observeEvent(input$butn_intr_rese_MostInfluential_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "most_influential"
+        )
+    })
+    
+    # . . DataDictionary page ----
+    observeEvent(input$butn_intr_data_DataDictionary_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "dictionary"
+        )
+    })
+    
+    # . . Undernourishment page ----
+    observeEvent(input$butn_intr_data_Undernourishment_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "undernourishment"
+        )
+    })
+    
+    # . . FeatureInteractions page ----
+    observeEvent(input$butn_intr_data_FeatureInteractions_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "interactions"
+        )
+    })
+    
+    # . . OverallStatistics page ----
+    observeEvent(input$butn_intr_data_OverallStatistics_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "stats_total"
+        )
+    })
+    
+    # . . FeatureStatistics page ----
+    observeEvent(input$butn_intr_data_FeatureStatistics_GoToPage, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "stats_features"
+        )
+    })
+    
     
     
     #------------------------------------------------------------------------------#
