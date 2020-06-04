@@ -1371,34 +1371,42 @@ pag_ReseSurprisingTrends <- tabItem(
         box(
             title=tags$b("Increasing Trends per Country"),
             width=12,
-            column(
-                width=4,
-                tags$p("There have been a number of countries which have had  a negative influence on their Prevalence of Undernourishment. The plot to the right shows the top 20 countries that have had an increase in ther POU score."),
-                tags$p("There are some interesting features about this plot, including:"),
-                tags$ul(
-                    tags$li(
-                        "There are six countries that have a {} score of over {} in 2018: {}, {}, {}, and {}." %>% 
-                            str_Format(
-                                code("Prevalence of Undernourishment"),
-                                code("0.2"),
-                                code("Central African Republic"),
-                                code("Madagascar"),
-                                code("Uganda"),
-                                code("Yemen"),
-                                code("Afghanistan"),
-                                code("Venezuela")
-                            ) %>% HTML()
-                    ),
-                    tags$li("There appears to be a general trend to have a decrease in the years 2010-2013, with an increase thereafter."),
-                    tags$li("")
+            fluidRow(
+                width=12,
+                column(
+                    width=6,
+                    tags$p("There have been a number of countries which have had  a negative influence on their Prevalence of Undernourishment. The plot here shows the top 20 countries that have had an increase in ther POU score."),
+                    tags$p("There are some interesting features about this plot, including:"),
+                    tags$ul(
+                        tags$li(
+                            "There are six countries that have a {} score of over {} in 2018: {}, {}, {}, and {}." %>% 
+                                str_Format(
+                                    code("Prevalence of Undernourishment"),
+                                    code("0.2"),
+                                    code("Central African Republic"),
+                                    code("Madagascar"),
+                                    code("Uganda"),
+                                    code("Yemen"),
+                                    code("Afghanistan"),
+                                    code("Venezuela")
+                                ) %>% HTML()
+                        ),
+                        tags$li("There appears to be a general trend to have a decrease in the years 2010-2013, with an increase thereafter.")
+                    )
                 ),
-                tags$p("These trends are surprising as they are not not regional specific, but instead there are multiple countries from many different regions on this plot. While there may have many different influences, it is interesting that multiple different countries have this depressive trend in the middle. It would therefore warrant  furthrr exploration and research in to this area.")
+                column(
+                    width=6,
+                    tags$p("These trends are surprising as they are not not regional specific, but instead there are multiple countries from many different regions on this plot. While there may have many different influences, it is interesting that multiple different countries have this depressive trend in the middle. It would therefore warrant  furthrr exploration and research in to this area.")
+                )
             ),
-            column(
-                width=8,
-                plotlyOutput(
-                    outputId="plt_surp_AllCountries",
-                    height="4in"
+            fluidRow(
+                width=12,
+                column(
+                    width=12,
+                    plotlyOutput(
+                        outputId="plt_surp_AllCountries",
+                        height="4in"
+                    )
                 )
             )
         )
@@ -1409,50 +1417,58 @@ pag_ReseSurprisingTrends <- tabItem(
         box(
             title=tags$b("Arable Land per Country"),
             width=12,
-            column(
-                width=6,
-                tags$p("As a naive approach to addressing the problem of undernourishment, one might say something long the lines of 'Why can't the countries just grow more food?' This response in and of itself will not solve the problem. Firstly, the countries must have the arable land available for farming, then there are a myriad of other systemic influences involved in establishing a viable supply chain and food security."),
-                tags$p(
-                    "What the plot to the right shows is the {} on the X-Axis, and the {} on the Y-Axis. Each dot is coloured according to it's country, and the attributes can be displayed when hovering over a data point." %>% 
-                        str_Format(
-                            code("Percentage of Arable Land"),
-                            code("Prevalence of Undernourishment")
-                        ) %>% HTML()
-                ),
-                tags$p("The following information can be drawn from inspecting this plot:"),
-                tags$ul(
-                    tags$li(
-                        "Even countries with 100% arable land still have a very high PoU score. For example: {}, {}, {}." %>% 
+            fluidRow(
+                column(
+                    width=6,
+                    tags$p("As a naive approach to addressing the problem of undernourishment, one might say something long the lines of 'Why can't the countries just grow more food?' This response in and of itself will not solve the problem. Firstly, the countries must have the arable land available for farming, then there are a myriad of other systemic influences involved in establishing a viable supply chain and food security."),
+                    tags$p(
+                        "What this plot shows is the {} on the X-Axis, and the {} on the Y-Axis. Each dot is coloured according to it's country, and the attributes can be displayed when hovering over a data point." %>% 
                             str_Format(
-                                code("Djibouti"),
-                                code("Sao Tome and Principe"),
-                                code("Ecuador")
+                                code("Percentage of Arable Land"),
+                                code("Prevalence of Undernourishment")
                             ) %>% HTML()
                     ),
-                    tags$li(
-                        "In some countries, an increase in arable land has actually lead to an increase in PoU. For example: {}, {}, {}." %>% 
-                            str_Format(
-                                code("Lao"),
-                                code("Timor-Leste"),
-                                code("Haiti")
-                            ) %>% HTML()
-                    ),
-                    tags$li(
-                        "In some instances, the amount of arable land has had no affect on PoU at all. For example: {}, {}, {}." %>% 
-                            str_Format(
-                                code("Afghanistan"),
-                                code("Guatemala"),
-                                code("DPRK")
-                            ) %>% HTML()
-                    )
                 ),
-                tags$p("These results are surprising, because given land that is suitable for farming, it would be logical to use this land to help to address the issue. But this is not the case. There must therefore be other influences that can contribute to improving the Prevalence of Undernourishment for a country. Perhaps focus should then be on international trade, supply chain relationships, economic viability, and the polticial stability of the country.")
+                column(
+                    width=6,
+                    tags$p("The following information can be drawn from inspecting this plot:"),
+                    tags$ul(
+                        tags$li(
+                            "Even countries with 100% arable land still have a very high PoU score. For example: {}, {}, {}." %>% 
+                                str_Format(
+                                    code("Djibouti"),
+                                    code("Sao Tome and Principe"),
+                                    code("Ecuador")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "In some countries, an increase in arable land has actually lead to an increase in PoU. For example: {}, {}, {}." %>% 
+                                str_Format(
+                                    code("Lao"),
+                                    code("Timor-Leste"),
+                                    code("Haiti")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "In some instances, the amount of arable land has had no affect on PoU at all. For example: {}, {}, {}." %>% 
+                                str_Format(
+                                    code("Afghanistan"),
+                                    code("Guatemala"),
+                                    code("DPRK")
+                                ) %>% HTML()
+                        )
+                    ),
+                    tags$p("These results are surprising, because given land that is suitable for farming, it would be logical to use this land to help to address the issue. But this is not the case. There must therefore be other influences that can contribute to improving the Prevalence of Undernourishment for a country. Perhaps focus should then be on international trade, supply chain relationships, economic viability, and the polticial stability of the country.")
+                )
             ),
-            column(
-                width=6,
-                plotlyOutput(
-                    outputId="plt_surp_ArableLand",
-                    height="4in"
+            fluidRow(
+                width=12,
+                column(
+                    width=12,
+                    plotlyOutput(
+                        outputId="plt_surp_ArableLand",
+                        height="4in"
+                    )
                 )
             )
         )
@@ -1463,35 +1479,43 @@ pag_ReseSurprisingTrends <- tabItem(
         box(
             title=tags$b("Change in GDP"),
             width=12,
-            column(
-                width=6,
-                tags$p("One of the best means of measuring the economic viability of a country is by reviewing their Gross Domestic Product (GDP). By comparing one country's GDP to another, it is easy to see which one is being more successful. The inputs that are used to calculate the GDP cover a range of social, political, trade, and financial factors."),
-                tags$p("The figure to the right plots the GDP score on the X-Axis, and the PoU score on the Y-Axis. One would expect that as the GDP increases for a given country, their associated PoU score would decrease. Each country has a different colour, and the majority of countries have been faded out to the background. Attention should be drawn to the four highlighted countries. The plot has been cut, to focus on countries with a GDP of less than 20,000."),
-                tags$p("The following information can be concluded:"),
-                tags$ul(
-                    tags$li(
-                        "For {}, as the GDP increased, so did the PoU score. This was up to a certain point, then the POU decreased accordingly. The resultant shape is conical in nature, and indicates that the GDP in this instance did not influence the PoU" %>% 
-                            str_Format(code("Zambia")) %>% HTML()
-                    ),
-                    tags$li(
-                        "For {}, the shape has been primarily flat, with a hook-like shape at the lower end of the GDP score range. Due to the flatness of these scores, it indicates that the increase in GDP has not had a corresponding decrease in the PoU score." %>% 
-                            str_Format(code("India")) %>% HTML()
-                    ),
-                    tags$li(
-                        "The trend for {} is majoritively upwards, indicating that an increase in GDP has had an overal negative influence in the PoU, and has pushed it in an upward direction." %>% 
-                            str_Format(code("Eswatini")) %>% HTML()
-                    ),
-                    tags$li(
-                        "The correlation for {} is the most interesting of the highlighted trends, because it is the most sporadic. This country shows some very substantial increases in GDP, and this is quite positive to see. Howver, the corresponding change in PoU has not always been influnced in a downward direction as hoped. Instead, there are instances where the score increases, and some where there is a sharp decrease. The PoU score appears to be unstable, when compared to GDP, and this indicates that there are many other societal and socio-economic influences on the Prevalence of Undernourishment in this country, other than GDP." %>% 
-                            str_Format(code("Timor-Leste")) %>% HTML()
+            fluidRow(
+                column(
+                    width=6,
+                    tags$p("One of the best means of measuring the economic viability of a country is by reviewing their Gross Domestic Product (GDP). By comparing one country's GDP to another, it is easy to see which one is being more successful. The inputs that are used to calculate the GDP cover a range of social, political, trade, and financial factors."),
+                    tags$p("The figure to the right plots the GDP score on the X-Axis, and the PoU score on the Y-Axis. One would expect that as the GDP increases for a given country, their associated PoU score would decrease. Each country has a different colour, and the majority of countries have been faded out to the background. Attention should be drawn to the four highlighted countries. The plot has been cut, to focus on countries with a GDP of less than 20,000."),
+                ),
+                column(
+                    width=6,
+                    tags$p("The following information can be concluded:"),
+                    tags$ul(
+                        tags$li(
+                            "For {}, as the GDP increased, so did the PoU score. This was up to a certain point, then the POU decreased accordingly. The resultant shape is conical in nature, and indicates that the GDP in this instance did not influence the PoU" %>% 
+                                str_Format(code("Zambia")) %>% HTML()
+                        ),
+                        tags$li(
+                            "For {}, the shape has been primarily flat, with a hook-like shape at the lower end of the GDP score range. Due to the flatness of these scores, it indicates that the increase in GDP has not had a corresponding decrease in the PoU score." %>% 
+                                str_Format(code("India")) %>% HTML()
+                        ),
+                        tags$li(
+                            "The trend for {} is majoritively upwards, indicating that an increase in GDP has had an overal negative influence in the PoU, and has pushed it in an upward direction." %>% 
+                                str_Format(code("Eswatini")) %>% HTML()
+                        ),
+                        tags$li(
+                            "The correlation for {} is the most interesting of the highlighted trends, because it is the most sporadic. This country shows some very substantial increases in GDP, and this is quite positive to see. Howver, the corresponding change in PoU has not always been influnced in a downward direction as hoped. Instead, there are instances where the score increases, and some where there is a sharp decrease. The PoU score appears to be unstable, when compared to GDP, and this indicates that there are many other societal and socio-economic influences on the Prevalence of Undernourishment in this country, other than GDP." %>% 
+                                str_Format(code("Timor-Leste")) %>% HTML()
+                        )
                     )
                 )
             ),
-            column(
-                width=6,
-                plotlyOutput(
-                    outputId="plt_surp_ChangeInGDP",
-                    height="4in"
+            fluidRow(
+                width=12,
+                column(
+                    width=12,
+                    plotlyOutput(
+                        outputId="plt_surp_ChangeInGDP",
+                        height="4in"
+                    )
                 )
             )
         )
