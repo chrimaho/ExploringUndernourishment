@@ -156,7 +156,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "General Trend",
                 tabName="general_trend",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("chart-line"),
                 badgeLabel="general",
                 badgeColor="aqua"
@@ -166,7 +166,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Successful",
                 tabName="most_successful",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("thumbs-up"),
                 badgeLabel="good",
                 badgeColor="aqua"
@@ -1021,6 +1021,18 @@ pag_ReseGeneralTrend <- tabItem(
     
     # . . Header ----
     h1("General Trend"),
+    
+    # . . Overview ----
+    fluidRow(
+        box(
+            title=tags$b("Overview"),
+            width=6,
+            column(
+                width=12,
+                tags$p("In order to ascertain the general trend for the data, three levels of analysis are included, segmented by their level of granularity. Firstly, the overall Global trend is included and analysed. Next, the data can be segmented by region and reviewed in isolation from all other regions. Lastly, individual countries can be reviewed, and their respective individual trends can be seen in isolation from all other countries.")
+            )
+        )
+    ),
     
     # . . Overall Trend ----
     fluidRow(
