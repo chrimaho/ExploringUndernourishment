@@ -161,25 +161,48 @@ str_Format <- function(string, ...) {
     #' @description Take an input string, and substitute in-string variables.
     #' @note This is similar to the Python `string.foramt()` method.
     #' @param string string. The string to be re-formatted. Note, each of the named arguments must be surrounded in curly brackets.
-    #' @param ... variables. A list of named variables. Note, each of these arguments must align to the variables in curly brackets from the `string` argument. These will be combined in to a list.
+    #' @param ... variables. A list of variables. Note, these can either be named or not; but they must all be named, or all be blank, because it cannot handle a mixture. Each of these arguments must align to the variables in curly brackets from the `string` argument. These will be combined in to a list.
     #' @return A formatted string
     #' @example str_Format("Sammy the {animal} {verb} a {noun}.", animal="shark", verb="made", noun="car")
+    #' @example str_Format("Sammy the {} {} a {}.", "shark", "made", "car")
     #' @references https://stackoverflow.com/questions/44763056/is-there-an-r-equivalent-of-pythons-string-format-function#answer-44763659
     #' @author chrimaho
     
     # . . Import packages ----
     require(stringr)
+    require(magrittr)
+    require(dplyr)
+    require(assertthat)
+    require(dynutils)
+    require(english)
     
     # . . Validations ----
     assert_that(is.string(string))
-    assert_that(c("stringr") %all_in% .packages(), msg="The packages 'stringr' must be mounted.")
+    assert_that(c("stringr", "magrittr", "dplyr", "assertthat", "dynutils", "english") %all_in% .packages(), msg="The packages must be mounted.")
     
-    # . . Get arguments ----
-    envir <- as.environment(list(...))
+    # . . Set Up ----
+    num_variables <- str_count(string, coll("{}"))
+    vars <- list(...)
+    
+    # . . Handle if vars are not named ----
+    if (num_variables>0) {
+        
+        # Add number in between each curly bracket
+        for (i in 1:num_variables) {
+            string %<>% str_replace(coll("{}"), paste0("{",as.english(i),"}"))
+        }
+        
+        # Name the vars as numbers
+        vars %<>% set_names(as.english(1:num_variables))
+        
+    }
+    
+    # . . Make environment ----
+    envir <- as.environment(vars)
     parent.env(envir) <- .GlobalEnv
     
     # . . Perform substitution
-    string <- str_replace_all(string, "\\{", "${")
+    string %<>% str_replace_all("\\{", "${")
     str_return <- str_interp(string=string, env=envir)
     
     # . . Return ----
