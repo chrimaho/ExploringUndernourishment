@@ -900,6 +900,34 @@ server <- function(input, output, session) {
     #                                                                              #
     #------------------------------------------------------------------------------#
     
+    
+    #------------------------------------------------------------------------------#
+    # . Links                                                                   ####
+    #------------------------------------------------------------------------------#
+    
+    # . . To Data Dictionary page ----
+    observeEvent(input$link_infl_over_DataDictionary_ToDataDictionary, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "dictionary"
+        )
+    })
+    
+    # . . To Undernourishment page ----
+    observeEvent(input$link_infl_varimp_Undernourishment_ToUndernourishment, {
+        updateTabItems(
+            session,
+            "SidebarMenu",
+            "undernourishment"
+        )
+    })
+    
+    
+    #------------------------------------------------------------------------------#
+    # . Plots                                                                   ####
+    #------------------------------------------------------------------------------#
+    
     # . . Variable Importance ----
     output$plt_infl_VariableImportance <- renderPlot(
         expr={
