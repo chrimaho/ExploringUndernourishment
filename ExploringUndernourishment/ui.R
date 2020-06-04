@@ -66,11 +66,11 @@ sidebar <- dashboardSidebar(
         
         id="SidebarMenu",
         
-        # . . Info ----
+        # . . Introduction ----
         menuItem(
             text="Introduction",
-            # selected=TRUE,
-            tabName="info",
+            selected=TRUE,
+            tabName="introduction",
             icon=icon("info-circle"),
             badgeLabel="info",
             badgeColor="blue"
@@ -107,7 +107,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Undernourishment",
                 tabName="undernourishment",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("seedling"),
                 badgeLabel="food",
                 badgeColor="olive"
@@ -223,13 +223,13 @@ sidebar <- dashboardSidebar(
 #------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------#
-# . Information                                                             ####
+# . Introduction                                                            ####
 #------------------------------------------------------------------------------#
 
 pag_InfoPage <- tabItem(
     
     # . . Name ----
-    tabName="info",
+    tabName="introduction",
     
     # . . Header ----
     h1(tags$b("Exploring Undernourishment")),
@@ -313,6 +313,7 @@ pag_InfoPage <- tabItem(
             )
         )
     )
+    
 )
 
 
