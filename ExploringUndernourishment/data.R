@@ -113,12 +113,14 @@ if (!exists("FaoStat_long")) {
         )) %>% 
         
         # . . Fix the units ----
-        mutate(value=ifelse(unit=="%", value/100, value)
-               ,value=ifelse(unit=="millions", value*1e+06, value)
-               ,year=str_Right(year,4)
-               ,country=as.factor(country)
-               ,year=as.factor(year)
-               ) %>% 
+        mutate(
+            value=ifelse(unit=="%", value/100, value),
+            value=ifelse(unit=="millions", value*1e+06, value),
+            year=str_Right(year,4),
+            country=as.factor(country),
+            region=as.factor(region),
+            year=as.factor(year)
+        ) %>% 
         
         # . . Extract feature mapping ----
         (function(x){
