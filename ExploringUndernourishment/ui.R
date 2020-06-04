@@ -166,7 +166,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Successful",
                 tabName="most_successful",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("thumbs-up"),
                 badgeLabel="good",
                 badgeColor="aqua"
@@ -176,7 +176,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Surprising Trends",
                 tabName="surprising_trends",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("surprise"),
                 badgeLabel="wow",
                 badgeColor="aqua"
@@ -1228,16 +1228,32 @@ pag_ReseMostSuccessful <- tabItem(
     # . . Header ----
     h1("Most Successful Countries"),
     
+    # . . Overview ----
+    fluidRow(
+        box(
+            title=tags$b("Overview"),
+            width=12,
+            column(
+                width=6,
+                tags$p("The challenge with identifying the most successful countries is primarily as a result of missing data. Some countries do not have any data for Prevalence of Undernourishment, and some countries only have records for a few years; these countries were excluded from this section."),
+            ),
+            column(
+                width=6,
+                tags$p("In order to adequately explore the top successful countries, they are plotted and explored in contrast to one another. The user interaction added to this plot alows for flexible and easy exploration of any number of top countries, in any region. Next, the full data is included in a table, so one can see the numeric values for each country for each year. Lastly, individual countries can be selected and all of their features can be explored, in order to establishe what it is that allows them to be successful.")
+            )
+        )
+    ),
+    
     # . . Comment and Plot ----
     fluidRow(
         box(
-            title=tags$b("Overall"),
+            title=tags$b("Top Countries Plot"),
             width=12,
             column(
                 width=4,
                 tags$p("Credit where it is due, there are some very impressive reductions in the Prevalence of Undernourishment over time. This data can be explored in the chart to the right. To see the details of the each line, simply over over it."),
                 tags$p(
-                    "Countries like {}, {}, {}, and {} have begun with a score of over {}, and have each reduced their score by at least {} of their original value." %>% 
+                    "Countries like {}, {}, {}, and {} have begun with a score of over {}, and have each reduced their score by at least {} of their original value. This is an impressive effort, and it is good to see that these changes have been successful and sustainable." %>% 
                         str_Format(
                             code("Angola"),
                             code("Ethiopia"),
@@ -1283,7 +1299,7 @@ pag_ReseMostSuccessful <- tabItem(
     # . . Table ----
     fluidRow(
         box(
-            title=tags$b("Table"),
+            title=tags$b("All Countries Table"),
             width=12,
             fluidRow(
                 column(
@@ -1315,7 +1331,7 @@ pag_ReseMostSuccessful <- tabItem(
     # . . Predictor Features ----
     fluidRow(
         box(
-            title=tags$b("Predictor Fratures"),
+            title=tags$b("Predictor Fratures by Country"),
             width=12,
             fluidRow(
                 column(
