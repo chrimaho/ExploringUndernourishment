@@ -176,7 +176,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Surprising Trends",
                 tabName="surprising_trends",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("surprise"),
                 badgeLabel="wow",
                 badgeColor="aqua"
@@ -186,7 +186,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Influential",
                 tabName="most_influential",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("check-square"),
                 badgeLabel="strong",
                 badgeColor="aqua"
@@ -1365,6 +1365,18 @@ pag_ReseSurprisingTrends <- tabItem(
     
     # . . Header ----
     h1("Some Surprising Trends In The Data"),
+    
+    # . . Overview ----
+    fluidRow(
+        box(
+            title=tags$b("Overview"),
+            width=6,
+            column(
+                width=12,
+                tags$p("Three different facts were chosen for inclusion in this section. That is not to say that there is not other surprising trends in the data; for there are. However, these three trends were perhaps the most prominent, and were ones which stood out during the completion of other sections of this Exploration Analysis.")
+            )
+        )
+    ),
     
     # . . Increasing Country Trends ----
     fluidRow(
