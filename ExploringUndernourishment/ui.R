@@ -107,7 +107,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Undernourishment",
                 tabName="undernourishment",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("seedling"),
                 badgeLabel="food",
                 badgeColor="olive"
@@ -517,11 +517,41 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Improvement Per Year"),
                     width=6,
-                    tags$p("The chart below shows the change in the Prevelance of Undernourishment per year, for the selected countries. Use the selections above to change the country and the years to focus in on relevant parts."),
+                    tags$p(
+                        "The chart below shows the change in the {} per {}, for the selected countries. Use the selections above to change the country and the years to focus in on relevant parts." %>% 
+                            str_Format(
+                                code("Prevelance of Undernourishment"),
+                                code("Year")
+                            ) %>% HTML()
+                    ),
                     tags$span("Some key call-outs include:"),
-                    tags$li("Thailand has had a very steep descent between 2001 and 2007, followed by a slight plateau to 2010, then a steady decline to 2018."),
-                    tags$li("Angola has had a steady and consistent decrease over all the years."),
-                    tags$li("Afganistan has had a constant decrease from 2002 to 2011, followed by an increase to 2018 with a trend to plateau thereafter."),
+                    tags$ul(
+                        tags$li(
+                            "{} has had a very steep descent between {} and {}, followed by a slight plateau to {}, then a steady decline to {}." %>% 
+                                str_Format(
+                                    code("Thailand"),
+                                    code("2001"),
+                                    code("2007"),
+                                    code("2010"),
+                                    code("2018")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "{} has had a steady and consistent decrease over all the years." %>% 
+                                str_Format(
+                                    code("Angola")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "{} has had a constant decrease from {} to {}, followed by an increase to {} with a trend to plateau thereafter." %>% 
+                                str_Format(
+                                    code("Afganistan"),
+                                    code("2002"),
+                                    code("2011"),
+                                    code("2018")
+                                ) %>% HTML()
+                        ),
+                    ),
                     plotlyOutput(
                         outputId="undr_dynm_plot_ImprovementPerYear",
                         height="6in"
@@ -530,11 +560,30 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Distribution Per Country"),
                     width=6,
-                    tags$p("Adjusting the controls above will update the chart below by adding more countries to the plot, or adjusting the yearly comparisons. Needless to say, each country will have a distinct shape for their Prevelance of Undernourishment, as they have all adopted different strategies and options for addressing the issue."),
+                    tags$p(
+                        "Adjusting the controls above will update the chart below by adding more countries to the plot, or adjusting the yearly comparisons. Needless to say, each country will have a distinct shape for their Prevelance of Undernourishment, as they have all adopted different strategies and options for addressing the issue."
+                    ),
                     tags$span("Some key call-outs include:"),
-                    tags$li("Brunei shows a very strong, tight grouping close to zero, indicating they have a good score, and are doing well to maintain it."),
-                    tags$li("Central Aftican Republic has an inconsistent and unstable score, spread out over a broad range of scores, indicating that there has been a broad-reaching change in their scores over time."),
-                    tags$li("Bangladesh has a tight clustering, but not close to zero, indicating that there is not any change in their scores over time, and no effor to improve."),
+                    tags$ul(
+                        tags$li(
+                            "{} shows a very strong, tight grouping close to zero, indicating they have a good score, and are doing well to maintain it." %>% 
+                                str_Format(
+                                    code("Brunei")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "{} has an inconsistent and unstable score, spread out over a broad range of scores, indicating that there has been a broad-reaching change in their scores over time." %>% 
+                                str_Format(
+                                    code("Central Aftican Republic")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "{} has a tight clustering, but not close to zero, indicating that there is not any change in their scores over time, and no effor to improve." %>% 
+                                str_Format(
+                                    code("Bangladesh")
+                                ) %>% HTML()
+                        ),
+                    ),
                     plotOutput(
                         outputId="undr_dynm_plot_DistributionPerCountry",
                         height="6in"
@@ -554,8 +603,17 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Completeness of Records"),
                     width=6,
-                    tags$p("Most of the countries will full scores are ones the ones that are expected to have low scores in this area (steriotypical 'third-world' countries); and most of the missing scores are from well-off countries (steriotypical 'first-world' countries'). This indicates toward a bias in the data collection strategy, assuming that these countries in the first-world do not have any issues with their Undernourishment. This is an unfair assumption when considering examples such as the Aboriginal Australians or the Indian Americans or the Native Africans in South Africa. Therefore attention needs to be paid to collect data in these countries."),
-                    tags$p("Moreover, there are examples of 'third-world' countries that are still missing data. What about Palau or Grenada or Tajikistan? These countries also deserve to have data collected for them."),
+                    tags$p(
+                        "Most of the countries will full scores are ones the ones that are expected to have low scores in this area (steriotypical 'third-world' countries); and most of the missing scores are from well-off countries (steriotypical 'first-world' countries'). This indicates toward a bias in the data collection strategy, assuming that these countries in the first-world do not have any issues with their Undernourishment. This is an unfair assumption when considering examples such as the Aboriginal Australians or the Indian Americans or the Native Africans in South Africa. Therefore attention needs to be paid to collect data in these countries."
+                    ),
+                    tags$p(
+                        "Moreover, there are examples of 'third-world' countries that are still missing data. What about {} or {} or {}? These countries also deserve to have data collected for them." %>% 
+                            str_Format(
+                                code("Palau"),
+                                code("Grenada"),
+                                code("Tajikistan")
+                            ) %>% HTML()
+                        ),
                     plotOutput(
                         outputId="plt_undr_stat_Completeness",
                         height="20in"
@@ -564,8 +622,22 @@ pag_Undernourishment <- tabItem(
                 column(
                     title=tags$b("Ridges per country"),
                     width=6,
-                    tags$p("There are many countries which show strong and consistent results, close to zero (for example, Belarus, Ukraine and Malaysia); indicating a strong and consistent effort to maintain a low PoU score. There are also some countries with a long and broad score (like Djibouti, Rwanda and Ethiopia), indicating big changes in their score over time; either positive or negative."),
-                    tags$p("However, there also appears to be a third category, one where there is a distint bi-nomial pattern (such as Botswana, Peru and Lebanon), which indicates that there has either been a drop followed by a rise in scores, or lot of high scores followed by a steep drop and a lot of low scores. Either way, the patterns for these countries are intrigueing and worth further exploration."),
+                    tags$p(
+                        "There are many countries which show strong and consistent results, close to zero (for example, {}, {} and {}); indicating a strong and consistent effort to maintain a low PoU score. There are also some countries with a long and broad score (like Djibouti, Rwanda and Ethiopia), indicating big changes in their score over time; either positive or negative." %>% 
+                            str_Format(
+                                code("Belarus"),
+                                code("Ukraine"),
+                                code("Malaysia")
+                            ) %>% HTML()
+                    ),
+                    tags$p(
+                        "However, there also appears to be a third category, one where there is a distint bi-nomial pattern (such as {}, {} and {}), which indicates that there has either been a drop followed by a rise in scores, or lot of high scores followed by a steep drop and a lot of low scores. Either way, the patterns for these countries are intrigueing and worth further exploration." %>% 
+                            str_Format(
+                                code("Botswana"),
+                                code("Peru"),
+                                code("Lebanon")
+                            ) %>% HTML()
+                        ),
                     plotOutput(
                         outputId="plt_undr_stat_Ridges",
                         height="20in"
