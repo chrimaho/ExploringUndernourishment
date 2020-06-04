@@ -893,35 +893,88 @@ pag_StatFeaturesPage <- tabItem(
         box(
             title=tags$b("Distribution of Each Feature", id="FeatStats"),
             width=12,
-            tags$p("Each of the features included in the data set each have their own distribution; their own shape. In order to fully understand the data that is being dealt with, reviewing their distrubution is necessary."),
-            tags$p("The following information can be obtained from reviewing the distributions:"),
-            tags$ul(
-                tags$li("There are multiple features that appear to have a neat, normal distribution. Including:"),
-                tags$ul(
-                    lapply(FUN=function(x) tags$li(tags$code(x)), c(
-                        "Political Stability",
-                        "Avg Dietary Adequacy",
-                        "Avg Protein Supply",
-                        "Avg Supply Of Protein Of Animal Origin",
-                        "Caloric Energy From Cereals Roots Tubers",
-                        "Choldren Who Are Stunted",
-                        "Prevalence of Breastfeeding Women"
-                    ))
+            fluidRow(
+                column(
+                    width=3,
+                    tags$p("Each of the features included in the data set each have their own distribution; their own shape. In order to fully understand the data that is being dealt with, reviewing their distrubution is necessary."),
+                    tags$p(
+                        tags$body("This is a test"),
+                        actionLink(
+                            "link_feat_VariableDistributions_ToOverallStatistics",
+                            "of a link"
+                        ),
+                        tags$body("to another page.")
+                    )
+                ),
+                column(
+                    width=4,
+                    tags$p("The following information can be obtained from reviewing the distributions:"),
+                    tags$ul(
+                        tags$li("There are multiple features that appear to have a neat, normal distribution. Including:"),
+                        tags$ul(
+                            lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                                "Political Stability",
+                                "Avg Dietary Adequacy",
+                                "Avg Protein Supply",
+                                "Avg Supply Of Protein Of Animal Origin",
+                                "Caloric Energy From Cereals Roots Tubers",
+                                "Choldren Who Are Stunted",
+                                "Prevalence of Breastfeeding Women"
+                            ))
+                        ),
+                        tags$li("There are a few features which appear to have a bi-nomial distribution, which is worthy of furhter exploration:"),
+                        tags$ul(
+                            lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                                "Prevalence of Anemia",
+                                "Prevalence of Obesity",
+                                "Avg Protein Supply",
+                                "Cereal Import Dependency Ratio",
+                                "Access To Improved Sanitation Services"
+                            ))
+                        )
+                    )
+                ),
+                column(
+                    width=4,
+                    tags$p("The following information can be obtained from reviewing the distributions:"),
+                    tags$ul(
+                        tags$li("There are a number of features with very long right-tails, indicating a positive skew:"),
+                        tags$ul(
+                            lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                                "Prevalence Of Undernourishment",
+                                "Food Production Variability",
+                                "Food Supply Variability",
+                                "Avg Value Of Food Production",
+                                "Food Imports As Share Of Merch Exports",
+                                "Number People Undernourished",
+                                "Gross Domestic Product Per Capita Ppp",
+                                "Children Affected By Wasting",
+                                "Children Who Are Overweight",
+                                "Number Moderate Food Insecurity",
+                                "Number Severe Food Insecurity",
+                                "Prevelance Moderate Food Insecurity",
+                                "Prevalence Severe Food Insecurity"
+                            ))
+                        ),
+                        tags$li("There are also some features with left-tail distributions, indicating a negative skey:"),
+                        tags$ul(
+                            lapply(FUN=function(x) tags$li(tags$code(x)), c(
+                                "Access To Basic Drinking Water",
+                                "Access To Basic Sanitation Services",
+                                "Access To Improved Drinking Water",
+                                "Access To Improved Sanitation Services"
+                            ))
+                        )
+                    )
                 )
             ),
-            tags$p(
-                tags$body("This is a test"),
-                actionLink(
-                    "link_feat_VariableDistributions_ToOverallStatistics",
-                    "of a link"
-                ),
-                tags$body("to another page.")
-            ),
-            column(
-                width=12,
-                plotOutput(
-                    outputId="plt_hist_FeatureDistributions",
-                    height="20in"
+            fluidRow(
+                column(
+                    width=12,
+                    plotOutput(
+                        outputId="plt_hist_FeatureDistributions",
+                        height="20in"
+                    )
                 )
             )
         )
