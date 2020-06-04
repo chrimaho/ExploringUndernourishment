@@ -176,7 +176,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Surprising Trends",
                 tabName="surprising_trends",
-                selected=TRUE,
+                # selected=TRUE,
                 icon=icon("surprise"),
                 badgeLabel="wow",
                 badgeColor="aqua"
@@ -186,7 +186,7 @@ sidebar <- dashboardSidebar(
             menuItem(
                 "Most Influential",
                 tabName="most_influential",
-                # selected=TRUE,
+                selected=TRUE,
                 icon=icon("check-square"),
                 badgeLabel="strong",
                 badgeColor="aqua"
@@ -1536,17 +1536,98 @@ pag_ReseMostInfluential <- tabItem(
     # . . Header ----
     h1("Most Influential Features"),
     
-    # . . Comment and Plot ----
     fluidRow(
         box(
             title=tags$b("Overview"),
             width=12,
             column(
-                width=4,
-                tags$p("Reserved for comments.")
+                width=6,
+                tags$p(
+                    "For all of the features provided by the FAO, they can all be categorised in to {} and {} variables. The full list of categorisation can be found in the" %>% 
+                        str_Format(
+                            code("dependent"),
+                            code("independent")
+                        ) %>% HTML(),
+                    actionLink(
+                        inputId="link_infl_over_DataDictionary_ToDataDictionary",
+                        label="data dictionary"
+                    ),
+                    span(". In this section, we want to determine which of the indepentant variables are most influential on the Prevalence of Undernourishment target. For this, the seventeen independent features were used.")
+                ),
             ),
             column(
-                width=8,
+                width=6,
+                tags$p(
+                    "In order to determine the most influential of these features, a forest-type model was run. In this instance, the {} (GBM) model was chosen. This was chosen not for it's predictability, but for it's ability to determine the most influential features; and for this reason the full data set was used (no train/test split). Due to the resampling ability of this model, and how it builds each tree for its forest, the model is quite powerful in determining which of the features are the most influential." %>% 
+                        str_Format(
+                            a("Gradient Boosted Machine", href="http://topepo.github.io/caret/train-models-by-tag.html#boosting")
+                        ) %>% HTML()
+                ),
+            )
+        )
+    ),
+    
+    # . . Comment and Plot ----
+    fluidRow(
+        box(
+            title=tags$b("Variable Importance Plot"),
+            width=12,
+            column(
+                width=6,
+                tags$p(
+                    "The results of running a Variable Importance analysis from this model has resulted in the plot to the right. This shows each of the featurs on the Y-axis, and the percentage of importance on the X-axis."
+                ),
+                tags$p("The following conclusions can be drawn:"),
+                tags$ul(
+                    tags$li(
+                        "The feature {} has influenced {} of the trees in the forest, while {} influenced {} of the trees, and therefore these two features are incredibly important." %>% 
+                            str_Format(
+                                code("Avg Value Of Food Production"),
+                                code("100%"),
+                                code("Avg Dietary Adequacy"),
+                                code("64.97%")
+                            ) %>% HTML()
+                    ),
+                    tags$li(
+                        span("This result is consistent with the results on the"),
+                        actionLink(
+                            "",
+                            "Undernourishment"
+                        ),
+                        span("tab, in the Features by Target section, which saw a very strong, very consistent correlation between these two features and the target feature.")
+                    ),
+                    tags$li(
+                        "The features {}, {}, and {} collectively influenced {} of the trees in the forest, and are therefore somewhat important, and somewhat influential to the target result." %>% 
+                            str_Format(
+                                code("Avg Protein Supply"),
+                                code("Political Stability"),
+                                code("Food Imports As Share Of Merch Exports"),
+                                code("62%")
+                            ) %>% HTML()
+                    ),
+                    tags$li(
+                        "Consistent with a {} analysis, {} of the features contribute {} to the influence of the target variable." %>% 
+                            str_Format(
+                                a("Pareto", href="https://en.wikipedia.org/wiki/Pareto_analysis"),
+                                code("20%"),
+                                code("80%")
+                            ) %>% HTML()
+                    ),
+                    tags$li(
+                        "The {} feature contributed {} to the influence, and as a result should be excluded; while three other features ({}, {}, and {}) contributed less than {} each, and have a very negligible imact on the overall result." %>% 
+                            str_Format(
+                                code("Caloric Energy From Cereals Roots Tubers"),
+                                code("0%"),
+                                code("Access To Improved Drinking Water"),
+                                code("Rail Line Density"),
+                                code("Access To Basic Sanitation Services"),
+                                code("1%")
+                            ) %>% HTML()
+                    )
+                )
+            ),
+            column(
+                width=6,
                 plotOutput(
                     outputId="plt_infl_VariableImportance"
                 )
@@ -1557,12 +1638,61 @@ pag_ReseMostInfluential <- tabItem(
     # . . Partial Dependancy Plots ----
     fluidRow(
         box(
-            title=tags$b("Partial Dependancy Plots"),
+            title=tags$b("Partial Dependence Plots"),
             width=12,
             fluidRow(
                 column(
-                    width=12,
-                    tags$p("Reserved for comments.")
+                    width=6,
+                    tags$p(
+                        "Another useful outcome of the GBM model is it's ability to create {}. Each of the plots below are for the seventeen independend features, and each of them show the relative feature on the X-axis, and the change in Prevalence of Undernourishment on the Y-axis." %>% 
+                            str_Format(
+                                a("Partial Dependence Plots", href="https://christophm.github.io/interpretable-ml-book/pdp.html")
+                            ) %>% HTML()
+                    ),
+                    tags$p(
+                        "As each these plots are scanned from left to right, reviewing the X-axis variable, the corresponding expected value for the Prevalence of Undernourishment is indicated by the line. Meaning to say, as the value of X changes, the expected value of Y is shown."
+                    ),
+                    tags$p(
+                        "These plots are also arranged in the same order as the Variable Importance Plots."
+                    ),
+                    tags$p(
+                        "By indicating that these features are less important is primarily meant from a statistical pespective, and with reference to its ability to predicet the value of the Prevalence of Undernourishment score. It does not, by any means, mean that these features are not important for the countries; for in some instances they are incredibly important. Take, for instance, {} and {}: The model has indicated that these are not important features in terms of their predictability; however, they are incredibly important factors for individual countries to be focussing on to improve their own economies." %>% 
+                            str_Format(
+                                code("Access To Improved Drinking Water"),
+                                code("Access To Basic Sanitatino Services")
+                            ) %>% HTML()
+                    )
+                ),
+                column(
+                    width=6,
+                    tags$p("There are a number of interesting things which can be learnt from these plots, including:"),
+                    tags$ul(
+                        tags$li(
+                            "It is clear to see why the top five features ({}, {}, {}, {}, and {}) were the most influential; because after an amount of instability to the left of the plot, the lines stabilise and remain relatively consistent through to the right." %>% 
+                                str_Format(
+                                    code("Avg Value Of Food Production"),
+                                    code("Avg Dietary Adequacy"),
+                                    code("Avg Protein Supply"),
+                                    code("Political Stability"),
+                                    code("Food Imports As Share Of Merch Exports")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "It is quite surprising to see that as the percentage of arable land increases, and as the percentage of food imports increases, and as the cereal import dependancy increases, this is has an adverse affect on the Prevalence of Undernourishment, forcing this score to increase. As seen by reviewing the plots for: {}, {}, {}." %>% 
+                                str_Format(
+                                    code("Percentage Of Arable Land"),
+                                    code("Food Imports As Share Of Merch Exports"),
+                                    code("Cereal Import Dependency Ratio")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "It is clear to see why the less-predictive features are so low, and is primarily due to the inconsistency and instability of the PoU line. Ass seen  particularly with: {} and {}." %>% 
+                                str_Format(
+                                    code("Access To Basic Sanitation Services"),
+                                    code("Caloric Energy From Cereals Roots Tubers")
+                                ) %>% HTML()
+                        )
+                    )
                 )
             ),
             fluidRow(
