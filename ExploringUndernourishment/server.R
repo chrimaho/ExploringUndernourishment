@@ -222,32 +222,49 @@ server <- function(input, output, session) {
     output$plt_undr_stat_Completeness <- renderPlot(
         expr={
             
-            # Optimise to save future load time.
+            # Check if exists in local environment
             if (!exists("plt_undr_stat_Completeness")) {
                 
-                # Make
-                plt_undr_stat_Completeness <<- FaoStat_wide %>% 
-                    select(country, pct_complete, cat_complete) %>%
-                    distinct() %>% 
-                    ggplot(aes(reorder(country, pct_complete), pct_complete, colour=cat_complete, fill=cat_complete)) +
-                    geom_col(width=0.2, alpha=0.3, size=0) +
-                    geom_point(size=3) +
-                    coord_flip() +
-                    scale_y_continuous(sec.axis=dup_axis()) +
-                    theme(legend.position="top") +
-                    labs(
-                        title="Completeness of Records",
-                        subtitle="'Prevalence of Undernourishment' per 'Country'",
-                        y="Percentage of non-NA records",
-                        x="Country",
-                        fill="Completeness",
-                        colour="Completeness"
+                # Check if exists in local directory
+                if (file.exists("./figure/plt_undr_stat_Completeness.rds")) {
+                    
+                    # Load
+                    plt_undr_stat_Completeness <<- read_rds("./figure/plt_undr_stat_Completeness.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_undr_stat_Completeness <<- FaoStat_wide %>% 
+                        select(country, pct_complete, cat_complete) %>%
+                        distinct() %>% 
+                        ggplot(aes(reorder(country, pct_complete), pct_complete, colour=cat_complete, fill=cat_complete)) +
+                        geom_col(width=0.2, alpha=0.3, size=0) +
+                        geom_point(size=3) +
+                        coord_flip() +
+                        scale_y_continuous(sec.axis=dup_axis()) +
+                        theme(legend.position="top") +
+                        labs(
+                            title="Completeness of Records",
+                            subtitle="'Prevalence of Undernourishment' per 'Country'",
+                            y="Percentage of non-NA records",
+                            x="Country",
+                            fill="Completeness",
+                            colour="Completeness"
+                        )
+                    
+                    # Save
+                    write_rds(
+                        x=plt_undr_stat_Completeness,
+                        path="./figure/plt_undr_stat_Completeness.rds",
+                        compress="none"
                     )
+                    
+                }
                 
             }
             
             # Return
-            plt_undr_stat_Completeness %>% return()
+            return(plt_undr_stat_Completeness)
             
         }
     )
@@ -256,29 +273,51 @@ server <- function(input, output, session) {
     output$plt_undr_stat_Ridges <- renderPlot(
         expr={
             
-            # Optimise to save future load time.
+            # Check if exists in local environment
             if (!exists("plt_undr_stat_Ridges")) {
                 
-                # Make
-                plt_undr_stat_Ridges <<- FaoStat_wide %>% 
-                    filter(cat_complete!="empty") %>% 
-                    {ggplot(., aes(prevalence_of_undernourishment, reorder(country, desc(avg_undernourishment)), fill=reorder(country, desc(avg_undernourishment)))) +
-                            geom_density_ridges(alpha=0.8) + 
-                            scale_fill_manual(values=colorRampPalette(brewer.pal(9, "Greens"))(nrow(unique(.["country"])))) +
-                            theme(legend.position="none") +
-                            scale_x_continuous(sec.axis=dup_axis()) +
-                            labs(
-                                title="Undernourishment Per Country",
-                                subtitle="Average 'Prevalence of Undernourishment' per 'Country'",
-                                y="Country",
-                                x="Prevalence of Undernourishment"
-                            )
-                    }
+                # Check if exists in local directory
+                if (file.exists("./figure/plt_undr_stat_Ridges.rds")) {
+                    
+                    # Load
+                    plt_undr_stat_Ridges <<- read_rds("./figure/plt_undr_stat_Ridges.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_undr_stat_Ridges <<- FaoStat_wide %>% 
+                        filter(cat_complete!="empty") %>% 
+                        {
+                            ggplot(data=., aes(
+                                    prevalence_of_undernourishment, 
+                                    reorder(country, desc(avg_undernourishment)), 
+                                    fill=reorder(country, desc(avg_undernourishment))
+                                )) +
+                                geom_density_ridges(alpha=0.8) + 
+                                scale_fill_manual(values=colorRampPalette(brewer.pal(9, "Greens"))(nrow(unique(.["country"])))) +
+                                theme(legend.position="none") +
+                                scale_x_continuous(sec.axis=dup_axis()) +
+                                labs(
+                                    title="Undernourishment Per Country",
+                                    subtitle="Average 'Prevalence of Undernourishment' per 'Country'",
+                                    y="Country",
+                                    x="Prevalence of Undernourishment"
+                                )
+                        }
+                    
+                    # Save
+                    write_rds(
+                        x=plt_undr_stat_Ridges,
+                        path="./figure/plt_undr_stat_Ridges.rds",
+                        compress="none"
+                    )
+                    
+                }
                 
             }
             
             # Return
-            plt_undr_stat_Ridges %>% return()
+            return(plt_undr_stat_Ridges)
         }
     )
     
