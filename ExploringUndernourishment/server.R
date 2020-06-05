@@ -629,7 +629,7 @@ server <- function(input, output, session) {
             }
             
             # Return
-            plt_hist_FeatureDistributions %>% return()
+            return(plt_hist_FeatureDistributions)
             
         }
     )
@@ -943,33 +943,60 @@ server <- function(input, output, session) {
     # . . Increasing Country Tends ----
     output$plt_surp_AllCountries <- renderPlotly(
         expr={
-            FaoStat_wide %>% 
-                filter(country %in% {
-                    FaoStat_yearly %>% 
-                        filter(improvement>30) %>% 
-                        select(country) %>% 
-                        pull()
-                }) %>% 
-                mutate(year=as.numeric(as.character(year))) %>% 
-                {
-                    ggplot(data=., aes(year, prevalence_of_undernourishment, colour=country)) +
-                        geom_line() +
-                        scale_x_continuous(
-                            breaks=seq(2001,2018),
-                            limits=c(2001,2018)
-                        ) +
-                        theme(
-                            axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
-                            panel.grid.minor.x=element_blank(),
-                            legend.position="none"
-                        ) +
-                        labs(
-                            title="Trends per Country",
-                            x="Year",
-                            y="Prevalence of Undernourishment",
-                            colour="Country"
-                        )
-                } %>% 
+            
+            # Check if exists in local environment
+            if (!exists("plt_surp_AllCountries")) {
+                
+                # Check if exists in local directory
+                if (file.exists("./file/plt_surp_AllCountries.rds")) {
+                    
+                    # Load
+                    plt_surp_AllCountries <<- read_rds("./figure/plt_surp_AllCountries.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_surp_AllCountries <<- FaoStat_wide %>% 
+                        filter(country %in% {
+                            FaoStat_yearly %>% 
+                                filter(improvement>30) %>% 
+                                select(country) %>% 
+                                pull()
+                        }) %>% 
+                        mutate(year=as.numeric(as.character(year))) %>% 
+                        {
+                            ggplot(data=., aes(year, prevalence_of_undernourishment, colour=country)) +
+                                geom_line() +
+                                scale_x_continuous(
+                                    breaks=seq(2001,2018),
+                                    limits=c(2001,2018)
+                                ) +
+                                theme(
+                                    axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
+                                    panel.grid.minor.x=element_blank(),
+                                    legend.position="none"
+                                ) +
+                                labs(
+                                    title="Trends per Country",
+                                    x="Year",
+                                    y="Prevalence of Undernourishment",
+                                    colour="Country"
+                                )
+                        }
+                    
+                    # Save
+                    write_rds(
+                        x=plt_surp_AllCountries,
+                        path="./figure/plt_surp_AllCountries.rds",
+                        compress="none"
+                    )
+                    
+                }
+                
+            }
+            
+            # Return
+            plt_surp_AllCountries %>% 
                 ggplotly() %>% 
                 return()
         }
@@ -979,17 +1006,45 @@ server <- function(input, output, session) {
     output$plt_surp_ArableLand <- renderPlotly(
         expr={
             
-            FaoStat_wide %>% 
-                ggplot(aes(percentage_of_arable_land, prevalence_of_undernourishment, colour=country)) +
-                geom_point(alpha=0.4) +
-                theme(
-                    legend.position="none"
-                ) +
-                labs(
-                    title="Arable Land per Country",
-                    x="Percentage of Arable Land",
-                    y="Prevalence of Undernourishment"
-                )
+            # Check if exists in local environment
+            if (!exists("plt_surp_ArableLand")) {
+                
+                # Check if exists in local directory
+                if (file.exists("./file/plt_surp_ArableLand.rds")) {
+                    
+                    # Load
+                    plt_surp_ArableLand <<- read_rds("./figure/plt_surp_ArableLand.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_surp_ArableLand <<- FaoStat_wide %>% 
+                        ggplot(aes(percentage_of_arable_land, prevalence_of_undernourishment, colour=country)) +
+                        geom_point(alpha=0.4) +
+                        theme(
+                            legend.position="none"
+                        ) +
+                        labs(
+                            title="Arable Land per Country",
+                            x="Percentage of Arable Land",
+                            y="Prevalence of Undernourishment"
+                        )
+                    
+                    # Save
+                    write_rds(
+                        x=plt_surp_ArableLand,
+                        path="./figure/plt_surp_ArableLand.rds",
+                        compress="none"
+                    )
+                    
+                }
+                
+            }
+            
+            # Return
+            plt_surp_ArableLand %>% 
+                ggplotly() %>% 
+                return()
             
         }
     )
@@ -998,69 +1053,97 @@ server <- function(input, output, session) {
     output$plt_surp_ChangeInGDP <- renderPlotly(
         expr={
             
-            FaoStat_wide %>% 
-                {
-                    ggplot(data=.) +
-                    geom_point(
-                        data=., 
-                        aes(
-                            gross_domestic_product_per_capita_ppp, 
-                            prevalence_of_undernourishment, 
-                            colour=country
-                        ), 
-                        size=2, 
-                        alpha=0.1
-                    ) +
-                    geom_line(
-                        data=., 
-                        aes(
-                            gross_domestic_product_per_capita_ppp, 
-                            prevalence_of_undernourishment, 
-                            colour=country
-                        ), 
-                        size=0.5, 
-                        alpha=0.1
-                    ) +
-                    geom_point(
-                        data=. %>% filter(country %in% c(
-                            "Eswatini",
-                            "Timor-Leste",
-                            "Zambia",
-                            "India"
-                        )),
-                        aes(
-                            gross_domestic_product_per_capita_ppp, 
-                            prevalence_of_undernourishment, 
-                            colour=country
-                        ), 
-                        size=3, 
-                        alpha=0.6
-                    ) +
-                        geom_line(
-                            data=. %>% filter(country %in% c(
-                                "Eswatini",
-                                "Timor-Leste",
-                                "Zambia",
-                                "India"
-                            )),
-                            aes(
-                                gross_domestic_product_per_capita_ppp, 
-                                prevalence_of_undernourishment, 
-                                colour=country
-                            ), 
-                            size=1, 
-                            alpha=0.6
-                        ) +
-                    coord_cartesian(xlim=c(0,20000)) +
-                    theme(
-                        legend.position="none"
-                    ) +
-                    labs(
-                        title="GDP vs PoU",
-                        y="Prevalence of Undernourishment",
-                        x="GDP per Capita"
+            # Check if exists in local environment
+            if (!exists("plt_surp_ChangeInGDP")) {
+                
+                # Check if exists in local directory
+                if (file.exists("./file/plt_surp_ChangeInGDP.rds")) {
+                    
+                    # Load
+                    plt_surp_ChangeInGDP <<- read_rds("./figure/plt_surp_ChangeInGDP.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_surp_ChangeInGDP <<- FaoStat_wide %>% 
+                        {
+                            ggplot(data=.) +
+                            geom_point(
+                                data=., 
+                                aes(
+                                    gross_domestic_product_per_capita_ppp, 
+                                    prevalence_of_undernourishment, 
+                                    colour=country
+                                ), 
+                                size=2, 
+                                alpha=0.1
+                            ) +
+                            geom_line(
+                                data=., 
+                                aes(
+                                    gross_domestic_product_per_capita_ppp, 
+                                    prevalence_of_undernourishment, 
+                                    colour=country
+                                ), 
+                                size=0.5, 
+                                alpha=0.1
+                            ) +
+                            geom_point(
+                                data=. %>% filter(country %in% c(
+                                    "Eswatini",
+                                    "Timor-Leste",
+                                    "Zambia",
+                                    "India"
+                                )),
+                                aes(
+                                    gross_domestic_product_per_capita_ppp, 
+                                    prevalence_of_undernourishment, 
+                                    colour=country
+                                ), 
+                                size=3, 
+                                alpha=0.6
+                            ) +
+                                geom_line(
+                                    data=. %>% filter(country %in% c(
+                                        "Eswatini",
+                                        "Timor-Leste",
+                                        "Zambia",
+                                        "India"
+                                    )),
+                                    aes(
+                                        gross_domestic_product_per_capita_ppp, 
+                                        prevalence_of_undernourishment, 
+                                        colour=country
+                                    ), 
+                                    size=1, 
+                                    alpha=0.6
+                                ) +
+                            coord_cartesian(xlim=c(0,20000)) +
+                            theme(
+                                legend.position="none"
+                            ) +
+                            labs(
+                                title="GDP vs PoU",
+                                y="Prevalence of Undernourishment",
+                                x="GDP per Capita"
+                            )
+                        }
+                    
+                    # Save
+                    write_rds(
+                        x=plt_surp_ChangeInGDP,
+                        path="./figure/plt_surp_ChangeInGDP.rds",
+                        compress="none"
                     )
+                    
                 }
+                
+            }
+            
+            # Return
+            plt_surp_ChangeInGDP %>% 
+                ggplotly() %>% 
+                return()
             
         }
     )
