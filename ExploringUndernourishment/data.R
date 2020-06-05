@@ -350,7 +350,7 @@ FaoStat_long %>%
     )
 FaoStat_long %>% 
     write_csv(
-        paste0(pro_DataPath, "/FaoStat_long.csv")
+        paste0(".", pro_DataPath, "/FaoStat_long.csv")
     )
 
 # . . Wide ----
@@ -360,7 +360,7 @@ FaoStat_wide %>%
     )
 FaoStat_wide %>% 
     write_csv(
-        paste0(pro_DataPath, "/FaoStat_wide.csv")
+        paste0(".", pro_DataPath, "/FaoStat_wide.csv")
     )
 
 # . . Mapping ----
@@ -370,7 +370,7 @@ FaoStat_VariableMapping %>%
     )
 FaoStat_VariableMapping %>% 
     write_csv(
-        paste0(pro_DataPath, "/FaoStat_VariableMapping.csv")
+        paste0(".", pro_DataPath, "/FaoStat_VariableMapping.csv")
     )
 
 # . . Yearly ----
@@ -380,7 +380,7 @@ FaoStat_yearly %>%
     )
 FaoStat_yearly %>% 
     write_csv(
-        paste0(pro_DataPath, "/FaoStat_yearly.csv")
+        paste0(".", pro_DataPath, "/FaoStat_yearly.csv")
     )
 
 
