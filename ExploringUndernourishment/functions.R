@@ -462,6 +462,9 @@ plt_grob_MultipleHistograms <- function(DataFrame, ExcludeFeatures=NA) {
     # . . Create Plot ----
     plot <- grob %>% as_ggplot()
     
+    # . . Clean Up ----
+    rm(objs)
+    
     # . . Return ----
     return(plot)
     
@@ -732,6 +735,9 @@ plt_PartialDependencyPlots <- function(Model, TrainData, VarImpData) {
     # . . Plot ----
     plot <- grob %>% as_ggplot()
     
+    # . . Clean Up ----
+    rm(objs)
+    
     # . . Return ----
     return(plot)
     
@@ -793,6 +799,9 @@ plt_FeatureCorrelationsByTarget <- function(DataFrame, Target, Exclude=NA) {
     )
     
     plot <- grob %>% as_ggplot()
+    
+    # . . Clean Up ----
+    rm(objs)
     
     # . . Return ----
     return(plot)
