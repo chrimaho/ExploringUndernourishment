@@ -393,7 +393,7 @@ server <- function(input, output, session) {
                 )
             
             # Return
-            plt_inta_MultiFeatures %>% return()
+            return(plt_inta_MultiFeatures)
             
         }
     )
@@ -410,31 +410,49 @@ server <- function(input, output, session) {
     output$plt_stat_PrevUndrOverall <- renderPlot(
         expr={
             
-            # Optimise to save future load time.
+            # Check if exists in local environment
             if (!exists("plt_stat_PrevUndrOverall")) {
                 
-                # Make
-                plt_stat_PrevUndrOverall <<- FaoStat_wide %>% 
-                    ggplot() +
-                    geom_histogram(
-                        aes(prevalence_of_undernourishment),
-                        bins=30, 
-                        fill="cornflowerblue", 
-                        colour="black",
-                        alpha=0.8,
-                        size=0.3
-                    ) +
-                    labs(
-                        title="Prevalence of Undernourishment",
-                        subtitle="Histogram Plot",
-                        x="Prevalence of Undernourishment",
-                        y="Count",
-                        caption="A neat, right-tailed histogram, with values between 0 and 0.7."
+                # Check if exists in local directory
+                if (file.exists("./figure/plt_stat_PrevUndrOverall.rds")) {
+                    
+                    # Load
+                    plt_stat_PrevUndrOverall <<- read_rds("./figure/plt_stat_PrevUndrOverall.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_stat_PrevUndrOverall <<- FaoStat_wide %>% 
+                        ggplot() +
+                        geom_histogram(
+                            aes(prevalence_of_undernourishment),
+                            bins=30, 
+                            fill="cornflowerblue", 
+                            colour="black",
+                            alpha=0.8,
+                            size=0.3
+                        ) +
+                        labs(
+                            title="Prevalence of Undernourishment",
+                            subtitle="Histogram Plot",
+                            x="Prevalence of Undernourishment",
+                            y="Count",
+                            caption="A neat, right-tailed histogram, with values between 0 and 0.7."
+                        )
+                    
+                    # Save
+                    write_rds(
+                        x=plt_stat_PrevUndrOverall,
+                        path="./figure/plt_stat_PrevUndrOverall.rds",
+                        compress="none"
                     )
+                    
+                }
+                
             }
                 
             # Return
-            plt_stat_PrevUndrOverall
+            return(plt_stat_PrevUndrOverall)
         }
     )
     
@@ -442,45 +460,63 @@ server <- function(input, output, session) {
     output$plt_stat_MissingData <- renderPlot(
         expr={
             
-            # Optimise to save future load time.
+            # Check if exists in local environment
             if (!exists("plt_stat_MissingData")) {
                 
-                # Make
-                plt_stat_MissingData <<- FaoStat_wide %>% 
-                    select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
-                    miss_var_summary() %>% 
-                    left_join(x=., y=FaoStat_VariableMapping %>% select(variable, category), by=c("variable"="variable")) %>% 
-                    ggplot(aes(x=stats::reorder(variable, pct_miss))) + 
-                    geom_bar(
-                        aes(y=pct_miss, colour=category, fill=category),
-                        stat="identity",
-                        position="dodge",
-                        width=0.1
-                    ) + 
-                    geom_point(
-                        aes(y = pct_miss, colour=category),
-                        size=3
-                    ) + 
-                    coord_flip() + 
-                    scale_color_brewer(
-                        type="qual", 
-                        palette="Dark2", 
-                        aesthetics=c("colour", "fill")
-                    ) +
-                    scale_y_continuous(breaks=seq(0,100,10), limits=c(0,100)) +
-                    theme(panel.grid.minor.x=element_blank()) +
-                    labs(
-                        title="Percentage of Missing Values",
-                        subtitle="Ordered by percentage missing",
-                        y="Percentage Missing",
-                        x="Variables",
-                        color="Category",
-                        fill="Category"
-                    )
-            }
+                # Check if exists in local directory
+                if (file.exists("./figure/plt_stat_MissingData.rds")) {
+                    
+                    # Load
+                    plt_stat_MissingData <<- read_rds("./figure/plt_stat_MissingData.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_stat_MissingData <<- FaoStat_wide %>% 
+                        select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
+                        miss_var_summary() %>% 
+                        left_join(x=., y=FaoStat_VariableMapping %>% select(variable, category), by=c("variable"="variable")) %>% 
+                        ggplot(aes(x=stats::reorder(variable, pct_miss))) + 
+                        geom_bar(
+                            aes(y=pct_miss, colour=category, fill=category),
+                            stat="identity",
+                            position="dodge",
+                            width=0.1
+                        ) + 
+                        geom_point(
+                            aes(y = pct_miss, colour=category),
+                            size=3
+                        ) + 
+                        coord_flip() + 
+                        scale_color_brewer(
+                            type="qual", 
+                            palette="Dark2", 
+                            aesthetics=c("colour", "fill")
+                        ) +
+                        scale_y_continuous(breaks=seq(0,100,10), limits=c(0,100)) +
+                        theme(panel.grid.minor.x=element_blank()) +
+                        labs(
+                            title="Percentage of Missing Values",
+                            subtitle="Ordered by percentage missing",
+                            y="Percentage Missing",
+                            x="Variables",
+                            color="Category",
+                            fill="Category"
+                        )
+                        
+                        # Save
+                        write_rds(
+                            x=plt_stat_MissingData,
+                            path="./figure/plt_stat_MissingData.rds",
+                            compress="none"
+                        )
+                    
+                }
                 
+            }
+            
             # Return
-            plt_stat_MissingData
+            return(plt_stat_MissingData)
             
         }
     )
@@ -506,26 +542,44 @@ server <- function(input, output, session) {
     output$plt_ridg_UndernourishmentByYear <- renderPlot(
         expr={
             
-            # Optimise to save future load time.
+            # Check if exists in local environment
             if (!exists("plt_ridg_UndernourishmentByYear")) {
                 
-                # Make
-                plt_ridg_UndernourishmentByYear <<- FaoStat_wide %>% {
-                    ggplot(., aes(prevalence_of_undernourishment, reorder(year,desc(year)), fill=year)) +
-                        geom_density_ridges() + 
-                        scale_fill_manual(values=colorRampPalette(brewer.pal(9, "YlGn"))(nrow(unique(.["year"])))) +
-                        labs(
-                            title="Undernourishment Per Year",
-                            subtitle="Ridge Plot",
-                            y="Year",
-                            x="Prevalence of Undernourishment"
-                        )
+                # Check if exists in local directory
+                if (file.exists("./figure/plt_ridg_UndernourishmentByYear.rds")) {
+                    
+                    # Load
+                    plt_ridg_UndernourishmentByYear <<- read_rds("./figure/plt_ridg_UndernourishmentByYear.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_ridg_UndernourishmentByYear <<- FaoStat_wide %>% 
+                        {
+                            ggplot(data=., aes(prevalence_of_undernourishment, reorder(year,desc(year)), fill=year)) +
+                                geom_density_ridges() + 
+                                scale_fill_manual(values=colorRampPalette(brewer.pal(9, "YlGn"))(nrow(unique(.["year"])))) +
+                                labs(
+                                    title="Undernourishment Per Year",
+                                    subtitle="Ridge Plot",
+                                    y="Year",
+                                    x="Prevalence of Undernourishment"
+                                )
+                        }
+                        
+                    # Save
+                    write_rds(
+                        x=plt_ridg_UndernourishmentByYear,
+                        path="./figure/plt_ridg_UndernourishmentByYear.rds",
+                        compress="none"
+                    )
+                    
                 }
                 
             }
             
             # Return
-            plt_ridg_UndernourishmentByYear
+            return(plt_ridg_UndernourishmentByYear)
             
         }
     )
