@@ -619,7 +619,7 @@ pag_Undernourishment <- tabItem(
                                     code("2011"),
                                     code("2018")
                                 ) %>% HTML()
-                        ),
+                        )
                     ),
                     plotlyOutput(
                         outputId="undr_dynm_plot_ImprovementPerYear",
@@ -651,7 +651,7 @@ pag_Undernourishment <- tabItem(
                                 str_Format(
                                     code("Bangladesh")
                                 ) %>% HTML()
-                        ),
+                        )
                     ),
                     plotOutput(
                         outputId="undr_dynm_plot_DistributionPerCountry",
@@ -766,7 +766,7 @@ pag_Undernourishment <- tabItem(
                                 "Avg Protein Supply"
                             ))
                         )
-                    ),
+                    )
                 )
             ),
             fluidRow(
@@ -1139,9 +1139,9 @@ pag_StatFeaturesPage <- tabItem(
                         tags$li("The search bar has been included for ease of searching."),
                         tags$li("There are more statistical features to the right!"),
                         tags$li(HTML(paste("The", tags$code("country"), ",", tags$code("region"), "and", tags$code("year"), "features are all string type, and therefore do not have any statistical values."))),
-                        tags$li("Each of the important statistical measurements are included."),
+                        tags$li("Each of the important statistical measurements are included.")
                     ),
-                    tags$p("It's important to have this level of detail available, because it will inform later analysis. It also places a numeric value to the above distrubutions, allowing the quantification of the visualisations."),
+                    tags$p("It's important to have this level of detail available, because it will inform later analysis. It also places a numeric value to the above distrubutions, allowing the quantification of the visualisations.")
                 )
             ),
             fluidRow(
@@ -1400,7 +1400,7 @@ pag_ReseMostSuccessful <- tabItem(
             width=12,
             column(
                 width=6,
-                tags$p("The challenge with identifying the most successful countries is primarily as a result of missing data. Some countries do not have any data for Prevalence of Undernourishment, and some countries only have records for a few years; these countries were excluded from this section."),
+                tags$p("The challenge with identifying the most successful countries is primarily as a result of missing data. Some countries do not have any data for Prevalence of Undernourishment, and some countries only have records for a few years; these countries were excluded from this section.")
             ),
             column(
                 width=6,
@@ -1620,7 +1620,7 @@ pag_ReseSurprisingTrends <- tabItem(
                                 code("Percentage of Arable Land"),
                                 code("Prevalence of Undernourishment")
                             ) %>% HTML()
-                    ),
+                    )
                 ),
                 column(
                     width=6,
@@ -1676,7 +1676,7 @@ pag_ReseSurprisingTrends <- tabItem(
                 column(
                     width=6,
                     tags$p("One of the best means of measuring the economic viability of a country is by reviewing their Gross Domestic Product (GDP). By comparing one country's GDP to another, it is easy to see which one is being more successful. The inputs that are used to calculate the GDP cover a range of social, political, trade, and financial factors."),
-                    tags$p("The figure to the right plots the GDP score on the X-Axis, and the PoU score on the Y-Axis. One would expect that as the GDP increases for a given country, their associated PoU score would decrease. Each country has a different colour, and the majority of countries have been faded out to the background. Attention should be drawn to the four highlighted countries. The plot has been cut, to focus on countries with a GDP of less than 20,000."),
+                    tags$p("The figure to the right plots the GDP score on the X-Axis, and the PoU score on the Y-Axis. One would expect that as the GDP increases for a given country, their associated PoU score would decrease. Each country has a different colour, and the majority of countries have been faded out to the background. Attention should be drawn to the four highlighted countries. The plot has been cut, to focus on countries with a GDP of less than 20,000.")
                 ),
                 column(
                     width=6,
@@ -1747,7 +1747,7 @@ pag_ReseMostInfluential <- tabItem(
                         label="data dictionary"
                     ),
                     span(". In this section, we want to determine which of the indepentant variables are most influential on the Prevalence of Undernourishment target. For this, the seventeen independent features were used.")
-                ),
+                )
             ),
             column(
                 width=6,
@@ -1756,7 +1756,7 @@ pag_ReseMostInfluential <- tabItem(
                         str_Format(
                             a("Gradient Boosted Machine", href="http://topepo.github.io/caret/train-models-by-tag.html#boosting")
                         ) %>% HTML()
-                ),
+                )
             )
         )
     ),
@@ -2005,7 +2005,7 @@ pag_Conclusion <- tabItem(
                             str_Format(
                                 tags$i(tags$a("The State of Food Security and Nutrition in the World", href="http://www.fao.org/3/ca5162en/ca5162en.pdf"))
                             ) %>% HTML()
-                    ),
+                    )
                 ),
                 box(
                     title=actionLink(
