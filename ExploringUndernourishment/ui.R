@@ -2024,7 +2024,25 @@ pag_Conclusion <- tabItem(
                     status="primary",
                     solidHeader=TRUE,
                     tags$p(tags$b("Findings")),
-                    tags$p("Findings"),
+                    tags$p(
+                        "Some of the countries that have improved the most over the last 20 years includ {}, {}, {} and {}. In 2018, these countries recorded a Prevalence of Undernourishment score that was at least {} lower than their 2001 score. There were some gaps in the data, particularly when some countries had begun their PoU recordings later than others, or had stopped after a few years, or were missing all together. This level of missing-ness should be addressed in the data collection strategies, and should be the responsibility of the individual countries to collect, and the FAO to follow-up on." %>% 
+                            str_Format(
+                                code("Angola"),
+                                code("Ethiopia"),
+                                code("Myanmar"),
+                                code("Dominican Republic"),
+                                code("50%")
+                            ) %>% HTML()
+                    ),
+                    tags$p(
+                        "Looking at the individual attributes of each country, it can be seen that the decrease in their {} score is correlated with an increase in attributes such as {}, {} and {}, among others. Looking at these individual attributes, per country, is helpful to understand the differences between countries, and the individual circumstances that many find themselves in. There is no one solution to this problem, as it is a systemic, complex, and societal/socio-economic issue." %>% 
+                            str_Format(
+                                code("Prevalence of Undernourishment"),
+                                code("Access to Basic Drinking Water"),
+                                code("Access to Basic Sanitaiton Services"),
+                                code("Gross Domestic Product Per Capita Ppp")
+                            ) %>% HTML()
+                    )
                 )
             ),
             fluidRow(
@@ -2038,7 +2056,38 @@ pag_Conclusion <- tabItem(
                     status="primary",
                     solidHeader=TRUE,
                     tags$p(tags$b("Findings")),
-                    tags$p("Findings"),
+                    tags$p("There were three surprising trends that were found during the completion of this Analsysis. Including:"),
+                    tags$ol(
+                        tags$li(
+                            "There were a number of countries that saw a substantial increase in their {} score over time; including {}, {}, and {}. Moreover, this same data showed that there was a distinct depression in the scores aroud the years 2010-2014, which seemed to be consistent over multiple countries in various regions." %>% 
+                                str_Format(
+                                    code("Prevalence of Undernourishment"),
+                                    code("Central African Republic"),
+                                    code("Madagascar"),
+                                    code("Uganda")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "There does not seem to be a correlation between the {} available in a particular country, and their {} score. Some countries with high PoU and high PAL include: {}, {} and {}. One would hope that it would be possible to implement farming principles to help to address the level of PoU, but this data suggests otherwise." %>% 
+                                str_Format(
+                                    code("Prevalence of Undernourishment"),
+                                    code("Percentage of Arable Land"),
+                                    code("Djibouti"),
+                                    code("Sao Tome and Principe"),
+                                    code("Ecuador")
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "The trend for the large proportion of countries indicates that an increase in {} is associated with a decrease in {}. However, there are a number of countries in which this trend is not consistent; including: {}, {}, and {}. This indicates that there is either some other systemic societal attributes which are influencing this score more than GDP, or that there is a substantial level of political instability, or that these countries simply do not fit the trend like the other countries." %>% 
+                                str_Format(
+                                    code("Gross Domestic Product"),
+                                    code("Prevalence of Undernourishment"),
+                                    code("Zambia"),
+                                    code("India"),
+                                    code("Eswatini")
+                                ) %>% HTML()
+                        )
+                    )
                 ),
                 box(
                     title=actionLink(
@@ -2050,7 +2099,24 @@ pag_Conclusion <- tabItem(
                     status="primary",
                     solidHeader=TRUE,
                     tags$p(tags$b("Findings")),
-                    tags$p("Findings"),
+                    tags$p(
+                        "After having implemented a Gradient Boosted Machine model to establish the level of importance of different independent variables, it was found that five features had the hightest level of influence: {}, {}, {}, {}, and {}. These features are logica, and follow a consistent trend similar to the rest of the analysis. It was also found that the Pareto principle is at play here, with {} of the features contributing over {} to the overall results." %>% 
+                            str_Format(
+                                code("Avg Value Of Food Production"),
+                                code("Avg Dietary Adequacy"),
+                                code("Avg Protein Supply"),
+                                code("Political Stability"),
+                                code("Food Imports As Share Of Merch Exports"),
+                                code("20%"),
+                                code("80%")
+                            ) %>% HTML()
+                        ),
+                    tags$p(
+                        "Having also created {} for each of the independent features, it can be seen that the variables with the higher level of influence also have a realatively consistent and stable PDP line. Wheras the features with a low-level of importance have an unstable line." %>% 
+                            str_Format(
+                                code("Partial Dependency Plots")
+                            ) %>% HTML()
+                    )
                 )
             )
         )
@@ -2059,10 +2125,15 @@ pag_Conclusion <- tabItem(
     # . . Meaning ----
     fluidRow(
         box(
-            title=tags$b("Meaning"),
+            title=tags$b("What Does This All Mean?"),
+            width=12,
             column(
                 width=6,
-                tags$p("What does this all mean?")
+                tags$p("At the end of the day, this data and it's associated analysis can be used by the Food and Agriculture Organisation to help determine what actions should be taken to address this issue in the future. It is possible to see which countries need the most amount of assistance, and what features or attributes influence those countries the mose. Furthermore, this will help to guide and inform the relative countries included, so that they may look to make the appropriate decisions for their best interest and future prosperity and viability.")
+            ),
+            column(
+                width=6,
+                tags$p("Moreover, more broadly, this analysis helps the United Nations to see just how successful they have been in addressing their Sustainable Development Goals in the last two decades. The rest of the society are able to see the level of impact that has already been made in our world, and are able to reflect with confidence that the future trends will be positive and impactful. While there is a bit of a bucking to the trend occurring in recent years, there is some clarity around what can be done to help address this. The level of hope that this brings to us all is inspirational, and beneficial. Which is something that we all need a little bit more of these days.", icon("heart"), icon("dove"))
             )
         )
     )
