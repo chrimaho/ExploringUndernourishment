@@ -1187,25 +1187,48 @@ server <- function(input, output, session) {
     output$plt_infl_VariableImportance <- renderPlot(
         expr={
                 
-                plt_infl_VariableImportance <<- mod_gbm_VariableImportance %>% 
-                    extract2("importance") %>% 
-                    rownames_to_column("variable") %>% 
-                    select("variable","score"="Overall") %>% 
-                    ggplot(aes(reorder(variable,score), score, label=round(score,2))) +
-                    geom_col(width=0.15, fill="darkgrey") +
-                    geom_point(size=4, colour="blue") +
-                    geom_label(hjust=-0.2) +
-                    scale_y_continuous(breaks=seq(0,100,10)) +
-                    theme(panel.grid.minor.x=element_blank()) +
-                    coord_flip() +
-                    labs(
-                        title="Variable Importance Plot",
-                        subtitle="Based on the output of a GBM Model",
-                        y="Importance",
-                        x="Variable"
-                    )
+            # Check if exists in local environment
+            if (!exists("plt_infl_VariableImportance")) {
                 
-            plt_infl_VariableImportance %>% return()
+                # Check if exists in local directory
+                if (file.exists("./file/plt_infl_VariableImportance.rds")) {
+                    
+                    # Load
+                    plt_infl_VariableImportance <<- read_rds("./figure/plt_infl_VariableImportance.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_infl_VariableImportance <<- mod_gbm_VariableImportance %>% 
+                        extract2("importance") %>% 
+                        rownames_to_column("variable") %>% 
+                        select("variable","score"="Overall") %>% 
+                        ggplot(aes(reorder(variable,score), score, label=round(score,2))) +
+                        geom_col(width=0.15, fill="darkgrey") +
+                        geom_point(size=4, colour="blue") +
+                        geom_label(hjust=-0.2) +
+                        scale_y_continuous(breaks=seq(0,100,10)) +
+                        theme(panel.grid.minor.x=element_blank()) +
+                        coord_flip() +
+                        labs(
+                            title="Variable Importance Plot",
+                            subtitle="Based on the output of a GBM Model",
+                            y="Importance",
+                            x="Variable"
+                        )
+                    
+                    # Save
+                    write_rds(
+                        x=plt_infl_VariableImportance,
+                        path="./figure/plt_infl_VariableImportance.rds",
+                        compress="none"
+                    )
+                }
+                
+            }
+            
+            # Return
+            return(plt_infl_VariableImportance)
             
         }
         
