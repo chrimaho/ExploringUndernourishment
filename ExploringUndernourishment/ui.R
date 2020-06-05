@@ -183,7 +183,7 @@ sidebar <- dashboardSidebar(
         
         # . . Socials ----
         tags$hr(),
-        tags$a("App Developer: ", tags$a("Chris Mahoney", href="https://www.chrismahoney.com.au", style="color:white;font-style:italic", target="_blank")), br(),
+        tags$a("App Developer: ", tags$a("Chris Mahoney", href="https://www.chrismahoney.com.au", style="color:white;font-weight:bold", target="_blank")), br(),
         tags$ol(tags$a(icon("linkedin"), "LinkedIn", href="https://www.linkedin.com/in/chrimaho/", target="_blank")),
         tags$ol(tags$a(icon("github"), "GitHub", href="https://github.com/chrimaho/ExploringUndernourishment/", target="_blank")),
         tags$ol(tags$a(icon("medium"), "Medium", href="https://medium.com/@chrimaho", target="_blank")),
