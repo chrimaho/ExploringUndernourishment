@@ -382,3 +382,19 @@ FaoStat_yearly %>%
     write_csv(
         paste0(pro_DataPath, "/FaoStat_yearly.csv")
     )
+
+
+
+#------------------------------------------------------------------------------#
+#                                                                              #
+#    Clean Up                                                               ####
+#                                                                              #
+#------------------------------------------------------------------------------#
+
+
+# . . Remove all unnecessary variables ----
+rm(
+    FaoStat,
+    FaoStat_long,
+    raw_FaoStat
+)
