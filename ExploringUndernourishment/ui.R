@@ -198,7 +198,9 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Conclusion",
             tabName="conclusion",
-            icon=icon("hourglass-end"),
+            selected=TRUE,
+            # icon=icon("hourglass-end"),
+            icon=icon("check"),
             badgeLabel="end",
             badgeColor="fuchsia"
         ),
@@ -1916,7 +1918,10 @@ pag_ReseMostInfluential <- tabItem(
 #                                                                              #
 #------------------------------------------------------------------------------#
 
-# . . Conclusion ----
+#------------------------------------------------------------------------------#
+# . Conclusion                                                              ####
+#------------------------------------------------------------------------------#
+
 pag_Conclusion <- tabItem(
     
     # . . Name ----
@@ -1925,22 +1930,145 @@ pag_Conclusion <- tabItem(
     # . . Header ----
     h1("Conclusion"),
     
+    # . . Conclusion ----
     fluidRow(
         box(
             title=tags$b("Conclusion"),
             width=12,
             column(
                 width=6,
-                tags$p("Reserved for comments.")
+                tags$p(
+                    "The emphasis that the {} has placed on their {}, particularly the goal of {}, has had a substantial impact on the society, on the Globe in general, and on the individual Countries and their own viability. When analysing the {} data provided by the {}, there are many learnings and conclusions which can be drawn from this information." %>% 
+                        str_Format(
+                            a("United Nations", href="https://www.un.org/"),
+                            a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"),
+                            a("Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/"),
+                            a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/"),
+                            a("Food and Agriculture Organisation of the United Nations", href="http://www.fao.org/home/en/")
+                        ) %>% HTML()
+                )
             ),
             column(
                 width=6,
-                tags$p("More comments.")
+                tags$p(
+                    "This Analysis has endeavoured to explore four broad areas of research:"
+                ),
+                tags$ul(
+                    tags$li(
+                        actionLink(
+                            "",
+                            "General Trends",
+                            icon("chart-line")
+                        )
+                    ),
+                    tags$li(
+                        actionLink(
+                            "",
+                            "Most Successful Countries",
+                            icon("thumbs-up")
+                        )
+                    ),
+                    tags$li(
+                        actionLink(
+                            "",
+                            "Surprising Trends",
+                            icon("surprise")
+                        )
+                    ),
+                    tags$li(
+                        actionLink(
+                            "",
+                            "Most Influential Features",
+                            icon("asterisk")
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    
+    # . . Research Questions ----
+    fluidRow(
+        width=12,
+        box(
+            title=tags$b(icon("graduation-cap"), "Research Questions"),
+            width=12,
+            fluidRow(
+                box(
+                    title=actionLink(
+                        "",
+                        tags$b(tags$u("Research Area 1: General Trend")),
+                        icon("chart-line")
+                    ),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$p(tags$b("Findings")),
+                    tags$p(
+                        "The Global trends have been decreasing consistently in the last 20 years. This is a positive sign, and for the most part, the regions and countries have also been improving. There are a couple of exceptions to this trend, and this has caused the positive downward trend to plateau and begin to increase in recent years."
+                    ),
+                    tags$p(
+                        "In their recent publication {}, the UN has addressed this recent bucking of the trend, and have attributed this to economic slowdowns and turndowns across the Globe. It can be seen that some countries have suffered a lot, and their Prevalence of Undernourishment score has been substantially impacted as a result." %>% 
+                            str_Format(
+                                tags$i(tags$a("The State of Food Security and Nutrition in the World", href="http://www.fao.org/3/ca5162en/ca5162en.pdf"))
+                            ) %>% HTML()
+                    ),
+                ),
+                box(
+                    title=actionLink(
+                        "",
+                        tags$b(tags$u("Research Area 2: Most Successful Country")),
+                        icon("thumbs-up")
+                    ),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$p(tags$b("Findings")),
+                    tags$p("Findings"),
+                )
+            ),
+            fluidRow(
+                box(
+                    title=actionLink(
+                        "",
+                        tags$b(tags$u("Research Area 3: Surprising Trends")),
+                        icon("surprise")
+                    ),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$p(tags$b("Findings")),
+                    tags$p("Findings"),
+                ),
+                box(
+                    title=actionLink(
+                        "",
+                        tags$b(tags$u("Research Area 4: Most Influential Indicator")),
+                        icon("asterisk")
+                    ),
+                    width=6,
+                    status="primary",
+                    solidHeader=TRUE,
+                    tags$p(tags$b("Findings")),
+                    tags$p("Findings"),
+                )
+            )
+        )
+    ),
+    
+    # . . Meaning ----
+    fluidRow(
+        box(
+            title=tags$b("Meaning"),
+            column(
+                width=6,
+                tags$p("What does this all mean?")
             )
         )
     )
     
 )
+
 
 
 #------------------------------------------------------------------------------#
