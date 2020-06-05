@@ -21,16 +21,12 @@ source("functions.R", local=TRUE)
 
 # Basics
 library(tidyverse)
-library(knitr)
-library(stringr)
 library(magrittr)
-library(rprojroot)
 library(assertthat)
 library(naniar)
 library(lubridate)
 library(dynutils)
 library(english)
-library(foreign)
 
 # Shiny
 library(shiny)
