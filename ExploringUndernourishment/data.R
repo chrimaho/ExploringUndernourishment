@@ -348,11 +348,19 @@ FaoStat_long %>%
     write_rds(
         paste0(pro_DataPath, "/FaoStat_long.rds")
     )
+FaoStat_long %>% 
+    write_csv(
+        paste0(pro_DataPath, "/FaoStat_long.csv")
+    )
 
 # . . Wide ----
 FaoStat_wide %>% 
     write_rds(
         paste0(pro_DataPath, "/FaoStat_wide.rds")
+    )
+FaoStat_wide %>% 
+    write_csv(
+        paste0(pro_DataPath, "/FaoStat_wide.csv")
     )
 
 # . . Mapping ----
@@ -360,9 +368,17 @@ FaoStat_VariableMapping %>%
     write_rds(
         paste0(pro_DataPath, "/FaoStat_VariableMapping.rds")
     )
+FaoStat_VariableMapping %>% 
+    write_csv(
+        paste0(pro_DataPath, "/FaoStat_VariableMapping.csv")
+    )
 
 # . . Yearly ----
 FaoStat_yearly %>% 
     write_rds(
         paste0(pro_DataPath, "/FaoStat_yearly.rds")
+    )
+FaoStat_yearly %>% 
+    write_csv(
+        paste0(pro_DataPath, "/FaoStat_yearly.csv")
     )
