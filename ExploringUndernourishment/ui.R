@@ -1195,7 +1195,7 @@ pag_ReseGeneralTrend <- tabItem(
             column(
                 width=4,
                 tags$p(
-                    "The aggregated score for all countries combined is displayed to the right. The actual scores for the {PoU} are indicated in the {green} colour, while the linear trend is displayed in {blue} colour. The actual trend indicates a steady and consistent decrease between 2001 and 2012, showing an overall decrease of aproximately {score}. The tend plateaued between 2012 and 2016, with minimal decrease in the score. Then, 2017 saw an increase in the score in the first time since the data collection began; and 2018 saw an even higher increase. This trend is expected to continue in 2019." %>% 
+                    "The aggregated score for all countries combined is displayed to the right. The actual scores for the {PoU} are indicated in the {green} colour, while the linear trend is displayed in {blue} colour. The actual trend indicates a steady and consistent decrease between 2001 and 2012, showing an overall decrease of approximately {score}. The tend plateaued between 2012 and 2016, with minimal decrease in the score. Then, 2017 saw an increase in the score in the first time since the data collection began; and 2018 saw an even higher increase. This trend is expected to continue in 2019." %>% 
                     str_Format(
                         PoU=code("Prevalence of Undernourishment"),
                         green=span("green", style="color:forestgreen"),
@@ -1313,8 +1313,13 @@ pag_ReseGeneralTrend <- tabItem(
                 tags$p("Some key call-outs include:"),
                 tags$ul(
                     tags$li(
-                        "{} indicates a strong sigmoidal oscillation between 0.3 and 0.26 with wavelengh of 10 years." %>% 
-                            str_Format(code("Iraq")) %>% HTML()
+                        "{} indicates a strong sigmoidal oscillation between {} and {} with wavelength of {} years." %>% 
+                            str_Format(
+                                code("Iraq"),
+                                code("0.3"),
+                                code("0.26"),
+                                code("10")
+                            ) %>% HTML()
                     ),
                     tags$li(
                         "{} indicates a consistent upwards trend every single year." %>% 
@@ -1325,7 +1330,7 @@ pag_ReseGeneralTrend <- tabItem(
                             str_Format(code("Yemen"), code("Middle east")) %>% HTML()
                     ),
                     tags$li(
-                        "Each of the countries in {} region show positive decreses in scores. Exept for countries like {}, {}, {}, {}, {}, and {} which indicate unstable and inconsistent scores." %>% 
+                        "Each of the countries in {} region show positive decreses in scores. Except for countries like {}, {}, {}, {}, {}, and {} which indicate unstable and inconsistent scores." %>% 
                             str_Format(
                                 code("Asia & Pacific"),
                                 code("Brunei"),
@@ -1338,10 +1343,10 @@ pag_ReseGeneralTrend <- tabItem(
                             ) %>% HTML()
                     ),
                     tags$li(
-                        "In the {} region, most of the countries have kept a consistent and impressive decreas in their score over time. Except for countries like {}, {}, {}, {}. These countries have seen an increas in their scores over time, and some remain quite high indeed." %>% 
+                        "In the {} region, most of the countries have kept a consistent and impressive decrease in their score over time. Except for countries like {}, {}, {}, {}. These countries have seen an increase in their scores over time, and some remain quite high indeed." %>% 
                             str_Format(
                                 code("Central African Republic"),
-                                code("Chat"),
+                                code("Chad"),
                                 code("Congo"),
                                 code("Eswatini"),
                                 code("Gabon")
@@ -1404,7 +1409,7 @@ pag_ReseMostSuccessful <- tabItem(
             ),
             column(
                 width=6,
-                tags$p("In order to adequately explore the top successful countries, they are plotted and explored in contrast to one another. The user interaction added to this plot alows for flexible and easy exploration of any number of top countries, in any region. Next, the full data is included in a table, so one can see the numeric values for each country for each year. Lastly, individual countries can be selected and all of their features can be explored, in order to establishe what it is that allows them to be successful.")
+                tags$p("In order to adequately explore the top successful countries, they are plotted and explored in contrast to one another. The user interaction added to this plot allows for flexible and easy exploration of any number of top countries, in any region. Next, the full data is included in a table, so one can see the numeric values for each country for each year. Lastly, individual countries can be selected, and all of their features can be explored, in order to establish what it is that allows them to be successful.")
             )
         )
     ),
@@ -1416,7 +1421,7 @@ pag_ReseMostSuccessful <- tabItem(
             width=12,
             column(
                 width=4,
-                tags$p("Credit where it is due, there are some very impressive reductions in the Prevalence of Undernourishment over time. This data can be explored in the chart to the right. To see the details of the each line, simply over over it."),
+                tags$p("Credit where it is due, there are some very impressive reductions in the Prevalence of Undernourishment over time. This data can be explored in the chart to the right. To see the details of each line, simply hover over it."),
                 tags$p(
                     "Countries like {}, {}, {}, and {} have begun with a score of over {}, and have each reduced their score by at least {} of their original value. This is an impressive effort, and it is good to see that these changes have been successful and sustainable." %>% 
                         str_Format(
@@ -1478,7 +1483,7 @@ pag_ReseMostSuccessful <- tabItem(
                     tags$ul(
                         tags$li("Each line represents a different country"),
                         tags$li("Each year is included as a different country, reading from left to right, oldest to newest."),
-                        tags$li("The overall improvement for each country is calculated as a percentage difference between the first column (2001), and the last column (2018). This score is included in the 'imprvement' column."),
+                        tags$li("The overall improvement for each country is calculated as a percentage difference between the first column (2001), and the last column (2018). This score is included in the 'improvement' column."),
                         tags$li("The data is then ordered by this 'improvement' column, showing the countries with the highest decrease at the top, and countries with the least amount of decrease in PoU at the bottom.")
                     ),
                     br()
@@ -1507,7 +1512,7 @@ pag_ReseMostSuccessful <- tabItem(
                         tags$li("Each plot is a different feature of the original data. Which is effectively a different column of the original data."),
                         tags$li("Each plot shows the x-axis as time."),
                         tags$li("Each of the colours are simply to help easy differentiation between the variables."),
-                        tags$li("All of the plots are only showing for one country, which can be changed using the drop down box.")
+                        tags$li("All of the plots are only showing for one country, which can be changed using the drop-down box.")
                     )
                 ),
                 column(
@@ -1554,7 +1559,7 @@ pag_ReseSurprisingTrends <- tabItem(
             width=6,
             column(
                 width=12,
-                tags$p("Three different facts were chosen for inclusion in this section. That is not to say that there is not other surprising trends in the data; for there are. However, these three trends were perhaps the most prominent, and were ones which stood out during the completion of other sections of this Exploration Analysis.")
+                tags$p("Three different facts were chosen for inclusion in this section. That is not to say that there are no other surprising trends in the data; for there are. However, these three trends were perhaps the most prominent, and were ones which stood out during the completion of other sections of this Exploration Analysis.")
             )
         )
     ),
@@ -1568,20 +1573,20 @@ pag_ReseSurprisingTrends <- tabItem(
                 width=12,
                 column(
                     width=6,
-                    tags$p("There have been a number of countries which have had  a negative influence on their Prevalence of Undernourishment. The plot here shows the top 20 countries that have had an increase in ther POU score."),
+                    tags$p("There have been a number of countries which have had  a negative influence on their Prevalence of Undernourishment. The plot here shows the top 20 countries that have had an increase in their POU score."),
                     tags$p("There are some interesting features about this plot, including:"),
                     tags$ul(
                         tags$li(
-                            "There are six countries that have a {} score of over {} in 2018: {}, {}, {}, and {}." %>% 
+                            "There are six countries that have a {} score of over {} in 2018: {}, {}, {}, {}, {}, and {}." %>% 
                                 str_Format(
                                     code("Prevalence of Undernourishment"),
                                     code("0.2"),
+                                    code("Afghanistan"),
                                     code("Central African Republic"),
                                     code("Madagascar"),
-                                    code("Uganda"),
                                     code("Yemen"),
-                                    code("Afghanistan"),
-                                    code("Venezuela")
+                                    code("Uganda"),
+                                    code("Niger")
                                 ) %>% HTML()
                         ),
                         tags$li("There appears to be a general trend to have a decrease in the years 2010-2013, with an increase thereafter.")
@@ -1589,7 +1594,7 @@ pag_ReseSurprisingTrends <- tabItem(
                 ),
                 column(
                     width=6,
-                    tags$p("These trends are surprising as they are not not regional specific, but instead there are multiple countries from many different regions on this plot. While there may have many different influences, it is interesting that multiple different countries have this depressive trend in the middle. It would therefore warrant  furthrr exploration and research in to this area.")
+                    tags$p("These trends are surprising as they are not regional specific, but instead there are multiple countries from many different regions on this plot. While there may have many different influences, it is interesting that multiple different countries have this depressive trend in the middle. It would therefore warrant  further exploration and research in to this area.")
                 )
             ),
             fluidRow(
@@ -1613,9 +1618,9 @@ pag_ReseSurprisingTrends <- tabItem(
             fluidRow(
                 column(
                     width=6,
-                    tags$p("As a naive approach to addressing the problem of undernourishment, one might say something long the lines of 'Why can't the countries just grow more food?' This response in and of itself will not solve the problem. Firstly, the countries must have the arable land available for farming, then there are a myriad of other systemic influences involved in establishing a viable supply chain and food security."),
+                    tags$p("As a naive approach to addressing the problem of undernourishment, one might say something along the lines of 'Why can't the countries just grow more food?' This response in and of itself will not solve the problem. Firstly, the countries must have the arable land available for farming, then there are a myriad of other systemic influences involved in establishing a viable supply chain and food security."),
                     tags$p(
-                        "What this plot shows is the {} on the X-Axis, and the {} on the Y-Axis. Each dot is coloured according to it's country, and the attributes can be displayed when hovering over a data point." %>% 
+                        "What this plot shows is the {} on the X-Axis, and the {} on the Y-Axis. Each dot is coloured according to its country, and the attributes can be displayed when hovering over a data point." %>% 
                             str_Format(
                                 code("Percentage of Arable Land"),
                                 code("Prevalence of Undernourishment")
@@ -1635,7 +1640,7 @@ pag_ReseSurprisingTrends <- tabItem(
                                 ) %>% HTML()
                         ),
                         tags$li(
-                            "In some countries, an increase in arable land has actually lead to an increase in PoU. For example: {}, {}, {}." %>% 
+                            "In some countries, an increase in arable land has actually led to an increase in PoU. For example: {}, {}, {}." %>% 
                                 str_Format(
                                     code("Lao"),
                                     code("Timor-Leste"),
@@ -1643,7 +1648,7 @@ pag_ReseSurprisingTrends <- tabItem(
                                 ) %>% HTML()
                         ),
                         tags$li(
-                            "In some instances, the amount of arable land has had no affect on PoU at all. For example: {}, {}, {}." %>% 
+                            "In some instances, the amount of arable land has had no effect on PoU at all. For example: {}, {}, {}." %>% 
                                 str_Format(
                                     code("Afghanistan"),
                                     code("Guatemala"),
@@ -1651,7 +1656,7 @@ pag_ReseSurprisingTrends <- tabItem(
                                 ) %>% HTML()
                         )
                     ),
-                    tags$p("These results are surprising, because given land that is suitable for farming, it would be logical to use this land to help to address the issue. But this is not the case. There must therefore be other influences that can contribute to improving the Prevalence of Undernourishment for a country. Perhaps focus should then be on international trade, supply chain relationships, economic viability, and the polticial stability of the country.")
+                    tags$p("These results are surprising, because given land that is suitable for farming, it would be logical to use this land to help to address the issue. But this is not the case. There must therefore be other influences that can contribute to improving the Prevalence of Undernourishment for a country. Perhaps focus should then be on international trade, supply chain relationships, economic viability, and the political stability of the country.")
                 )
             ),
             fluidRow(
@@ -1691,11 +1696,11 @@ pag_ReseSurprisingTrends <- tabItem(
                                 str_Format(code("India")) %>% HTML()
                         ),
                         tags$li(
-                            "The trend for {} is majoritively upwards, indicating that an increase in GDP has had an overal negative influence in the PoU, and has pushed it in an upward direction." %>% 
+                            "The trend for {} is majoritively upwards, indicating that an increase in GDP has had an overall negative influence in the PoU, and has pushed it in an upward direction." %>% 
                                 str_Format(code("Eswatini")) %>% HTML()
                         ),
                         tags$li(
-                            "The correlation for {} is the most interesting of the highlighted trends, because it is the most sporadic. This country shows some very substantial increases in GDP, and this is quite positive to see. Howver, the corresponding change in PoU has not always been influnced in a downward direction as hoped. Instead, there are instances where the score increases, and some where there is a sharp decrease. The PoU score appears to be unstable, when compared to GDP, and this indicates that there are many other societal and socio-economic influences on the Prevalence of Undernourishment in this country, other than GDP." %>% 
+                            "The correlation for {} is the most interesting of the highlighted trends, because it is the most sporadic. This country shows some very substantial increases in GDP, and this is quite positive to see. However, the corresponding change in PoU has not always been influenced in a downward direction as hoped. Instead, there are instances where the score increases, and some where there is a sharp decrease. The PoU score appears to be unstable, when compared to GDP, and this indicates that there are many other societal and socio-economic influences on the Prevalence of Undernourishment in this country, other than GDP." %>% 
                                 str_Format(code("Timor-Leste")) %>% HTML()
                         )
                     )
@@ -1746,13 +1751,13 @@ pag_ReseMostInfluential <- tabItem(
                         inputId="link_infl_over_DataDictionary_ToDataDictionary",
                         label="data dictionary"
                     ),
-                    span(". In this section, we want to determine which of the indepentant variables are most influential on the Prevalence of Undernourishment target. For this, the seventeen independent features were used.")
+                    span(". In this section, we want to determine which of the independent variables are most influential on the Prevalence of Undernourishment target. For this, the seventeen independent features were used.")
                 )
             ),
             column(
                 width=6,
                 tags$p(
-                    "In order to determine the most influential of these features, a forest-type model was run. In this instance, the {} (GBM) model was chosen. This was chosen not for it's predictability, but for it's ability to determine the most influential features; and for this reason the full data set was used (no train/test split). Due to the resampling ability of this model, and how it builds each tree for its forest, the model is quite powerful in determining which of the features are the most influential." %>% 
+                    "In order to determine the most influential of these features, a forest-type model was run. In this instance, the {} (GBM) model was chosen. This was chosen not for its predictability, but for its ability to determine the most influential features; and for this reason the full data set was used (no train/test split). Due to the resampling ability of this model, and how it builds each tree for its forest, the model is quite powerful in determining which of the features are the most influential." %>% 
                         str_Format(
                             a("Gradient Boosted Machine", href="http://topepo.github.io/caret/train-models-by-tag.html#boosting")
                         ) %>% HTML()
@@ -1769,7 +1774,7 @@ pag_ReseMostInfluential <- tabItem(
             column(
                 width=6,
                 tags$p(
-                    "The results of running a Variable Importance analysis from this model has resulted in the plot to the right. This shows each of the featurs on the Y-axis, and the percentage of importance on the X-axis."
+                    "The results of running a Variable Importance analysis from this model has resulted in the plot to the right. This shows each of the features on the Y-axis, and the percentage of importance on the X-axis."
                 ),
                 tags$p("The following conclusions can be drawn:"),
                 tags$ul(
@@ -1808,7 +1813,7 @@ pag_ReseMostInfluential <- tabItem(
                             ) %>% HTML()
                     ),
                     tags$li(
-                        "The {} feature contributed {} to the influence, and as a result should be excluded; while three other features ({}, {}, and {}) contributed less than {} each, and have a very negligible imact on the overall result." %>% 
+                        "The {} feature contributed {} to the influence, and as a result should be excluded; while three other features ({}, {}, and {}) contributed less than {} each, and have a very negligible impact on the overall result." %>% 
                             str_Format(
                                 code("Caloric Energy From Cereals Roots Tubers"),
                                 code("0%"),
@@ -1838,7 +1843,7 @@ pag_ReseMostInfluential <- tabItem(
                 column(
                     width=6,
                     tags$p(
-                        "Another useful outcome of the GBM model is it's ability to create {}. Each of the plots below are for the seventeen independend features, and each of them show the relative feature on the X-axis, and the change in Prevalence of Undernourishment on the Y-axis." %>% 
+                        "Another useful outcome of the GBM model is its ability to create {}. Each of the plots below are for the seventeen independent features, and each of them show the relative feature on the X-axis, and the change in Prevalence of Undernourishment on the Y-axis." %>% 
                             str_Format(
                                 a("Partial Dependence Plots", href="https://christophm.github.io/interpretable-ml-book/pdp.html")
                             ) %>% HTML()
@@ -1850,10 +1855,10 @@ pag_ReseMostInfluential <- tabItem(
                         "These plots are also arranged in the same order as the Variable Importance Plots."
                     ),
                     tags$p(
-                        "By indicating that these features are less important is primarily meant from a statistical pespective, and with reference to its ability to predicet the value of the Prevalence of Undernourishment score. It does not, by any means, mean that these features are not important for the countries; for in some instances they are incredibly important. Take, for instance, {} and {}: The model has indicated that these are not important features in terms of their predictability; however, they are incredibly important factors for individual countries to be focussing on to improve their own economies." %>% 
+                        "By indicating that these features are less important is primarily meant from a statistical perspective, and with reference to its ability to predict the value of the Prevalence of Undernourishment score. It does not, by any means, mean that these features are not important for the countries; for in some instances they are incredibly important. Take, for instance, {} and {}: The model has indicated that these are not important features in terms of their predictability; however, they are incredibly important factors for individual countries to be focussing on to improve their own economies." %>% 
                             str_Format(
                                 code("Access To Improved Drinking Water"),
-                                code("Access To Basic Sanitatino Services")
+                                code("Access To Basic Sanitation Services")
                             ) %>% HTML()
                     )
                 ),
@@ -1872,7 +1877,7 @@ pag_ReseMostInfluential <- tabItem(
                                 ) %>% HTML()
                         ),
                         tags$li(
-                            "It is quite surprising to see that as the percentage of arable land increases, and as the percentage of food imports increases, and as the cereal import dependancy increases, this is has an adverse affect on the Prevalence of Undernourishment, forcing this score to increase. As seen by reviewing the plots for: {}, {}, {}." %>% 
+                            "It is quite surprising to see that as the percentage of arable land increases, and as the percentage of food imports increases, and as the cereal import dependency increases, this is has an adverse affect on the Prevalence of Undernourishment, forcing this score to increase. As seen by reviewing the plots for: {}, {}, {}." %>% 
                                 str_Format(
                                     code("Percentage Of Arable Land"),
                                     code("Food Imports As Share Of Merch Exports"),
@@ -2032,7 +2037,7 @@ pag_Conclusion <- tabItem(
                             str_Format(
                                 code("Prevalence of Undernourishment"),
                                 code("Access to Basic Drinking Water"),
-                                code("Access to Basic Sanitaiton Services"),
+                                code("Access to Basic Sanitation Services"),
                                 code("Gross Domestic Product Per Capita Ppp")
                             ) %>% HTML()
                     )
@@ -2049,10 +2054,10 @@ pag_Conclusion <- tabItem(
                     status="primary",
                     solidHeader=TRUE,
                     tags$p(tags$b("Findings")),
-                    tags$p("There were three surprising trends that were found during the completion of this Analsysis. Including:"),
+                    tags$p("There were three surprising trends that were found during the completion of this Analysis. Including:"),
                     tags$ol(
                         tags$li(
-                            "There were a number of countries that saw a substantial increase in their {} score over time; including {}, {}, and {}. Moreover, this same data showed that there was a distinct depression in the scores aroud the years 2010-2014, which seemed to be consistent over multiple countries in various regions." %>% 
+                            "There were a number of countries that saw a substantial increase in their {} score over time; including {}, {}, and {}. Moreover, this same data showed that there was a distinct depression in the scores around the years 2010-2014, which seemed to be consistent over multiple countries in various regions." %>% 
                                 str_Format(
                                     code("Prevalence of Undernourishment"),
                                     code("Central African Republic"),
@@ -2093,7 +2098,7 @@ pag_Conclusion <- tabItem(
                     solidHeader=TRUE,
                     tags$p(tags$b("Findings")),
                     tags$p(
-                        "After having implemented a Gradient Boosted Machine model to establish the level of importance of different independent variables, it was found that five features had the hightest level of influence: {}, {}, {}, {}, and {}. These features are logica, and follow a consistent trend similar to the rest of the analysis. It was also found that the Pareto principle is at play here, with {} of the features contributing over {} to the overall results." %>% 
+                        "After having implemented a Gradient Boosted Machine model to establish the level of importance of different independent variables, it was found that five features had the highest level of influence: {}, {}, {}, {}, and {}. These features are logical, and follow a consistent trend similar to the rest of the analysis. It was also found that the Pareto principle is at play here, with {} of the features contributing over {} to the overall results." %>% 
                             str_Format(
                                 code("Avg Value Of Food Production"),
                                 code("Avg Dietary Adequacy"),
@@ -2105,7 +2110,7 @@ pag_Conclusion <- tabItem(
                             ) %>% HTML()
                         ),
                     tags$p(
-                        "Having also created {} for each of the independent features, it can be seen that the variables with the higher level of influence also have a realatively consistent and stable PDP line. Wheras the features with a low-level of importance have an unstable line." %>% 
+                        "Having also created {} for each of the independent features, it can be seen that the variables with the higher level of influence also have a relatively consistent and stable PDP line. Whereas the features with a low-level of importance have an unstable line." %>% 
                             str_Format(
                                 code("Partial Dependency Plots")
                             ) %>% HTML()
@@ -2122,7 +2127,7 @@ pag_Conclusion <- tabItem(
             width=12,
             column(
                 width=6,
-                tags$p("At the end of the day, this data and it's associated analysis can be used by the Food and Agriculture Organisation to help determine what actions should be taken to address this issue in the future. It is possible to see which countries need the most amount of assistance, and what features or attributes influence those countries the mose. Furthermore, this will help to guide and inform the relative countries included, so that they may look to make the appropriate decisions for their best interest and future prosperity and viability.")
+                tags$p("At the end of the day, this data and its associated analysis can be used by the Food and Agriculture Organisation to help determine what actions should be taken to address this issue in the future. It is possible to see which countries need the most amount of assistance, and what features or attributes influence those countries the most. Furthermore, this will help to guide and inform the relative countries included, so that they may look to make the appropriate decisions for their best interest and future prosperity and viability.")
             ),
             column(
                 width=6,
