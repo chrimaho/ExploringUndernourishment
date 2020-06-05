@@ -256,7 +256,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_undr_stat_Completeness,
                         path="./figure/plt_undr_stat_Completeness.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -309,7 +309,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_undr_stat_Ridges,
                         path="./figure/plt_undr_stat_Ridges.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -351,7 +351,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_undr_FeaturesByTarget,
                         path="./figure/plt_undr_FeaturesByTarget.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -444,7 +444,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_stat_PrevUndrOverall,
                         path="./figure/plt_stat_PrevUndrOverall.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -504,12 +504,12 @@ server <- function(input, output, session) {
                             fill="Category"
                         )
                         
-                        # Save
-                        write_rds(
-                            x=plt_stat_MissingData,
-                            path="./figure/plt_stat_MissingData.rds",
-                            compress="none"
-                        )
+                    # Save
+                    write_rds(
+                        x=plt_stat_MissingData,
+                        path="./figure/plt_stat_MissingData.rds",
+                        compress="xz"
+                    )
                     
                 }
                 
@@ -571,7 +571,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_ridg_UndernourishmentByYear,
                         path="./figure/plt_ridg_UndernourishmentByYear.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -621,7 +621,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_hist_FeatureDistributions,
                         path="./figure/plt_hist_FeatureDistributions.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -988,7 +988,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_surp_AllCountries,
                         path="./figure/plt_surp_AllCountries.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -1034,7 +1034,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_surp_ArableLand,
                         path="./figure/plt_surp_ArableLand.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -1133,7 +1133,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_surp_ChangeInGDP,
                         path="./figure/plt_surp_ChangeInGDP.rds",
-                        compress="none"
+                        compress="xz"
                     )
                     
                 }
@@ -1221,7 +1221,7 @@ server <- function(input, output, session) {
                     write_rds(
                         x=plt_infl_VariableImportance,
                         path="./figure/plt_infl_VariableImportance.rds",
-                        compress="none"
+                        compress="xz"
                     )
                 }
                 
@@ -1262,7 +1262,7 @@ server <- function(input, output, session) {
                 write_rds(
                     x=plt_infl_PartialDependancy,
                     path="./figure/plt_infl_PartialDependancy.rds",
-                    compress="none"
+                    compress="xz"
                 )
                 
             }
