@@ -26,40 +26,64 @@ server <- function(input, output, session) {
     #------------------------------------------------------------------------------#
     
     # . . GeneralTrend page ----
-    observeEvent(input$butn_intr_rese_GeneralTrend_GoToPage, {
-        updateTabItems(
-            session,
-            "SidebarMenu",
-            "general_trend"
-        )
-    })
+    observeEvent(
+        {
+            input$butn_intr_rese_GeneralTrend_GoToPage
+            input$link_intr_rese_GeneralTrend_GoToPage
+        }, 
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "general_trend"
+            )
+        }
+    )
     
     # . . MostSuccessful page ----
-    observeEvent(input$butn_intr_rese_MostSuccessful_GoToPage, {
-        updateTabItems(
-            session,
-            "SidebarMenu",
-            "most_successful"
-        )
-    })
+    observeEvent(
+        {
+            input$butn_intr_rese_MostSuccessful_GoToPage
+            input$link_intr_rese_MostSuccessful_GoToPage
+        },
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "most_successful"
+            )
+        }
+    )
     
     # . . SurprisingTrends page ----
-    observeEvent(input$butn_intr_rese_SurprisingTrends_GoToPage, {
-        updateTabItems(
-            session,
-            "SidebarMenu",
-            "surprising_trends"
-        )
-    })
+    observeEvent(
+        {
+            input$butn_intr_rese_SurprisingTrends_GoToPage
+            input$link_intr_rese_SurprisingTrends_GoToPage
+        },
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "surprising_trends"
+            )
+        }
+    )
     
     # . . MostInfluential page ----
-    observeEvent(input$butn_intr_rese_MostInfluential_GoToPage, {
-        updateTabItems(
-            session,
-            "SidebarMenu",
-            "most_influential"
-        )
-    })
+    observeEvent(
+        {
+            input$butn_intr_rese_MostInfluential_GoToPage
+            input$link_intr_rese_MostInfluential_GoToPage
+        },
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "most_influential"
+            )
+        }
+    )
     
     # . . DataDictionary page ----
     observeEvent(input$butn_intr_data_DataDictionary_GoToPage, {
@@ -1050,5 +1074,78 @@ server <- function(input, output, session) {
         }
         
     )
+    
+    
+    
+    #------------------------------------------------------------------------------#
+    #                                                                              #
+    #    Conclusion                                                             ####
+    #                                                                              #
+    #------------------------------------------------------------------------------#
+    
+    #------------------------------------------------------------------------------#
+    # . Links                                                                   ####
+    #------------------------------------------------------------------------------#
+    
+    # . . GeneralTrend page ----
+    observeEvent(
+        {
+            input$link_conc_conc_GeneralTrend_GoToPage
+            input$link_conc_rese_GeneralTrend_GoToPage
+        }, 
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "general_trend"
+            )
+        }
+    )
+    
+    # . . MostSuccessful page ----
+    observeEvent(
+        {
+            input$link_conc_conc_MostSuccessful_GoToPage
+            input$link_conc_rese_MostSuccessful_GoToPage
+        }, 
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "most_successful"
+            )
+        }
+    )
+    
+    # . . SurprisingTrends page ----
+    observeEvent(
+        {
+            input$link_conc_conc_SurprisingTrends_GoToPage
+            input$link_conc_rese_SurprisingTrends_GoToPage
+        }, 
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "surprising_trends"
+            )
+        }
+    )
+    
+    # . . MostInfluential page ----
+    observeEvent(
+        {
+            input$link_conc_conc_MostInfluential_GoToPage
+            input$link_conc_rese_MostInfluential_GoToPage
+        }, 
+        {
+            updateTabItems(
+                session,
+                "SidebarMenu",
+                "most_influential"
+            )
+        }
+    )
+    
     
 }

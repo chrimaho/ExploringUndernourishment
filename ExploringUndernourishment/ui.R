@@ -198,8 +198,7 @@ sidebar <- dashboardSidebar(
         menuItem(
             "Conclusion",
             tabName="conclusion",
-            selected=TRUE,
-            # icon=icon("hourglass-end"),
+            # selected=TRUE,
             icon=icon("check"),
             badgeLabel="end",
             badgeColor="fuchsia"
@@ -266,7 +265,12 @@ pag_InfoPage <- tabItem(
             width=12,
             fluidRow(
                 box(
-                    title=tags$b(icon("chart-line"), "Research Area 1: General Trend"),
+                    title=actionLink(
+                        # inputId="",
+                        inputId="link_intr_rese_GeneralTrend_GoToPage",
+                        tags$b(tags$u("Research Area 1: General Trend")),
+                        icon("chart-line")
+                    ),
                     width=6,
                     status="primary",
                     solidHeader=TRUE,
@@ -275,13 +279,19 @@ pag_InfoPage <- tabItem(
                     tags$b("Hypothesis:"),
                     tags$p("There has been a general trend to decrease the prevelance over the last two decades."),
                     actionButton(
+                        # inputId="",
                         inputId="butn_intr_rese_GeneralTrend_GoToPage",
                         label="Go to General Trend page",
                         icon=icon("chart-line")
                     )
                 ),
                 box(
-                    title=tags$b(icon("thumbs-up"), "Research Area 2: Most Successful Country"),
+                    title=actionLink(
+                        # inputId="",
+                        inputId="link_intr_rese_MostSuccessful_GoToPage",
+                        tags$b(tags$u("Research Area 2: Most Successful Country")),
+                        icon("thumbs-up")
+                    ),
                     width=6,
                     status="primary",
                     solidHeader=TRUE,
@@ -290,6 +300,7 @@ pag_InfoPage <- tabItem(
                     tags$b("Hypothesis:"),
                     tags$p("South-East Asian countries (for example, Vietnam) have made substantial progress in recent decades to break out of poverty; therefore there has been an associated success trend in their prevalence of undernourishment."),
                     actionButton(
+                        # inputId="",
                         inputId="butn_intr_rese_MostSuccessful_GoToPage",
                         label="Go to Most Successful page",
                         icon=icon("thumbs-up")
@@ -298,7 +309,12 @@ pag_InfoPage <- tabItem(
             ),
             fluidRow(
                 box(
-                    title=tags$b(icon("surprise"), "Research Area 3: Surprising Trends"),
+                    title=actionLink(
+                        # inputId="",
+                        inputId="link_intr_rese_SurprisingTrends_GoToPage",
+                        tags$b(tags$u("Research Area 3: Surprising Trends")),
+                        icon("surprise")
+                    ),
                     width=6,
                     status="primary",
                     solidHeader=TRUE,
@@ -307,13 +323,19 @@ pag_InfoPage <- tabItem(
                     tags$b("Hypothesis:"),
                     tags$p("Due to events happening in the Middle Eastern region of the world, this has lead to some negative results on some countries ability to address their Prevalence of Undernourishment score."),
                     actionButton(
+                        # inputId="",
                         inputId="butn_intr_rese_SurprisingTrends_GoToPage",
                         label="Go to Surprising Trends page",
                         icon=icon("surprise")
                     )
                 ),
                 box(
-                    title=tags$b(icon("asterisk"), "Research Area 4: Most Influential Indicator"),
+                    title=actionLink(
+                        # inputId="",
+                        inputId="link_intr_rese_MostInfluential_GoToPage",
+                        tags$b(tags$u("Research Area 4: Most Influential Indicator")),
+                        icon("asterisk")
+                    ),
                     width=6,
                     status="primary",
                     solidHeader=TRUE,
@@ -322,6 +344,7 @@ pag_InfoPage <- tabItem(
                     tags$b("Hypothesis:"),
                     tags$p("There will be an interesting trade-off between the self-sustaining indicators (such as amount of arable land and ability to grow crops), and the free-trade indicators (such as )."),
                     actionButton(
+                        # inputId="",
                         inputId="butn_intr_rese_MostInfluential_GoToPage",
                         label="Go to Most Influential page",
                         icon=icon("asterisk")
@@ -1956,28 +1979,32 @@ pag_Conclusion <- tabItem(
                 tags$ul(
                     tags$li(
                         actionLink(
-                            "",
+                            # "",
+                            "link_conc_conc_GeneralTrend_GoToPage",
                             "General Trends",
                             icon("chart-line")
                         )
                     ),
                     tags$li(
                         actionLink(
-                            "",
+                            # "",
+                            "link_conc_conc_MostSuccessful_GoToPage",
                             "Most Successful Countries",
                             icon("thumbs-up")
                         )
                     ),
                     tags$li(
                         actionLink(
-                            "",
+                            # "",
+                            "link_conc_conc_SurprisingTrends_GoToPage",
                             "Surprising Trends",
                             icon("surprise")
                         )
                     ),
                     tags$li(
                         actionLink(
-                            "",
+                            # "",
+                            "link_conc_conc_MostInfluential_GoToPage",
                             "Most Influential Features",
                             icon("asterisk")
                         )
@@ -1996,7 +2023,8 @@ pag_Conclusion <- tabItem(
             fluidRow(
                 box(
                     title=actionLink(
-                        "",
+                        # "",
+                        "link_conc_rese_GeneralTrend_GoToPage",
                         tags$b(tags$u("Research Area 1: General Trend")),
                         icon("chart-line")
                     ),
@@ -2016,7 +2044,8 @@ pag_Conclusion <- tabItem(
                 ),
                 box(
                     title=actionLink(
-                        "",
+                        # "",
+                        "link_conc_rese_MostSuccessful_GoToPage",
                         tags$b(tags$u("Research Area 2: Most Successful Country")),
                         icon("thumbs-up")
                     ),
@@ -2048,7 +2077,8 @@ pag_Conclusion <- tabItem(
             fluidRow(
                 box(
                     title=actionLink(
-                        "",
+                        # "",
+                        "link_conc_rese_SurprisingTrends_GoToPage",
                         tags$b(tags$u("Research Area 3: Surprising Trends")),
                         icon("surprise")
                     ),
@@ -2091,7 +2121,8 @@ pag_Conclusion <- tabItem(
                 ),
                 box(
                     title=actionLink(
-                        "",
+                        # "",
+                        "link_conc_rese_MostInfluential_GoToPage",
                         tags$b(tags$u("Research Area 4: Most Influential Indicator")),
                         icon("asterisk")
                     ),
