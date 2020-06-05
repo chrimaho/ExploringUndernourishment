@@ -183,11 +183,11 @@ sidebar <- dashboardSidebar(
         
         # . . Socials ----
         tags$hr(),
-        tags$a("App Developer: ", tags$a("Chris Mahoney", href="https://www.chrismahoney.com.au", style="color:white;font-style:italic")), br(),
-        tags$ol(tags$a(icon("linkedin"), "LinkedIn", href="https://www.linkedin.com/in/chrimaho/")),
-        tags$ol(tags$a(icon("github"), "GitHub", href="https://github.com/chrimaho/ExploringUndernourishment/")),
-        tags$ol(tags$a(icon("medium"), "Medium", href="https://medium.com/@chrimaho")),
-        tags$ol(tags$a(icon("stack-overflow"), "StackOverflow", href="https://stackoverflow.com/users/12036005/chrimaho")),
+        tags$a("App Developer: ", tags$a("Chris Mahoney", href="https://www.chrismahoney.com.au", style="color:white;font-style:italic", target="_blank")), br(),
+        tags$ol(tags$a(icon("linkedin"), "LinkedIn", href="https://www.linkedin.com/in/chrimaho/", target="_blank")),
+        tags$ol(tags$a(icon("github"), "GitHub", href="https://github.com/chrimaho/ExploringUndernourishment/", target="_blank")),
+        tags$ol(tags$a(icon("medium"), "Medium", href="https://medium.com/@chrimaho", target="_blank")),
+        tags$ol(tags$a(icon("stack-overflow"), "StackOverflow", href="https://stackoverflow.com/users/12036005/chrimaho", target="_blank")),
         tags$a("App Launch Date: ", tags$span("5/Jun/2020"))
         
     )
@@ -221,16 +221,16 @@ pag_InfoPage <- tabItem(
             width=12,
             tags$p(HTML(str_Format(
                 "The {UN} (UN) has placed a lot of emphasis on their {SDG} (SDG), one of which is: {ZH}. To address this, the UN has set up the {FAO}. This organisation has embarked on a journey to help understand and address the worlds needs for access to food. One of the indicators that they have set up is the {PoU}, which is defined as: {def}.",
-                UN=tags$a("United Nations", href="https://www.un.org/"),
-                SDG=tags$a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"),
-                ZH=tags$a("Goal 2: Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/"),
-                FAO=tags$a("Food and Agriculture Oranisation", href="http://www.fao.org/home/en/"),
-                PoU=tags$a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/"),
+                UN=tags$a("United Nations", href="https://www.un.org/", target="_blank"),
+                SDG=tags$a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/", target="_blank"),
+                ZH=tags$a("Goal 2: Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/", target="_blank"),
+                FAO=tags$a("Food and Agriculture Oranisation", href="http://www.fao.org/home/en/", target="_blank"),
+                PoU=tags$a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/", target="_blank"),
                 def=tags$i("an estimate of the proportion of the population whose habitual food consumption is insufficient to provide the dietary energy levels that are required to maintain a normal active and healthy life")
             ))),
             tags$p(HTML(sprintf(
                 "This app uses data provided by the %s, and a number of exploratory data analysis techniques to investigate four reserach questions, which are detailed below.",
-                tags$a("FAO", href="http://www.fao.org/faostat/en/#data/FS")
+                tags$a("FAO", href="http://www.fao.org/faostat/en/#data/FS", target="_blank")
             )))
         )
     ),
@@ -404,15 +404,15 @@ pag_DisclaimerPage <- tabItem(
             title=tags$b("Data Sources"),
             width=12,
             "Source data provided by:",
-            tags$li(tags$a("Food and Agriculture Organization of the United Nations", href="http://www.fao.org/home/en/"), " (FAO)."),
+            tags$li(tags$a("Food and Agriculture Organization of the United Nations", href="http://www.fao.org/home/en/", target="_blank"), " (FAO)."),
             tags$br(),
             "Raw data obtained from:", 
-            tags$li(tags$a("FAO: Suite of Food Security Indicators", href="http://www.fao.org/faostat/en/#data/FS")),
+            tags$li(tags$a("FAO: Suite of Food Security Indicators", href="http://www.fao.org/faostat/en/#data/FS", target="_blank")),
             tags$br(),
             "Additional information about the data sources can be found at:",
-            tags$li(tags$a("FAO: Sustainable Development Goals: Indicator 2.1.1 - Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/")),
-            tags$li(tags$a("FAO: Food Security Indicators", href="http://www.fao.org/economic/ess/ess-fs/ess-fadata/en/#.XrXa5Wgzack")),
-            tags$li(tags$a("Our World in Data: Hunger and Undernourishment", href="https://ourworldindata.org/hunger-and-undernourishment"))
+            tags$li(tags$a("FAO: Sustainable Development Goals: Indicator 2.1.1 - Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/", target="_blank")),
+            tags$li(tags$a("FAO: Food Security Indicators", href="http://www.fao.org/economic/ess/ess-fs/ess-fadata/en/#.XrXa5Wgzack", target="_blank")),
+            tags$li(tags$a("Our World in Data: Hunger and Undernourishment", href="https://ourworldindata.org/hunger-and-undernourishment", target="_blank"))
         )
     ),
     
@@ -439,27 +439,27 @@ pag_DisclaimerPage <- tabItem(
             tags$li(HTML(str_Format(
                 "FAO 2020, {title}, <{link}>.",
                 title=tags$i("Food and Agriculture Organisation of the United Nations"),
-                link=tags$a("http://www.fao.org/home/en/", href="http://www.fao.org/home/en/")
+                link=tags$a("http://www.fao.org/home/en/", href="http://www.fao.org/home/en/", target="_blank")
             ))),
             tags$li(HTML(str_Format(
                 "FAO 2019, {title}, <{link}>.",
                 title=tags$i("The State of Food Security and Nutrition in the World: Safeguarding Against Economic Slowdowns and Downturns"),
-                link=tags$a("http://www.fao.org/3/ca5162en/ca5162en.pdf", href="http://www.fao.org/3/ca5162en/ca5162en.pdf")
+                link=tags$a("http://www.fao.org/3/ca5162en/ca5162en.pdf", href="http://www.fao.org/3/ca5162en/ca5162en.pdf", target="_blank")
             ))),
             tags$li(HTML(str_Format(
                 "FAO 2020, {title}, <{link}>.",
                 title=tags$i("Sustainable Development Goals: Indicator 2.1.1 - Prevalence of undernourishment"),
-                link=tags$a("http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/")
+                link=tags$a("http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/", target="_blank")
             ))),
             tags$li(HTML(str_Format(
                 "FAO 2020, {title}, <{link}>.",
                 title=tags$i("FAOStat"),
-                link=tags$a("http://www.fao.org/faostat/en/#data/FS", href="http://www.fao.org/faostat/en/#data/FS")
+                link=tags$a("http://www.fao.org/faostat/en/#data/FS", href="http://www.fao.org/faostat/en/#data/FS", target="_blank")
             ))),
             tags$li(HTML(str_Format(
                 "FAO 2020, {title},  <{link}>.",
                 title=tags$i("Enhanced Parametric Approach Including In-Depth Thematic Analysis of Underlying Factors and Drivers Behind Food Security and Nutrition Trends"),
-                link=tags$a("https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf", href="https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf")
+                link=tags$a("https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf", href="https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf", target="_blank")
             ))),
             tags$li(HTML(str_Format(
                 "Fontell & Luchsinger 2011, ‘{title}’, {journal}, vol. 5, no. 2, pp. 79-83, ProQuest central database.",
@@ -484,12 +484,12 @@ pag_DisclaimerPage <- tabItem(
             tags$li(HTML(str_Format(
                 "UN 2020a, {title}, <{link}>.",
                 title=tags$i("Sustainable Development Goals"),
-                link=tags$a("https://www.un.org/sustainabledevelopment/sustainable-development-goals/", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/")
+                link=tags$a("https://www.un.org/sustainabledevelopment/sustainable-development-goals/", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/", target="_blank")
             ))),
             tags$li(HTML(str_Format(
                 "UN 2020b, {title}, <{link}>.",
                 title=tags$i("Goal 2: Zero Hunger"),
-                link=tags$a("https://www.un.org/sustainabledevelopment/hunger/", href="https://www.un.org/sustainabledevelopment/hunger/")
+                link=tags$a("https://www.un.org/sustainabledevelopment/hunger/", href="https://www.un.org/sustainabledevelopment/hunger/", target="_blank")
             )))
         )
     )
@@ -2003,7 +2003,7 @@ pag_Conclusion <- tabItem(
                     tags$p(
                         "In their recent publication {}, the UN has addressed this recent bucking of the trend, and have attributed this to economic slowdowns and turndowns across the Globe. It can be seen that some countries have suffered a lot, and their Prevalence of Undernourishment score has been substantially impacted as a result." %>% 
                             str_Format(
-                                tags$i(tags$a("The State of Food Security and Nutrition in the World", href="http://www.fao.org/3/ca5162en/ca5162en.pdf"))
+                                tags$i(tags$a("The State of Food Security and Nutrition in the World", href="http://www.fao.org/3/ca5162en/ca5162en.pdf", target="_blank"))
                             ) %>% HTML()
                     )
                 ),
