@@ -154,26 +154,68 @@ if (file.exists("./model/mod_gbm_Model.rds")) {
 # . . Get Variables ----
 mod_gbm_VariableImportance <- varImp(mod_gbm_Model)
 
+# . . Variable Importance ----
+if (!exists("plt_infl_VariableImportance")) {
+    
+    if (file.exists("./figure/plt_infl_VariableImportance.rds")) {
+        
+        # Load
+        plt_infl_VariableImportance <<- read_rds("./figure/plt_infl_VariableImportance.rds")
+        
+    } else {
+        
+        # Make
+        plt_infl_VariableImportance <<- mod_gbm_VariableImportance %>% 
+            extract2("importance") %>% 
+            rownames_to_column("variable") %>% 
+            select("variable","score"="Overall") %>% 
+            ggplot(aes(reorder(variable,score), score, label=round(score,2))) +
+            geom_col(width=0.15, fill="darkgrey") +
+            geom_point(size=4, colour="blue") +
+            geom_label(hjust=-0.2) +
+            scale_y_continuous(breaks=seq(0,100,10)) +
+            theme(panel.grid.minor.x=element_blank()) +
+            coord_flip() +
+            labs(
+                title="Variable Importance Plot",
+                subtitle="Based on the output of a GBM Model",
+                y="Importance",
+                x="Variable"
+            )
+        
+        # Save
+        write_rds(
+            x=plt_infl_VariableImportance,
+            path="./figure/plt_infl_VariableImportance.rds",
+            compress="xz"
+        )
+        
+    }
+    
+}
+
 # . . Partial Dependency ----
-# Optimise
-if (!exists("plt_infl_PartialDependancy.rds")) {
+if (!exists("plt_infl_PartialDependancy")) {
     
     if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
         
+        # Load
         plt_infl_PartialDependancy <<- read_rds("./figure/plt_infl_PartialDependancy.rds")
         
     } else {
         
+        # Make
         plt_infl_PartialDependancy <<- plt_PartialDependencyPlots(
             mod_gbm_Model,
             mod_data_Raw,
             mod_gbm_VariableImportance
         )
         
+        # Save
         write_rds(
             x=plt_infl_PartialDependancy,
             path="./figure/plt_infl_PartialDependancy.rds",
-            compress="none"
+            compress="xz"
         )
         
     }
