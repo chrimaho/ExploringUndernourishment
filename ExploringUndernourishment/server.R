@@ -229,12 +229,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_undr_stat_Completeness.rds")) {
                     
                     # Load
-                    plt_undr_stat_Completeness <<- read_rds("./figure/plt_undr_stat_Completeness.rds")
+                    plt_undr_stat_Completeness <- read_rds("./figure/plt_undr_stat_Completeness.rds")
                     
                 } else {
                     
                     # Make
-                    plt_undr_stat_Completeness <<- FaoStat_wide %>% 
+                    plt_undr_stat_Completeness <- FaoStat_wide %>% 
                         select(country, pct_complete, cat_complete) %>%
                         distinct() %>% 
                         ggplot(aes(reorder(country, pct_complete), pct_complete, colour=cat_complete, fill=cat_complete)) +
@@ -264,7 +264,8 @@ server <- function(input, output, session) {
             }
             
             # Return
-            return(plt_undr_stat_Completeness)
+            plt_undr_stat_Completeness %>% 
+                return()
             
         }
     )
@@ -280,12 +281,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_undr_stat_Ridges.rds")) {
                     
                     # Load
-                    plt_undr_stat_Ridges <<- read_rds("./figure/plt_undr_stat_Ridges.rds")
+                    plt_undr_stat_Ridges <- read_rds("./figure/plt_undr_stat_Ridges.rds")
                     
                 } else {
                     
                     # Make
-                    plt_undr_stat_Ridges <<- FaoStat_wide %>% 
+                    plt_undr_stat_Ridges <- FaoStat_wide %>% 
                         filter(cat_complete!="empty") %>% 
                         {
                             ggplot(data=., aes(
@@ -317,7 +318,8 @@ server <- function(input, output, session) {
             }
             
             # Return
-            return(plt_undr_stat_Ridges)
+            plt_undr_stat_Ridges %>% 
+                return()
         }
     )
     
@@ -336,12 +338,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_undr_FeaturesByTarget.rds")) {
                     
                     # Load
-                    plt_undr_FeaturesByTarget <<- read_rds("./figure/plt_undr_FeaturesByTarget.rds")
+                    plt_undr_FeaturesByTarget <- read_rds("./figure/plt_undr_FeaturesByTarget.rds")
                     
                 } else {
                     
                     # Make
-                    plt_undr_FeaturesByTarget <<- plt_FeatureCorrelationsByTarget(
+                    plt_undr_FeaturesByTarget <- plt_FeatureCorrelationsByTarget(
                         FaoStat_wide, 
                         "prevalence_of_undernourishment", 
                         c("avg_undernourishment","pct_complete")
@@ -358,7 +360,8 @@ server <- function(input, output, session) {
                 
             }
             
-            return(plt_undr_FeaturesByTarget)
+            plt_undr_FeaturesByTarget %>% 
+                return()
             
         }
     )
@@ -384,7 +387,7 @@ server <- function(input, output, session) {
         expr={
             
             # Make
-            plt_inta_MultiFeatures <<- dat_inta_dynm_InputData() %>% 
+            plt_inta_MultiFeatures <- dat_inta_dynm_InputData() %>% 
                 plt_comb_MultiFeaturesMultiPlots(
                     DataFrame=.,
                     Countries=input$inta_dynm_inbx_SelectedCountries,
@@ -393,7 +396,8 @@ server <- function(input, output, session) {
                 )
             
             # Return
-            return(plt_inta_MultiFeatures)
+            plt_inta_MultiFeatures %>% 
+                return()
             
         }
     )
@@ -417,12 +421,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_stat_PrevUndrOverall.rds")) {
                     
                     # Load
-                    plt_stat_PrevUndrOverall <<- read_rds("./figure/plt_stat_PrevUndrOverall.rds")
+                    plt_stat_PrevUndrOverall <- read_rds("./figure/plt_stat_PrevUndrOverall.rds")
                     
                 } else {
                     
                     # Make
-                    plt_stat_PrevUndrOverall <<- FaoStat_wide %>% 
+                    plt_stat_PrevUndrOverall <- FaoStat_wide %>% 
                         ggplot() +
                         geom_histogram(
                             aes(prevalence_of_undernourishment),
@@ -452,7 +456,8 @@ server <- function(input, output, session) {
             }
                 
             # Return
-            return(plt_stat_PrevUndrOverall)
+            plt_stat_PrevUndrOverall %>% 
+                return()
         }
     )
     
@@ -467,12 +472,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_stat_MissingData.rds")) {
                     
                     # Load
-                    plt_stat_MissingData <<- read_rds("./figure/plt_stat_MissingData.rds")
+                    plt_stat_MissingData <- read_rds("./figure/plt_stat_MissingData.rds")
                     
                 } else {
                     
                     # Make
-                    plt_stat_MissingData <<- FaoStat_wide %>% 
+                    plt_stat_MissingData <- FaoStat_wide %>% 
                         select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
                         miss_var_summary() %>% 
                         left_join(x=., y=FaoStat_VariableMapping %>% select(variable, category), by=c("variable"="variable")) %>% 
@@ -516,7 +521,8 @@ server <- function(input, output, session) {
             }
             
             # Return
-            return(plt_stat_MissingData)
+            plt_stat_MissingData %>% 
+                return()
             
         }
     )
@@ -549,12 +555,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_ridg_UndernourishmentByYear.rds")) {
                     
                     # Load
-                    plt_ridg_UndernourishmentByYear <<- read_rds("./figure/plt_ridg_UndernourishmentByYear.rds")
+                    plt_ridg_UndernourishmentByYear <- read_rds("./figure/plt_ridg_UndernourishmentByYear.rds")
                     
                 } else {
                     
                     # Make
-                    plt_ridg_UndernourishmentByYear <<- FaoStat_wide %>% 
+                    plt_ridg_UndernourishmentByYear <- FaoStat_wide %>% 
                         {
                             ggplot(data=., aes(prevalence_of_undernourishment, reorder(year,desc(year)), fill=year)) +
                                 geom_density_ridges() + 
@@ -579,7 +585,8 @@ server <- function(input, output, session) {
             }
             
             # Return
-            return(plt_ridg_UndernourishmentByYear)
+            plt_ridg_UndernourishmentByYear %>% 
+                return()
             
         }
     )
@@ -608,12 +615,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_hist_FeatureDistributions.rds")) {
                     
                     # Load
-                    plt_hist_FeatureDistributions <<- read_rds("./figure/plt_hist_FeatureDistributions.rds")
+                    plt_hist_FeatureDistributions <- read_rds("./figure/plt_hist_FeatureDistributions.rds")
                     
                 } else {
                     
                     # Make
-                    plt_hist_FeatureDistributions <<- FaoStat_wide %>% 
+                    plt_hist_FeatureDistributions <- FaoStat_wide %>% 
                         select(-contains("_complete"), -contains("avg_undernourishment")) %>% 
                         plt_grob_MultipleHistograms(ExcludeFeatures=c("country", "region", "year"))
                     
@@ -629,7 +636,8 @@ server <- function(input, output, session) {
             }
             
             # Return
-            return(plt_hist_FeatureDistributions)
+            plt_hist_FeatureDistributions %>% 
+                return()
             
         }
     )
@@ -663,45 +671,63 @@ server <- function(input, output, session) {
     output$plt_rese_genr_OverallTrend <- renderPlot(
         expr={
             
-            # Optimise
+            # Check if exists in local environment
             if (!exists("plt_rese_genr_OverallTrend")) {
-                
-                # Make
-                plt_rese_genr_OverallTrend <<- FaoStat_wide %>% 
-                    filter(!is.na(prevalence_of_undernourishment)) %>%
-                    group_by(year) %>% 
-                    summarise(avg_yearly_undernourishment=mean(prevalence_of_undernourishment)) %>% 
-                    ungroup() %>% 
-                    mutate(year=as.numeric(as.character(year))) %>% 
-                    mutate(fit=lm(avg_yearly_undernourishment~year, data=.) %>% fitted.values()) %>% 
-                    {
-                        ggplot(data=., aes(x=year)) +
-                            geom_line(
-                                aes(y=avg_yearly_undernourishment, colour="PoU"),
-                                size=1,
-                                arrow=arrow(length=unit(0.3, "inches"))
-                            ) +
-                            geom_line(
-                                aes(y=fit, colour="Trend"),
-                                size=1,
-                                arrow=arrow(length=unit(0.3, "inches"))
-                            ) +
-                            scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
-                            scale_color_manual(values=c("forestgreen", "blue")) +
-                            theme(panel.grid.minor.x=element_blank()) +
-                            labs(
-                                title="Prevalence of Undernourishment",
-                                subtitle="Trend per Year",
-                                y="Prevalence of Undernourishment",
-                                x="Year",
-                                colour="Value"
-                            )
-                    }
+            
+                # Optimise
+                if (file.exists("./figure/plt_rese_genr_OverallTrend.rds")) {
+                    
+                    # Load
+                    plt_rese_genr_OverallTrend <- read_rds("./figure/plt_rese_genr_OverallTrend.rds")
+                    
+                } else {
+                    
+                    # Make
+                    plt_rese_genr_OverallTrend <- FaoStat_wide %>% 
+                        filter(!is.na(prevalence_of_undernourishment)) %>%
+                        group_by(year) %>% 
+                        summarise(avg_yearly_undernourishment=mean(prevalence_of_undernourishment)) %>% 
+                        ungroup() %>% 
+                        mutate(year=as.numeric(as.character(year))) %>% 
+                        mutate(fit=lm(avg_yearly_undernourishment~year, data=.) %>% fitted.values()) %>% 
+                        {
+                            ggplot(data=., aes(x=year)) +
+                                geom_line(
+                                    aes(y=avg_yearly_undernourishment, colour="PoU"),
+                                    size=1,
+                                    arrow=arrow(length=unit(0.3, "inches"))
+                                ) +
+                                geom_line(
+                                    aes(y=fit, colour="Trend"),
+                                    size=1,
+                                    arrow=arrow(length=unit(0.3, "inches"))
+                                ) +
+                                scale_x_continuous(breaks=seq(min(.["year"]), max(.["year"]))) +
+                                scale_color_manual(values=c("forestgreen", "blue")) +
+                                theme(panel.grid.minor.x=element_blank()) +
+                                labs(
+                                    title="Prevalence of Undernourishment",
+                                    subtitle="Trend per Year",
+                                    y="Prevalence of Undernourishment",
+                                    x="Year",
+                                    colour="Value"
+                                )
+                        }
+                    
+                    # Save
+                    write_rds(
+                        x=plt_rese_genr_OverallTrend,
+                        path="./figure/plt_rese_genr_OverallTrend.rds",
+                        compress="xz"
+                    )
+                    
+                }
                 
             }
             
             # Return
-            plt_rese_genr_OverallTrend %>% return()
+            plt_rese_genr_OverallTrend %>% 
+                return()
             
         }
     )
@@ -951,12 +977,12 @@ server <- function(input, output, session) {
                 if (file.exists("./file/plt_surp_AllCountries.rds")) {
                     
                     # Load
-                    plt_surp_AllCountries <<- read_rds("./figure/plt_surp_AllCountries.rds")
+                    plt_surp_AllCountries <- read_rds("./figure/plt_surp_AllCountries.rds")
                     
                 } else {
                     
                     # Make
-                    plt_surp_AllCountries <<- FaoStat_wide %>% 
+                    plt_surp_AllCountries <- FaoStat_wide %>% 
                         filter(country %in% {
                             FaoStat_yearly %>% 
                                 filter(improvement>30) %>% 
@@ -1013,12 +1039,12 @@ server <- function(input, output, session) {
                 if (file.exists("./file/plt_surp_ArableLand.rds")) {
                     
                     # Load
-                    plt_surp_ArableLand <<- read_rds("./figure/plt_surp_ArableLand.rds")
+                    plt_surp_ArableLand <- read_rds("./figure/plt_surp_ArableLand.rds")
                     
                 } else {
                     
                     # Make
-                    plt_surp_ArableLand <<- FaoStat_wide %>% 
+                    plt_surp_ArableLand <- FaoStat_wide %>% 
                         ggplot(aes(percentage_of_arable_land, prevalence_of_undernourishment, colour=country)) +
                         geom_point(alpha=0.4) +
                         theme(
@@ -1060,12 +1086,12 @@ server <- function(input, output, session) {
                 if (file.exists("./file/plt_surp_ChangeInGDP.rds")) {
                     
                     # Load
-                    plt_surp_ChangeInGDP <<- read_rds("./figure/plt_surp_ChangeInGDP.rds")
+                    plt_surp_ChangeInGDP <- read_rds("./figure/plt_surp_ChangeInGDP.rds")
                     
                 } else {
                     
                     # Make
-                    plt_surp_ChangeInGDP <<- FaoStat_wide %>% 
+                    plt_surp_ChangeInGDP <- FaoStat_wide %>% 
                         {
                             ggplot(data=.) +
                             geom_point(
@@ -1194,12 +1220,12 @@ server <- function(input, output, session) {
                 if (file.exists("./file/plt_infl_VariableImportance.rds")) {
                     
                     # Load
-                    plt_infl_VariableImportance <<- read_rds("./figure/plt_infl_VariableImportance.rds")
+                    plt_infl_VariableImportance <- read_rds("./figure/plt_infl_VariableImportance.rds")
                     
                 } else {
                     
                     # Make
-                    plt_infl_VariableImportance <<- mod_gbm_VariableImportance %>% 
+                    plt_infl_VariableImportance <- mod_gbm_VariableImportance %>% 
                         extract2("importance") %>% 
                         rownames_to_column("variable") %>% 
                         select("variable","score"="Overall") %>% 
@@ -1228,7 +1254,8 @@ server <- function(input, output, session) {
             }
             
             # Return
-            return(plt_infl_VariableImportance)
+            plt_infl_VariableImportance %>% 
+                return()
             
         }
         
@@ -1245,12 +1272,12 @@ server <- function(input, output, session) {
                 if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
                     
                     # Load
-                    plt_infl_PartialDependancy <<- read_rds("./figure/plt_infl_PartialDependancy.rds")
+                    plt_infl_PartialDependancy <- read_rds("./figure/plt_infl_PartialDependancy.rds")
                     
                 } else {
                     
                     # Run PDP function
-                    plt_infl_PartialDependancy <<- plt_PartialDependencyPlots(
+                    plt_infl_PartialDependancy <- plt_PartialDependencyPlots(
                         mod_gbm_Model,
                         mod_data_Raw,
                         mod_gbm_VariableImportance
@@ -1268,7 +1295,8 @@ server <- function(input, output, session) {
             }
             
             # Render
-            plt_infl_PartialDependancy %>% return()
+            plt_infl_PartialDependancy %>% 
+                return()
             
         }
         
