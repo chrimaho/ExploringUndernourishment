@@ -222,16 +222,16 @@ server <- function(input, output, session) {
     output$plt_undr_stat_Completeness <- renderPlot(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_undr_stat_Completeness")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./figure/plt_undr_stat_Completeness.rds")) {
-                    
-                    # Load
-                    plt_undr_stat_Completeness <- read_rds("./figure/plt_undr_stat_Completeness.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_undr_stat_Completeness")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./figure/plt_undr_stat_Completeness.rds")) {
+            #         
+            #         # Load
+            #         plt_undr_stat_Completeness <- read_rds("./figure/plt_undr_stat_Completeness.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_undr_stat_Completeness <- FaoStat_wide %>% 
@@ -252,16 +252,16 @@ server <- function(input, output, session) {
                             colour="Completeness"
                         )
                     
-                    # Save
-                    write_rds(
-                        x=plt_undr_stat_Completeness,
-                        path="./figure/plt_undr_stat_Completeness.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_undr_stat_Completeness,
+            #             path="./figure/plt_undr_stat_Completeness.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_undr_stat_Completeness %>% 
@@ -274,16 +274,16 @@ server <- function(input, output, session) {
     output$plt_undr_stat_Ridges <- renderPlot(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_undr_stat_Ridges")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./figure/plt_undr_stat_Ridges.rds")) {
-                    
-                    # Load
-                    plt_undr_stat_Ridges <- read_rds("./figure/plt_undr_stat_Ridges.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_undr_stat_Ridges")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./figure/plt_undr_stat_Ridges.rds")) {
+            #         
+            #         # Load
+            #         plt_undr_stat_Ridges <- read_rds("./figure/plt_undr_stat_Ridges.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_undr_stat_Ridges <- FaoStat_wide %>% 
@@ -306,16 +306,16 @@ server <- function(input, output, session) {
                                 )
                         }
                     
-                    # Save
-                    write_rds(
-                        x=plt_undr_stat_Ridges,
-                        path="./figure/plt_undr_stat_Ridges.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_undr_stat_Ridges,
+            #             path="./figure/plt_undr_stat_Ridges.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_undr_stat_Ridges %>% 
@@ -414,16 +414,16 @@ server <- function(input, output, session) {
     output$plt_stat_PrevUndrOverall <- renderPlot(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_stat_PrevUndrOverall")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./figure/plt_stat_PrevUndrOverall.rds")) {
-                    
-                    # Load
-                    plt_stat_PrevUndrOverall <- read_rds("./figure/plt_stat_PrevUndrOverall.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_stat_PrevUndrOverall")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./figure/plt_stat_PrevUndrOverall.rds")) {
+            #         
+            #         # Load
+            #         plt_stat_PrevUndrOverall <- read_rds("./figure/plt_stat_PrevUndrOverall.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_stat_PrevUndrOverall <- FaoStat_wide %>% 
@@ -444,16 +444,16 @@ server <- function(input, output, session) {
                             caption="A neat, right-tailed histogram, with values between 0 and 0.7."
                         )
                     
-                    # Save
-                    write_rds(
-                        x=plt_stat_PrevUndrOverall,
-                        path="./figure/plt_stat_PrevUndrOverall.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_stat_PrevUndrOverall,
+            #             path="./figure/plt_stat_PrevUndrOverall.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
                 
             # Return
             plt_stat_PrevUndrOverall %>% 
@@ -465,16 +465,16 @@ server <- function(input, output, session) {
     output$plt_stat_MissingData <- renderPlot(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_stat_MissingData")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./figure/plt_stat_MissingData.rds")) {
-                    
-                    # Load
-                    plt_stat_MissingData <- read_rds("./figure/plt_stat_MissingData.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_stat_MissingData")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./figure/plt_stat_MissingData.rds")) {
+            #         
+            #         # Load
+            #         plt_stat_MissingData <- read_rds("./figure/plt_stat_MissingData.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_stat_MissingData <- FaoStat_wide %>% 
@@ -509,16 +509,16 @@ server <- function(input, output, session) {
                             fill="Category"
                         )
                         
-                    # Save
-                    write_rds(
-                        x=plt_stat_MissingData,
-                        path="./figure/plt_stat_MissingData.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_stat_MissingData,
+            #             path="./figure/plt_stat_MissingData.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_stat_MissingData %>% 
@@ -548,16 +548,16 @@ server <- function(input, output, session) {
     output$plt_ridg_UndernourishmentByYear <- renderPlot(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_ridg_UndernourishmentByYear")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./figure/plt_ridg_UndernourishmentByYear.rds")) {
-                    
-                    # Load
-                    plt_ridg_UndernourishmentByYear <- read_rds("./figure/plt_ridg_UndernourishmentByYear.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_ridg_UndernourishmentByYear")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./figure/plt_ridg_UndernourishmentByYear.rds")) {
+            #         
+            #         # Load
+            #         plt_ridg_UndernourishmentByYear <- read_rds("./figure/plt_ridg_UndernourishmentByYear.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_ridg_UndernourishmentByYear <- FaoStat_wide %>% 
@@ -573,16 +573,16 @@ server <- function(input, output, session) {
                                 )
                         }
                         
-                    # Save
-                    write_rds(
-                        x=plt_ridg_UndernourishmentByYear,
-                        path="./figure/plt_ridg_UndernourishmentByYear.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_ridg_UndernourishmentByYear,
+            #             path="./figure/plt_ridg_UndernourishmentByYear.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_ridg_UndernourishmentByYear %>% 
@@ -671,16 +671,16 @@ server <- function(input, output, session) {
     output$plt_rese_genr_OverallTrend <- renderPlot(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_rese_genr_OverallTrend")) {
-            
-                # Optimise
-                if (file.exists("./figure/plt_rese_genr_OverallTrend.rds")) {
-                    
-                    # Load
-                    plt_rese_genr_OverallTrend <- read_rds("./figure/plt_rese_genr_OverallTrend.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_rese_genr_OverallTrend")) {
+            # 
+            #     # Optimise
+            #     if (file.exists("./figure/plt_rese_genr_OverallTrend.rds")) {
+            #         
+            #         # Load
+            #         plt_rese_genr_OverallTrend <- read_rds("./figure/plt_rese_genr_OverallTrend.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_rese_genr_OverallTrend <- FaoStat_wide %>% 
@@ -714,16 +714,18 @@ server <- function(input, output, session) {
                                 )
                         }
                     
-                    # Save
-                    write_rds(
-                        x=plt_rese_genr_OverallTrend,
-                        path="./figure/plt_rese_genr_OverallTrend.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_rese_genr_OverallTrend,
+            #             path="./figure/plt_rese_genr_OverallTrend.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
+            
+            print(pryr::mem_used())
             
             # Return
             plt_rese_genr_OverallTrend %>% 
@@ -970,16 +972,16 @@ server <- function(input, output, session) {
     output$plt_surp_AllCountries <- renderPlotly(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_surp_AllCountries")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./file/plt_surp_AllCountries.rds")) {
-                    
-                    # Load
-                    plt_surp_AllCountries <- read_rds("./figure/plt_surp_AllCountries.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_surp_AllCountries")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./file/plt_surp_AllCountries.rds")) {
+            #         
+            #         # Load
+            #         plt_surp_AllCountries <- read_rds("./figure/plt_surp_AllCountries.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_surp_AllCountries <- FaoStat_wide %>% 
@@ -1010,16 +1012,16 @@ server <- function(input, output, session) {
                                 )
                         }
                     
-                    # Save
-                    write_rds(
-                        x=plt_surp_AllCountries,
-                        path="./figure/plt_surp_AllCountries.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_surp_AllCountries,
+            #             path="./figure/plt_surp_AllCountries.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_surp_AllCountries %>% 
@@ -1032,16 +1034,16 @@ server <- function(input, output, session) {
     output$plt_surp_ArableLand <- renderPlotly(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_surp_ArableLand")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./file/plt_surp_ArableLand.rds")) {
-                    
-                    # Load
-                    plt_surp_ArableLand <- read_rds("./figure/plt_surp_ArableLand.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_surp_ArableLand")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./file/plt_surp_ArableLand.rds")) {
+            #         
+            #         # Load
+            #         plt_surp_ArableLand <- read_rds("./figure/plt_surp_ArableLand.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_surp_ArableLand <- FaoStat_wide %>% 
@@ -1056,16 +1058,16 @@ server <- function(input, output, session) {
                             y="Prevalence of Undernourishment"
                         )
                     
-                    # Save
-                    write_rds(
-                        x=plt_surp_ArableLand,
-                        path="./figure/plt_surp_ArableLand.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_surp_ArableLand,
+            #             path="./figure/plt_surp_ArableLand.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_surp_ArableLand %>% 
@@ -1079,16 +1081,16 @@ server <- function(input, output, session) {
     output$plt_surp_ChangeInGDP <- renderPlotly(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_surp_ChangeInGDP")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./file/plt_surp_ChangeInGDP.rds")) {
-                    
-                    # Load
-                    plt_surp_ChangeInGDP <- read_rds("./figure/plt_surp_ChangeInGDP.rds")
-                    
-                } else {
+            # # Check if exists in local environment
+            # if (!exists("plt_surp_ChangeInGDP")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./file/plt_surp_ChangeInGDP.rds")) {
+            #         
+            #         # Load
+            #         plt_surp_ChangeInGDP <- read_rds("./figure/plt_surp_ChangeInGDP.rds")
+            #         
+            #     } else {
                     
                     # Make
                     plt_surp_ChangeInGDP <- FaoStat_wide %>% 
@@ -1155,16 +1157,16 @@ server <- function(input, output, session) {
                             )
                         }
                     
-                    # Save
-                    write_rds(
-                        x=plt_surp_ChangeInGDP,
-                        path="./figure/plt_surp_ChangeInGDP.rds",
-                        compress="xz"
-                    )
-                    
-                }
-                
-            }
+            #         # Save
+            #         write_rds(
+            #             x=plt_surp_ChangeInGDP,
+            #             path="./figure/plt_surp_ChangeInGDP.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_surp_ChangeInGDP %>% 
@@ -1213,45 +1215,46 @@ server <- function(input, output, session) {
     output$plt_infl_VariableImportance <- renderPlot(
         expr={
                 
-            # Check if exists in local environment
-            if (!exists("plt_infl_VariableImportance")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./file/plt_infl_VariableImportance.rds")) {
-                    
+            # # Check if exists in local environment
+            # if (!exists("plt_infl_VariableImportance")) {
+            # 
+            #     # Check if exists in local directory
+            #     if (file.exists("./file/plt_infl_VariableImportance.rds")) {
+
                     # Load
                     plt_infl_VariableImportance <- read_rds("./figure/plt_infl_VariableImportance.rds")
-                    
-                } else {
-                    
-                    # Make
-                    plt_infl_VariableImportance <- mod_gbm_VariableImportance %>% 
-                        extract2("importance") %>% 
-                        rownames_to_column("variable") %>% 
-                        select("variable","score"="Overall") %>% 
-                        ggplot(aes(reorder(variable,score), score, label=round(score,2))) +
-                        geom_col(width=0.15, fill="darkgrey") +
-                        geom_point(size=4, colour="blue") +
-                        geom_label(hjust=-0.2) +
-                        scale_y_continuous(breaks=seq(0,100,10)) +
-                        theme(panel.grid.minor.x=element_blank()) +
-                        coord_flip() +
-                        labs(
-                            title="Variable Importance Plot",
-                            subtitle="Based on the output of a GBM Model",
-                            y="Importance",
-                            x="Variable"
-                        )
-                    
-                    # Save
-                    write_rds(
-                        x=plt_infl_VariableImportance,
-                        path="./figure/plt_infl_VariableImportance.rds",
-                        compress="xz"
-                    )
-                }
-                
-            }
+
+            #    } else {
+            #        
+            #        # Make
+            #        plt_infl_VariableImportance <- mod_gbm_VariableImportance %>% 
+            #            extract2("importance") %>% 
+            #            rownames_to_column("variable") %>% 
+            #            select("variable","score"="Overall") %>% 
+            #            ggplot(aes(reorder(variable,score), score, label=round(score,2))) +
+            #            geom_col(width=0.15, fill="darkgrey") +
+            #            geom_point(size=4, colour="blue") +
+            #            geom_label(hjust=-0.2) +
+            #            scale_y_continuous(breaks=seq(0,100,10)) +
+            #            theme(panel.grid.minor.x=element_blank()) +
+            #            coord_flip() +
+            #            labs(
+            #                title="Variable Importance Plot",
+            #                subtitle="Based on the output of a GBM Model",
+            #                y="Importance",
+            #                x="Variable"
+            #            )
+            #        
+            #         # Save
+            #         write_rds(
+            #             x=plt_infl_VariableImportance,
+            #             path="./figure/plt_infl_VariableImportance.rds",
+            #             compress="xz"
+            #         )
+            #         
+            #     }
+            #     
+            # }
             
             # Return
             plt_infl_VariableImportance %>% 
@@ -1265,34 +1268,34 @@ server <- function(input, output, session) {
     output$plt_infl_PartialDependancy <- renderPlot(
         expr={
             
-            # Check if exists in local environment
-            if (!exists("plt_infl_PartialDependancy")) {
-                
-                # Check if exists in local directory
-                if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
+            # # Check if exists in local environment
+            # if (!exists("plt_infl_PartialDependancy")) {
+            #     
+            #     # Check if exists in local directory
+            #     if (file.exists("./figure/plt_infl_PartialDependancy.rds")) {
                     
                     # Load
                     plt_infl_PartialDependancy <- read_rds("./figure/plt_infl_PartialDependancy.rds")
                     
-                } else {
-                    
-                    # Run PDP function
-                    plt_infl_PartialDependancy <- plt_PartialDependencyPlots(
-                        mod_gbm_Model,
-                        mod_data_Raw,
-                        mod_gbm_VariableImportance
-                    )
-                    
-                }
-                
-                # Save file
-                write_rds(
-                    x=plt_infl_PartialDependancy,
-                    path="./figure/plt_infl_PartialDependancy.rds",
-                    compress="xz"
-                )
-                
-            }
+            #     } else {
+            #         
+            #         # Run PDP function
+            #         plt_infl_PartialDependancy <- plt_PartialDependencyPlots(
+            #             mod_gbm_Model,
+            #             mod_data_Raw,
+            #             mod_gbm_VariableImportance
+            #         )
+            #         
+            #     }
+            #     
+            #     # Save file
+            #     write_rds(
+            #         x=plt_infl_PartialDependancy,
+            #         path="./figure/plt_infl_PartialDependancy.rds",
+            #         compress="xz"
+            #     )
+            #     
+            # }
             
             # Render
             plt_infl_PartialDependancy %>% 
