@@ -212,7 +212,7 @@ pag_InfoPage <- tabItem(
     
     # . . Header ----
     h1(tags$b("Exploring Undernourishment")),
-    h2("A visual data exploration for our better understanding"),
+    h2("A Visual Data Exploration Research Project to Better Understand the Nuances of Our Global Nutrition"),
     
     # . . Introduction ----
     fluidRow(
