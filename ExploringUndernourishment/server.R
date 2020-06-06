@@ -725,8 +725,6 @@ server <- function(input, output, session) {
             #     
             # }
             
-            print(pryr::mem_used())
-            
             # Return
             plt_rese_genr_OverallTrend %>% 
                 return()
@@ -751,6 +749,8 @@ server <- function(input, output, session) {
     # . . Regional Trend Plot ----
     output$plt_rese_genr_RegionalTrend <- renderPlot(
         expr={
+            writeLines("App memory size:")
+            print(pryr::mem_used())
             dat_rese_regi_InputData() %>% 
                 {
                     ggplot(data=., aes(x=year)) +
