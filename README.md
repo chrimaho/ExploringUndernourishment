@@ -9,6 +9,7 @@
 #    References : .                                                            #
 #    Sources    : .                                                            #
 #    Edited     : 09/May/2020 - Initial creation                               #
+#    Edited     : 16/Oct/2020 - Add links for Article                          #
 #                                                                              #
 #==============================================================================#
 -->
@@ -17,14 +18,25 @@
 
 Exploring data from the United Nations to better understand undernourishment.
 
-## Shiny App
+### Shiny App
 
 The primary means of exploring this data:
 
 * Shiny App deployed to: [Exploring Undernourishment](https://chrimaho.shinyapps.io/ExploringUndernourishment/).
-* Shiny App source code: [`ExploringUndernourishment\`](https://github.com/chrimaho/ExploringUndernourishment/tree/master/ExploringUndernourishment).
+* Shiny App source code: [`ExploringUndernourishment/`](https://github.com/chrimaho/ExploringUndernourishment/tree/master/ExploringUndernourishment).
 
-## Data Sources
+### Exploring Undernourishment Article:
+
+* Part 1 - [Introduction and Overview](https://medium.com/@chrimaho/exploring-undernourishment-part-1-introduction-and-overview-ff024fa7dd32?source=friends_link&sk=dc47b684aa91157137e18e2bc4e7d8f8)
+* Part 2 - [Literature Review](https://medium.com/@chrimaho/exploring-undernourishment-part-2-literature-review-a1abfefb86b7?source=friends_link&sk=ee953d379bafa7e6f2bf552fe4d7481f)
+* Part 3 - [Data Exploration](https://medium.com/@chrimaho/exploring-undernourishment-part-3-data-exploration-71f15e5778f3?source=friends_link&sk=5c5c2dc44248109e1c443cb731102773)
+* Part 4 - [Research Area 1: General Trend](https://medium.com/@chrimaho/exploring-undernourishment-part-4-research-area-1-general-trend-cdb8ced5b0af?source=friends_link&sk=30922587311cccfd051e40e90e4bf3b8)
+* Part 5 - [Research Area 2: Most Successful Countries](https://medium.com/@chrimaho/exploring-undernourishment-part-5-research-area-2-most-successful-countries-c0afd1504c71?source=friends_link&sk=8da658166ca6d80b3cd9613b26ab02f1)
+* Part 6 - [Research Area 3: Surprising Trends](https://medium.com/@chrimaho/exploring-undernourishment-part-6-research-area-3-surprising-trends-962d653a08fc?source=friends_link&sk=d6ba983f77a0f08176d2d916033c4b52)
+* Part 7 - [Research Area 4: Most Influential Indicator](https://medium.com/@chrimaho/exploring-undernourishment-part-7-research-area-4-most-influential-indicator-47ba76395f9b?source=friends_link&sk=5eab78561820fe6e0dd5b3ade028e1b5)
+* Part 8 - [Recommendations and Conclusions](https://medium.com/@chrimaho/exploring-undernourishment-part-8-recommendations-and-conclusions-c5eb682bb3a5?source=friends_link&sk=d1b4e31a82e421f6e7924d46732a816f)
+
+### Data Sources
 
 Data provided by:
 
@@ -42,9 +54,9 @@ Additional information about the data sources can be found at:
 
 ---
 
-## Data Dictionary
+### Data Dictionary
 
-|variable                                   |description                                                                                           |type       |category       |
+| variable                                  | description                                                                                          | type      | category      |
 |:------------------------------------------|:-----------------------------------------------------------------------------------------------------|:----------|:--------------|
 |`country`                                  |The country being recorded                                                                            |identifier |identifier     |
 |`year`                                     |The year of record                                                                                    |identifier |identifier     |

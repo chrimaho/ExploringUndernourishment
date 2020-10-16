@@ -188,7 +188,8 @@ sidebar <- dashboardSidebar(
         tags$ol(tags$a(icon("github"), "GitHub", href="https://github.com/chrimaho/ExploringUndernourishment/", target="_blank")),
         tags$ol(tags$a(icon("medium"), "Medium", href="https://medium.com/@chrimaho", target="_blank")),
         tags$ol(tags$a(icon("stack-overflow"), "StackOverflow", href="https://stackoverflow.com/users/12036005/chrimaho", target="_blank")),
-        tags$a("App Launch Date: ", tags$span("5/Jun/2020"))
+        tags$a("App Launch Date: ", tags$span("5/Jun/2020")), tags$br(),
+        tags$a("Last Updated:", tags$span("16/Oct/2020"))
         
     )
 )
@@ -231,7 +232,99 @@ pag_InfoPage <- tabItem(
             tags$p(HTML(sprintf(
                 "This app uses data provided by the %s, and a number of exploratory data analysis techniques to investigate four reserach questions, which are detailed below.",
                 tags$a("FAO", href="http://www.fao.org/faostat/en/#data/FS", target="_blank")
-            )))
+            ))),
+            tags$p(
+                "This App is also supported by an article on {} which takes a deep-dive in to the analysis. The Contents are:" %>% 
+                    str_Format(
+                        tags$a(
+                            "Medium",
+                            href="https://medium.com/@chrimaho/exploring-undernourishment-part-1-introduction-and-overview-ff024fa7dd32?source=friends_link&sk=dc47b684aa91157137e18e2bc4e7d8f8",
+                            target="_blank"
+                        )
+                    ) %>% HTML()
+            ),
+            tags$ul(
+                tags$li(
+                    "Part 1 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Introduction and Overview",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-1-introduction-and-overview-ff024fa7dd32?source=friends_link&sk=dc47b684aa91157137e18e2bc4e7d8f8",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                ),
+                tags$li(
+                    "Part 2 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Literature Review",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-2-literature-review-a1abfefb86b7?source=friends_link&sk=ee953d379bafa7e6f2bf552fe4d7481f",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                ),
+                tags$li(
+                    "Part 3 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Data Exploration",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-3-data-exploration-71f15e5778f3?source=friends_link&sk=5c5c2dc44248109e1c443cb731102773",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                ),
+                tags$li(
+                    "Part 4 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Research Area 1: General Trend",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-4-research-area-1-general-trend-cdb8ced5b0af?source=friends_link&sk=30922587311cccfd051e40e90e4bf3b8",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                ),
+                tags$li(
+                    "Part 5 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Research Area 2: Most Successful Countries",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-5-research-area-2-most-successful-countries-c0afd1504c71?source=friends_link&sk=8da658166ca6d80b3cd9613b26ab02f1",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                ),
+                tags$li(
+                    "Part 6 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Research Area 3: Surprising Trends",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-6-research-area-3-surprising-trends-962d653a08fc?source=friends_link&sk=d6ba983f77a0f08176d2d916033c4b52",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                ),
+                tags$li(
+                    "Part 7 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Research Area 4: Most Influential Indicator",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-7-research-area-4-most-influential-indicator-47ba76395f9b?source=friends_link&sk=5eab78561820fe6e0dd5b3ade028e1b5",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                ),
+                tags$li(
+                    "Part 8 - {}" %>%
+                        str_Format(
+                            tags$a(
+                                "Recommendations and Conclusions",
+                                href="https://medium.com/@chrimaho/exploring-undernourishment-part-8-recommendations-and-conclusions-c5eb682bb3a5?source=friends_link&sk=d1b4e31a82e421f6e7924d46732a816f",
+                                target="_blank"
+                            )
+                        ) %>% HTML()
+                )
+            )
         )
     ),
     
@@ -1933,51 +2026,150 @@ pag_Conclusion <- tabItem(
         box(
             title=tags$b("Conclusion"),
             width=12,
-            column(
-                width=6,
-                tags$p(
-                    "The emphasis that the {} has placed on their {}, particularly the goal of {}, has had a substantial impact on the society, on the Globe in general, and on the individual Countries and their own viability. When analysing the {} data provided by the {}, there are many learnings and conclusions which can be drawn from this information." %>% 
-                        str_Format(
-                            a("United Nations", href="https://www.un.org/"),
-                            a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"),
-                            a("Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/"),
-                            a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/"),
-                            a("Food and Agriculture Organisation of the United Nations", href="http://www.fao.org/home/en/")
-                        ) %>% HTML()
+            fluidRow(
+                column(
+                    width=6,
+                    tags$p(
+                        "The emphasis that the {} has placed on their {}, particularly the goal of {}, has had a substantial impact on the society, on the Globe in general, and on the individual Countries and their own viability. When analysing the {} data provided by the {}, there are many learnings and conclusions which can be drawn from this information." %>% 
+                            str_Format(
+                                a("United Nations", href="https://www.un.org/"),
+                                a("Sustainable Development Goals", href="https://www.un.org/sustainabledevelopment/sustainable-development-goals/"),
+                                a("Zero Hunger", href="https://www.un.org/sustainabledevelopment/hunger/"),
+                                a("Prevalence of Undernourishment", href="http://www.fao.org/sustainable-development-goals/indicators/2.1.1/en/"),
+                                a("Food and Agriculture Organisation of the United Nations", href="http://www.fao.org/home/en/")
+                            ) %>% HTML()
+                    )
+                ),
+                column(
+                    width=6,
+                    tags$p(
+                        "This Analysis has endeavoured to explore four broad areas of research:"
+                    ),
+                    tags$ul(
+                        tags$li(
+                            actionLink(
+                                "link_conc_conc_GeneralTrend_GoToPage",
+                                "General Trends",
+                                icon("chart-line")
+                            )
+                        ),
+                        tags$li(
+                            actionLink(
+                                "link_conc_conc_MostSuccessful_GoToPage",
+                                "Most Successful Countries",
+                                icon("thumbs-up")
+                            )
+                        ),
+                        tags$li(
+                            actionLink(
+                                "link_conc_conc_SurprisingTrends_GoToPage",
+                                "Surprising Trends",
+                                icon("surprise")
+                            )
+                        ),
+                        tags$li(
+                            actionLink(
+                                "link_conc_conc_MostInfluential_GoToPage",
+                                "Most Influential Features",
+                                icon("asterisk")
+                            )
+                        )
+                    )
                 )
             ),
-            column(
-                width=6,
-                tags$p(
-                    "This Analysis has endeavoured to explore four broad areas of research:"
-                ),
-                tags$ul(
-                    tags$li(
-                        actionLink(
-                            "link_conc_conc_GeneralTrend_GoToPage",
-                            "General Trends",
-                            icon("chart-line")
-                        )
+            fluidRow(
+                column(
+                    width=12,
+                    tags$p(
+                        "This App is also supported by an article on {} which takes a deep-dive in to the analysis. The Contents are:" %>% 
+                            str_Format(
+                                tags$a(
+                                    "Medium",
+                                    href="https://medium.com/@chrimaho/exploring-undernourishment-part-1-introduction-and-overview-ff024fa7dd32?source=friends_link&sk=dc47b684aa91157137e18e2bc4e7d8f8",
+                                    target="_blank"
+                                )
+                            ) %>% HTML()
                     ),
-                    tags$li(
-                        actionLink(
-                            "link_conc_conc_MostSuccessful_GoToPage",
-                            "Most Successful Countries",
-                            icon("thumbs-up")
-                        )
-                    ),
-                    tags$li(
-                        actionLink(
-                            "link_conc_conc_SurprisingTrends_GoToPage",
-                            "Surprising Trends",
-                            icon("surprise")
-                        )
-                    ),
-                    tags$li(
-                        actionLink(
-                            "link_conc_conc_MostInfluential_GoToPage",
-                            "Most Influential Features",
-                            icon("asterisk")
+                    tags$ul(
+                        tags$li(
+                            "Part 1 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Introduction and Overview",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-1-introduction-and-overview-ff024fa7dd32?source=friends_link&sk=dc47b684aa91157137e18e2bc4e7d8f8",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "Part 2 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Literature Review",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-2-literature-review-a1abfefb86b7?source=friends_link&sk=ee953d379bafa7e6f2bf552fe4d7481f",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "Part 3 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Data Exploration",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-3-data-exploration-71f15e5778f3?source=friends_link&sk=5c5c2dc44248109e1c443cb731102773",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "Part 4 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Research Area 1: General Trend",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-4-research-area-1-general-trend-cdb8ced5b0af?source=friends_link&sk=30922587311cccfd051e40e90e4bf3b8",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "Part 5 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Research Area 2: Most Successful Countries",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-5-research-area-2-most-successful-countries-c0afd1504c71?source=friends_link&sk=8da658166ca6d80b3cd9613b26ab02f1",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "Part 6 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Research Area 3: Surprising Trends",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-6-research-area-3-surprising-trends-962d653a08fc?source=friends_link&sk=d6ba983f77a0f08176d2d916033c4b52",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "Part 7 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Research Area 4: Most Influential Indicator",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-7-research-area-4-most-influential-indicator-47ba76395f9b?source=friends_link&sk=5eab78561820fe6e0dd5b3ade028e1b5",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
+                        ),
+                        tags$li(
+                            "Part 8 - {}" %>%
+                                str_Format(
+                                    tags$a(
+                                        "Recommendations and Conclusions",
+                                        href="https://medium.com/@chrimaho/exploring-undernourishment-part-8-recommendations-and-conclusions-c5eb682bb3a5?source=friends_link&sk=d1b4e31a82e421f6e7924d46732a816f",
+                                        target="_blank"
+                                    )
+                                ) %>% HTML()
                         )
                     )
                 )
