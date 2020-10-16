@@ -21,6 +21,7 @@
 
 # . . Set Path ----
 raw_DataPath <- "./data/raw"
+# raw_DataPath <- rprojroot::find_rstudio_root_file("ExploringUndernourishment/data/raw")
 
 # . . Do Import ----
 for (file in list.files(raw_DataPath, pattern="*.csv")) {
