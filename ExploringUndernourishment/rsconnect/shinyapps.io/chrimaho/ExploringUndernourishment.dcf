@@ -5,8 +5,8 @@ account: chrimaho
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2308699
-bundleId: 3234972
+bundleId: 3750608
 url: https://chrimaho.shinyapps.io/ExploringUndernourishment/
-when: 1591412553.3362
+when: 1602889188.57977
 asMultiple: FALSE
 asStatic: FALSE
